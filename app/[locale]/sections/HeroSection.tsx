@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 
@@ -10,7 +10,15 @@ interface HeroSectionProps {
   dict: Dictionary;
 }
 
-function AnimatedWord({ word, index, isVisible }: { word: string; index: number; isVisible: boolean }) {
+function AnimatedWord({
+  word,
+  index,
+  isVisible,
+}: {
+  word: string;
+  index: number;
+  isVisible: boolean;
+}) {
   return (
     <span
       className={`inline-block transition-all duration-700 ${
@@ -19,6 +27,68 @@ function AnimatedWord({ word, index, isVisible }: { word: string; index: number;
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       {word}&nbsp;
+    </span>
+  );
+}
+
+function RotatingWord({
+  words,
+  isVisible,
+  index,
+}: {
+  words: string[];
+  isVisible: boolean;
+  index: number;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState<"up" | "down">("up");
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setDirection("up");
+
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+        setDirection("down");
+
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 300);
+      }, 300);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isVisible, words.length]);
+
+  return (
+    <span
+      className={`inline-block transition-all duration-700 align-baseline  ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+    >
+      <span className="relative inline-block overflow-hidden align-baseline">
+        <span
+          className="inline-block transition-all duration-300 ease-in-out bg-linear-to-r from-[#1A4AFF] via-[#4F7FFF] to-[#1A4AFF] bg-clip-text text-transparent"
+          style={{
+            transform: isAnimating
+              ? direction === "up"
+                ? "translateY(-100%)"
+                : "translateY(0)"
+              : "translateY(0)",
+            opacity: isAnimating && direction === "up" ? 0 : 1,
+            textShadow: "none",
+            WebkitBackgroundClip: "text",
+          }}
+        >
+          {words[currentIndex]}
+        </span>
+      </span>
+      &nbsp;
     </span>
   );
 }
@@ -32,6 +102,17 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
 
   const titleWords = dict.hero.title.split(" ");
   const subtitleWords = dict.hero.subtitle.split(" ");
+
+  // Words to rotate through for the "Quality" word
+  const rotatingWords = isRTL
+    ? ["عالية", "موثوقة", "دقيقة"]
+    : ["Quality", "Reliability", "Trust"];
+
+  // Find the index of "Quality" or equivalent word to replace with rotating animation
+  const qualityWordIndex = titleWords.findIndex(
+    (word) =>
+      word.toLowerCase() === "quality" || word === "عالية" || word === "الجودة"
+  );
 
   // Trigger animation on mount
   useEffect(() => {
@@ -84,43 +165,63 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
         />
 
         <h1
-          className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[1.1] mb-8 font-extrabold uppercase ${
-            isRTL ? "font-[var(--font-cairo)]" : ""
+          className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-normal mb-4 font-extrabold uppercase ${
+            isRTL ? "font-(--font-cairo)" : ""
           }`}
           style={{
-            fontFamily: isRTL ? "var(--font-cairo), sans-serif" : "'Manrope', sans-serif",
+            fontFamily: isRTL
+              ? "var(--font-cairo), sans-serif"
+              : "'Manrope', sans-serif",
             textShadow: "0 4px 30px rgba(0,0,0,0.3)",
             letterSpacing: isRTL ? "0" : "0.02em",
           }}
         >
-          {titleWords.map((word, index) => (
-            <AnimatedWord key={index} word={word} index={index} isVisible={isVisible} />
-          ))}
+          {titleWords.map((word, index) => {
+            if (index === qualityWordIndex) {
+              return (
+                <Fragment key={index}>
+                  <br />
+                  <RotatingWord
+                    words={rotatingWords}
+                    isVisible={isVisible}
+                    index={index}
+                  />
+                </Fragment>
+              );
+            }
+            return (
+              <AnimatedWord
+                key={index}
+                word={word}
+                index={index}
+                isVisible={isVisible}
+              />
+            );
+          })}
         </h1>
-
-        <p
-          className={`text-white/90 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto ${
-            isRTL ? "font-[var(--font-cairo)]" : ""
-          }`}
-          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.2)" }}
-        >
-          {subtitleWords.map((word, index) => (
-            <AnimatedWord
-              key={index}
-              word={word}
-              index={index + titleWords.length}
-              isVisible={isVisible}
-            />
-          ))}
-        </p>
 
         <Link
           href={`/${locale}/contact`}
-          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full transition-all duration-500 hover:bg-white hover:text-[#122D8B] ${
+          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+          } ${isRTL ? "font-(--font-cairo)" : ""}`}
           style={{
-            transitionDelay: `${(titleWords.length + subtitleWords.length) * 150 + 300}ms`,
+            transition: isVisible ? "all 0.3s ease" : "all 0.7s ease",
+            transitionDelay: isVisible
+              ? "0s"
+              : `${(titleWords.length + subtitleWords.length) * 150 + 300}ms`,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "white";
+            e.currentTarget.style.color = "#122D8B";
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "transparent";
+            e.currentTarget.style.color = "white";
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "none";
           }}
         >
           {dict.hero.cta}
