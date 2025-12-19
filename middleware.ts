@@ -26,20 +26,6 @@ export function middleware(request: NextRequest) {
     const localeFromPath = segments[1];
     
     if (isValidLocale(localeFromPath)) {
-      // Check if accessing admin routes (but not login page)
-      const isAdminRoute = pathname.includes("/admin") && !pathname.includes("/admin/login");
-      
-      if (isAdminRoute) {
-        // Check for auth token in cookies
-        const authToken = request.cookies.get("admin_token");
-        
-        if (!authToken) {
-          // Redirect to login page
-          const loginUrl = new URL(`/${localeFromPath}/admin/login`, request.url);
-          return NextResponse.redirect(loginUrl);
-        }
-      }
-      
       return NextResponse.next();
     }
   }
