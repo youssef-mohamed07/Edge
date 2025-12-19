@@ -206,9 +206,24 @@ export function Footer({ locale, dict }: FooterProps) {
               isRTL ? "md:flex-row-reverse" : ""
             }`}
           >
-            <p className={`text-white/40 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              © {new Date().getFullYear()} EDGE for Garments. {dict.footer.rights}
-            </p>
+            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+              <p className={`text-white/40 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                © {new Date().getFullYear()} EDGE for Garments. {dict.footer.rights}
+              </p>
+              <span className="text-white/20 hidden md:inline">|</span>
+              <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
+                <Image
+                  src="/assets/logos/ddrZXWxdKnWCthtq49D_Ommh20E.png"
+                  alt="SEDEX Certified"
+                  width={24}
+                  height={24}
+                  className="h-6 w-auto"
+                />
+                <span className={`text-white/40 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  {isRTL ? "معتمد من SEDEX" : "Certified by SEDEX"}
+                </span>
+              </div>
+            </div>
             <div className={`flex items-center gap-5 ${isRTL ? "flex-row-reverse" : ""}`}>
               <LanguageSwitcher currentLocale={locale} variant="footer" />
               <span className="text-white/20">|</span>

@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { isValidLocale, siteUrl, getDirection } from "../../i18n/config";
 import { getDictionary } from "../../i18n/dictionaries";
 import { Navbar } from "../components/layout/Navbar";
@@ -10,6 +8,7 @@ import { Chatbot } from "../components/layout/Chatbot";
 import { PageHero } from "../components/PageHero";
 import { supabase } from "../../../lib/supabase";
 import productsJson from "../../../data/products.json";
+import { ProductCategoriesSection } from "./ProductCategoriesSection";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -143,45 +142,11 @@ export default async function ProductsPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-12">
-            <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? "فئات المنتجات" : "Product Categories"}
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {productCategories.map((product) => (
-              <div key={product.slug} className={`group border border-[#D8DDE9] hover:border-[#1A4AFF]/30 transition-all ${isRTL ? "text-right" : ""}`}>
-                <div className="aspect-[4/3] bg-[#D8DDE9] relative overflow-hidden">
-                  <Image src={product.image} alt={product.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className={`absolute bottom-0 w-0 h-1 bg-[#1A4AFF] group-hover:w-full transition-all duration-300 ${isRTL ? "right-0" : "left-0"}`} />
-                </div>
-
-                <div className="p-6">
-                  <h3 className={`text-xl text-[#122D8B] mb-3 font-bold uppercase tracking-wide ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{product.title}</h3>
-                  <p className={`text-[#122D8B]/60 text-sm mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{product.description}</p>
-
-                  <ul className={`space-y-2 mb-6 ${isRTL ? "text-right" : ""}`}>
-                    {product.features.map((feature) => (
-                      <li key={feature} className={`flex items-center gap-2 text-sm text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                        <div className="w-1.5 h-1.5 bg-[#1A4AFF] flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link href={`/${locale}/products/${product.slug}`} className={`text-[#1A4AFF] font-semibold text-sm uppercase tracking-wide hover:text-[#122D8B] transition-colors inline-flex items-center gap-2 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "عرض التفاصيل" : "View Details"}
-                    <span>{isRTL ? "←" : "→"}</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProductCategoriesSection 
+        locale={locale}
+        isRTL={isRTL}
+        productCategories={productCategories}
+      />
 
       <Footer locale={locale} dict={dict} />
       <Chatbot locale={locale} />

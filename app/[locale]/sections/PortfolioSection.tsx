@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface PortfolioSectionProps {
   locale: Locale;
@@ -50,6 +51,7 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image */}
+          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:order-2">
             <Image
               src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
@@ -58,8 +60,10 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
               className="object-cover"
             />
           </div>
+          </ScrollReveal>
 
           {/* Process Steps */}
+          <ScrollReveal direction={isRTL ? "right" : "left"}>
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
             <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "كيف نعمل" : "How We Work"}
@@ -97,6 +101,7 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
               ))}
             </div>
           </div>
+          </ScrollReveal>
         </div>
 
       </div>

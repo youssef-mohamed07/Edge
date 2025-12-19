@@ -1,20 +1,15 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { isValidLocale, siteUrl, getDirection, type Locale } from "../../i18n/config";
+import { isValidLocale, siteUrl, getDirection } from "../../i18n/config";
 import { getDictionary } from "../../i18n/dictionaries";
 import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
 import { Chatbot } from "../components/layout/Chatbot";
-import {
-  FabricInspectionIcon,
-  CuttingIcon,
-  SewingIcon,
-  WashingIcon,
-  EmbroideryIcon,
-  PackagingIcon,
-} from "../../components/Icons";
 import { PageHero } from "../components/PageHero";
+import { AnimatedServiceStep, type IconName } from "./AnimatedServiceStep";
+import { WhySetsUsApart } from "./WhySetsUsApart";
+import { AIGuideSection } from "../sections/AIGuideSection";
+import { FAQSection } from "../sections/FAQSection";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -51,45 +46,51 @@ export default async function ServicesPage({ params }: PageProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
-  const services = isRTL
+  const services: Array<{
+    iconName: IconName;
+    title: string;
+    image: string;
+    description: string;
+    details: string[];
+  }> = isRTL
     ? [
         {
-          icon: FabricInspectionIcon,
+          iconName: "FabricInspectionIcon",
           title: "فحص الأقمشة",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description: "فحوصات جودة صارمة على جميع المواد الواردة لضمان أعلى المعايير.",
           details: ["نظام فحص 4 نقاط", "التحقق من اتساق الألوان", "اختبار الانكماش", "تحليل الوزن والتركيب"],
         },
         {
-          icon: CuttingIcon,
+          iconName: "CuttingIcon",
           title: "القص",
           image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
           description: "قص دقيق بآلات متقدمة لأنماط دقيقة وأقل هدر.",
           details: ["صنع الباترون CAD/CAM", "آلات فرد أوتوماتيكية", "أنظمة قص محوسبة", "استخدام أمثل للقماش"],
         },
         {
-          icon: SewingIcon,
+          iconName: "SewingIcon",
           title: "الخياطة",
           image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
           description: "خياطة احترافية بأيدي حرفيين مهرة باستخدام معدات صناعية.",
           details: ["آلات دنيم متخصصة", "آلات غرزة سلسلة متعددة الإبر", "أتمتة العراوي والأزرار", "فحص جودة مباشر"],
         },
         {
-          icon: WashingIcon,
+          iconName: "WashingIcon",
           title: "الغسيل",
           image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
           description: "تقنيات غسيل متخصصة للحصول على التشطيبات المطلوبة.",
           details: ["غسيل حجري وإنزيمي", "تبييض وصبغ", "معالجات تنعيم", "خيارات صديقة للبيئة"],
         },
         {
-          icon: EmbroideryIcon,
+          iconName: "EmbroideryIcon",
           title: "التطريز والطباعة",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description: "خدمات تطريز وطباعة مخصصة للعلامات التجارية.",
           details: ["آلات تطريز متعددة الرؤوس", "طباعة الشاشة الحريرية", "طباعة النقل الحراري", "النقش بالليزر"],
         },
         {
-          icon: PackagingIcon,
+          iconName: "PackagingIcon",
           title: "التغليف ومراقبة الجودة",
           image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
           description: "مراقبة جودة شاملة وتغليف احترافي للتسليم.",
@@ -98,42 +99,42 @@ export default async function ServicesPage({ params }: PageProps) {
       ]
     : [
         {
-          icon: FabricInspectionIcon,
+          iconName: "FabricInspectionIcon",
           title: "Fabric Inspection",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description: "Rigorous quality checks on all incoming materials to ensure premium standards.",
           details: ["4-point inspection system", "Color consistency verification", "Shrinkage testing", "Weight and composition analysis"],
         },
         {
-          icon: CuttingIcon,
+          iconName: "CuttingIcon",
           title: "Cutting",
           image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
           description: "Precision cutting with advanced machinery for accurate patterns and minimal waste.",
           details: ["CAD/CAM pattern making", "Automatic spreading machines", "Computerized cutting systems", "Optimal fabric utilization"],
         },
         {
-          icon: SewingIcon,
+          iconName: "SewingIcon",
           title: "Sewing",
           image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
           description: "Expert stitching by skilled craftsmen using industrial-grade equipment.",
           details: ["Specialized denim machinery", "Multi-needle chain stitch machines", "Bartack and buttonhole automation", "Inline quality inspection"],
         },
         {
-          icon: WashingIcon,
+          iconName: "WashingIcon",
           title: "Washing",
           image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
           description: "Specialized washing techniques for desired finishes and fabric treatment.",
           details: ["Stone wash and enzyme wash", "Bleaching and tinting", "Softening treatments", "Eco-friendly wash options"],
         },
         {
-          icon: EmbroideryIcon,
+          iconName: "EmbroideryIcon",
           title: "Embroidery & Printing",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description: "Custom embroidery and printing services for branding and design elements.",
           details: ["Multi-head embroidery machines", "Screen printing", "Heat transfer printing", "Laser engraving"],
         },
         {
-          icon: PackagingIcon,
+          iconName: "PackagingIcon",
           title: "Packaging & Final QC",
           image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
           description: "Comprehensive quality control and professional packaging for delivery.",
@@ -172,45 +173,29 @@ export default async function ServicesPage({ params }: PageProps) {
 
           <div className="space-y-16">
             {services.map((service, index) => (
-              <div key={service.title} className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className={index % 2 === 0 ? "lg:order-1" : "lg:order-2"}>
-                  <div className={`text-[#B6C6E1] text-sm mb-4 font-bold uppercase tracking-wide ${isRTL ? "text-right" : ""}`}>
-                    {isRTL ? `الخطوة ${String(index + 1).padStart(2, "0")}` : `STEP ${String(index + 1).padStart(2, "0")}`}
-                  </div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <service.icon className="w-16 h-16 text-[#122D8B]" />
-                    <h2 className={`text-2xl md:text-3xl text-[#122D8B] font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {service.title}
-                    </h2>
-                  </div>
-                  <p className={`text-[#122D8B]/70 text-lg mb-6 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>
-                    {service.description}
-                  </p>
-                  <ul className={`space-y-3 ${isRTL ? "text-right" : ""}`}>
-                    {service.details.map((detail) => (
-                      <li
-                        key={detail}
-                        className="flex items-center gap-3"
-                      >
-                        <div className="w-2 h-2 bg-[#1A4AFF] flex-shrink-0" />
-                        <span className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div
-                  className={`aspect-video bg-[#D8DDE9] relative overflow-hidden ${index % 2 === 0 ? "lg:order-2" : "lg:order-1"}`}
-                >
-                  <Image src={service.image} alt={service.title} fill className="object-cover" />
-                  <div className={`absolute top-4 w-8 h-8 border-t-2 border-[#1A4AFF] ${isRTL ? "right-4 border-r-2" : "left-4 border-l-2"}`} />
-                  <div className={`absolute bottom-4 w-8 h-8 border-b-2 border-[#1A4AFF] ${isRTL ? "left-4 border-l-2" : "right-4 border-r-2"}`} />
-                </div>
-              </div>
+              <AnimatedServiceStep
+                key={service.title}
+                index={index}
+                title={service.title}
+                description={service.description}
+                details={service.details}
+                image={service.image}
+                iconName={service.iconName}
+                isRTL={isRTL}
+              />
             ))}
           </div>
         </div>
       </section>
+
+      {/* What Sets Us Apart */}
+      <WhySetsUsApart isRTL={isRTL} />
+
+      {/* AI Guide Section */}
+      <AIGuideSection locale={locale} />
+
+      {/* FAQ Section */}
+      <FAQSection locale={locale} dict={dict} />
 
       <Footer locale={locale} dict={dict} />
       <Chatbot locale={locale} />

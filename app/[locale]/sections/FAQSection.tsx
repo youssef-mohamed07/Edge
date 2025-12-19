@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -40,6 +41,7 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
   return (
     <section className="py-20 lg:py-28 bg-[#F8F9FA]">
       <div className="max-w-4xl mx-auto px-6 lg:px-12">
+        <ScrollReveal>
         <div className={`mb-14 ${isRTL ? "text-right" : "text-center"}`}>
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "الأسئلة الشائعة" : "FAQ"}
@@ -51,10 +53,12 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
             {dict.faq.subtitle}
           </p>
         </div>
+        </ScrollReveal>
 
         <div className="space-y-4">
-          {faqs.map((faq) => (
-            <div key={faq.id} className="bg-white rounded-2xl overflow-hidden shadow-sm">
+          {faqs.map((faq, index) => (
+            <ScrollReveal key={faq.id} delay={index * 100}>
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
               <button
                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
                 className={`w-full px-6 py-5 flex items-center hover:bg-[#F8F9FA]/50 transition-colors ${
@@ -72,9 +76,11 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
                 </p>
               </div>
             </div>
+            </ScrollReveal>
           ))}
         </div>
 
+        <ScrollReveal delay={600}>
         <div className="mt-12 text-center">
           <p className={`text-[#122D8B]/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "لا زال لديك أسئلة؟" : "Still have questions?"}
@@ -91,6 +97,7 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
             </svg>
           </Link>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

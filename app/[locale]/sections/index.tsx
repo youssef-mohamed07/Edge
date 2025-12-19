@@ -11,3 +11,4 @@ export { AIGuideSection } from "./AIGuideSection";
 export { LocationsMapSection } from "./LocationsMapSection";
 export { FAQSection } from "./FAQSection";
 export { ValuesSection } from "./ValuesSection";
+export { AIAgentFormSection } from "./AIAgentFormSection";

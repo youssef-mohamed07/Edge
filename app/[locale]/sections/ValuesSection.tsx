@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ReliabilityIcon,
   QualityIcon,
@@ -8,6 +10,7 @@ import {
 } from "../../components/Icons";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface ValuesSectionProps {
   locale: Locale;
@@ -39,6 +42,7 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
   return (
     <section id="values" className="py-20 lg:py-32" style={{ backgroundColor: "rgba(182, 198, 225, 0.3)" }} dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <ScrollReveal>
         <div className="text-center mb-16">
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.values.label}
@@ -47,11 +51,12 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
             {dict.values.title}
           </h2>
         </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {values.map((value) => (
+          {values.map((value, index) => (
+            <ScrollReveal key={value.title} delay={index * 100}>
             <div
-              key={value.title}
               className={`bg-white p-8 border border-[#D8DDE9] hover:border-[#1A4AFF]/30 transition-colors group ${
                 isRTL ? "text-right" : ""
               }`}
@@ -68,6 +73,7 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
                 {value.description}
               </p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

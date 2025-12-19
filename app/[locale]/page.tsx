@@ -9,6 +9,7 @@ import {
   HeroSection,
   QuoteSection,
   OurServicesSection,
+  AIAgentFormSection,
   PartnersSection,
   ProductsSection,
   PortfolioSection,
@@ -63,6 +64,7 @@ export default async function HomePage({ params }: PageProps) {
       <HeroSection locale={locale} dict={dict} />
       <QuoteSection locale={locale} />
       <OurServicesSection locale={locale} dict={dict} />
+      <AIAgentFormSection locale={locale} />
       <ProductsSection locale={locale} dict={dict} />
       <PortfolioSection locale={locale} dict={dict} />
       <PartnersSection locale={locale} dict={dict} />

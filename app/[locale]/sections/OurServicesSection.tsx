@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface OurServicesSectionProps {
   locale: Locale;
@@ -119,6 +120,7 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
   return (
     <section className="py-20 lg:py-28 px-6 lg:px-12 bg-white overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto">
+        <ScrollReveal>
         <div className="text-center mb-14">
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.services.label}
@@ -127,7 +129,9 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
             {isRTL ? "خدماتنا" : "Our Services"}
           </h2>
         </div>
+        </ScrollReveal>
 
+        <ScrollReveal delay={200}>
         <div className="relative h-[450px] md:h-[500px] flex items-center justify-center">
           {services.map((service, index) => (
             <Link
@@ -163,6 +167,7 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
             </Link>
           ))}
         </div>
+        </ScrollReveal>
 
         <div className="flex justify-center gap-3 mt-8">
           {services.map((_, index) => (

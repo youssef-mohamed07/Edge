@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 import productsData from "../../../data/products.json";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface ProductsSectionProps {
   locale: Locale;
@@ -23,6 +26,7 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
     <section id="products" className="py-16 lg:py-24 bg-[#F8F9FB]" dir={dir}>
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Header */}
+        <ScrollReveal>
         <div className="text-center mb-12">
           <span className={`text-[#1A4AFF] text-xs font-semibold uppercase tracking-wider block mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.products.label}
@@ -34,11 +38,13 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
             {dict.products.subtitle}
           </p>
         </div>
+        </ScrollReveal>
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          {products.map((product) => (
-            <Link href={`/${locale}/products/${product.slug}`} key={product.title} className="group block">
+          {products.map((product, index) => (
+            <ScrollReveal key={product.title} delay={index * 100}>
+            <Link href={`/${locale}/products/${product.slug}`} className="group block">
               <div className="aspect-[3/4] bg-white relative overflow-hidden rounded-xl shadow-sm">
                 <Image
                   src={product.image}
@@ -54,10 +60,12 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
                 </div>
               </div>
             </Link>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* View All Button */}
+        <ScrollReveal delay={400}>
         <div className="text-center mt-10">
           <Link
             href={`/${locale}/products`}
@@ -67,6 +75,7 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
             <span>{isRTL ? "←" : "→"}</span>
           </Link>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

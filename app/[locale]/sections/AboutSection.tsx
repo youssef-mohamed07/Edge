@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface AboutSectionProps {
   locale: Locale;
@@ -21,6 +24,7 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Side */}
+          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
           <div className="relative lg:order-2">
             <div className="p-4 relative">
               <div
@@ -57,8 +61,10 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
               </div>
             </div>
           </div>
+          </ScrollReveal>
 
           {/* Content Side */}
+          <ScrollReveal direction={isRTL ? "right" : "left"}>
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
             <div className="mb-8">
               <span
@@ -131,6 +137,7 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
               {dict.about.learnMore}
             </Link>
           </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

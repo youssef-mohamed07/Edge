@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 // Real Google Reviews
 const reviews = [
@@ -131,6 +132,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
   return (
     <section className="py-20 lg:py-28 bg-[#F8F9FA] overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <ScrollReveal>
         <div className="text-center mb-12">
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "آراء العملاء" : "Testimonials"}
@@ -145,6 +147,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
             </span>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Carousel */}
         <div className="relative h-[380px] flex items-center justify-center mb-12">
@@ -207,6 +210,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
         </div>
 
         {/* Add Review CTA */}
+        <ScrollReveal delay={400}>
         <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
           <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
             <div className="w-14 h-14 bg-[#1A4AFF]/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -233,6 +237,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
             {isRTL ? "اكتب تقييم" : "Write a Review"}
           </a>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );
