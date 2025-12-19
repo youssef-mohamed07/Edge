@@ -100,6 +100,7 @@ export default function AdminDashboard() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteType, setDeleteType] = useState<"blog" | "product">("blog");
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -177,15 +178,41 @@ export default function AdminDashboard() {
 
   return (
     <div className={`min-h-screen bg-slate-50 ${isRTL ? "font-[var(--font-cairo)]" : ""}`} dir={isRTL ? "rtl" : "ltr"}>
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[70] lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className={`fixed top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-full bg-[#122D8B] text-white z-40 hidden lg:block`}>
-        <div className="p-6">
+      <aside 
+        className={`fixed top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-full bg-[#122D8B] text-white z-[80] transition-transform duration-300 ${
+          sidebarOpen 
+            ? "translate-x-0" 
+            : isRTL 
+              ? "translate-x-full lg:translate-x-0" 
+              : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        {/* Close button inside sidebar - mobile only */}
+        <button 
+          onClick={() => setSidebarOpen(false)}
+          className={`lg:hidden absolute top-4 ${isRTL ? "left-4" : "right-4"} p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <div className="p-6 pt-16 lg:pt-6">
           <Image src="/logo1.png" alt="EDGE" width={120} height={40} className="mb-8" />
         </div>
         
         <nav className="px-4">
           <button
-            onClick={() => setActiveTab("blog")}
+            onClick={() => { setActiveTab("blog"); setSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl mb-2 transition-all ${activeTab === "blog" ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5"}`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +222,7 @@ export default function AdminDashboard() {
           </button>
           
           <button
-            onClick={() => setActiveTab("products")}
+            onClick={() => { setActiveTab("products"); setSidebarOpen(false); }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl mb-2 transition-all ${activeTab === "products" ? "bg-white/10 text-white" : "text-white/70 hover:bg-white/5"}`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,6 +233,17 @@ export default function AdminDashboard() {
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
+          {/* Language Switcher - Mobile only in sidebar */}
+          <button 
+            onClick={() => { router.push(`/${locale === "ar" ? "en" : "ar"}/admin`); setSidebarOpen(false); }} 
+            className="lg:hidden w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:bg-white/5 hover:text-white transition-all mb-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            <span>{locale === "ar" ? "English" : "العربية"}</span>
+          </button>
+          
           <Link href={`/${locale}`} className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:bg-white/5 hover:text-white transition-all mb-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -225,14 +263,23 @@ export default function AdminDashboard() {
       <main className={`min-h-screen ${isRTL ? "lg:mr-64" : "lg:ml-64"}`}>
         <header className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-30">
           <div className="flex items-center justify-between">
-            <div className="lg:hidden"><Image src="/logo1.png" alt="EDGE" width={100} height={35} /></div>
-            <h1 className="text-xl font-bold text-slate-800 hidden lg:block">{t.dashboard}</h1>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              {/* Mobile Menu Toggle */}
+              <button 
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden p-2 text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <div className="lg:hidden"><Image src="/logo1.png" alt="EDGE" width={100} height={35} /></div>
+              <h1 className="text-xl font-bold text-slate-800 hidden lg:block">{t.dashboard}</h1>
+            </div>
+            {/* Desktop only - Language switcher */}
+            <div className="hidden lg:flex items-center gap-4">
               <button onClick={() => router.push(`/${locale === "ar" ? "en" : "ar"}/admin`)} className="px-3 py-1.5 text-sm text-slate-600 hover:text-slate-800 border border-slate-300 rounded-lg hover:bg-slate-50 transition-all">
                 {locale === "ar" ? "EN" : "AR"}
-              </button>
-              <button onClick={handleLogout} className="lg:hidden px-3 py-1.5 text-sm text-red-600 hover:text-red-700 border border-red-200 rounded-lg hover:bg-red-50 transition-all">
-                {t.logout}
               </button>
             </div>
           </div>
