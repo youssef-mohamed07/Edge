@@ -14,6 +14,7 @@ import {
   EmbroideryIcon,
   PackagingIcon,
 } from "../../components/Icons";
+import { PageHero } from "../components/PageHero";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -144,37 +145,21 @@ export default async function ServicesPage({ params }: PageProps) {
     <main className="min-h-screen bg-white">
       <Navbar locale={locale} dict={dict} />
 
-      {/* Page Header */}
-      <section className="relative py-24 lg:py-40 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
-            alt="Services Background"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#122D8B]/85" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-          <div className={`max-w-3xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}>
-            <div className={`w-16 h-1 bg-[#1A4AFF] mb-8 ${isRTL ? "mr-0 ml-auto" : ""}`} />
-            <h1
-              className={`text-4xl md:text-5xl lg:text-6xl text-white font-bold uppercase tracking-wide mb-6 ${
-                isRTL ? "font-[var(--font-cairo)]" : ""
-              }`}
-            >
-              {isRTL ? "خدماتنا" : "Our Services"}
-            </h1>
-            <p className={`text-white/80 text-lg lg:text-xl leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL
-                ? "عملية تصنيع متكاملة من البداية للنهاية مصممة للجودة والكفاءة. من القماش إلى الملابس الجاهزة، نتولى كل شيء."
-                : "A complete end-to-end manufacturing process designed for quality and efficiency. From fabric to finished garment, we handle it all."}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Page Hero */}
+      <PageHero
+        title={isRTL ? "خدماتنا" : "Our Services"}
+        subtitle={
+          isRTL
+            ? "عملية تصنيع متكاملة من البداية للنهاية مصممة للجودة والكفاءة. من القماش إلى الملابس الجاهزة، نتولى كل شيء."
+            : "A complete end-to-end manufacturing process designed for quality and efficiency. From fabric to finished garment, we handle it all."
+        }
+        image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
+        isRTL={isRTL}
+        breadcrumbs={[
+          { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
+          { label: isRTL ? "خدماتنا" : "Services" },
+        ]}
+      />
 
       {/* Production Cycle */}
       <section className="py-20 lg:py-32">

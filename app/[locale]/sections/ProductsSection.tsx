@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import productsData from "../../../data/products.json";
 
 interface ProductsSectionProps {
   locale: Locale;
@@ -12,32 +13,23 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
-  const products = isRTL
-    ? [
-        { title: "جينز", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80", slug: "jeans" },
-        { title: "جاكيتات دنيم", image: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=600&q=80", slug: "denim-jackets" },
-        { title: "ملابس العمل", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80", slug: "workwear" },
-        { title: "قمصان", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80", slug: "shirts" },
-        { title: "ملابس مخصصة", image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=80", slug: "custom" },
-        { title: "علامة خاصة", image: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80", slug: "private-label" },
-      ]
-    : [
-        { title: "Jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80", slug: "jeans" },
-        { title: "Denim Jackets", image: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=600&q=80", slug: "denim-jackets" },
-        { title: "Workwear", image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80", slug: "workwear" },
-        { title: "Shirts", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80", slug: "shirts" },
-        { title: "Custom Garments", image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=80", slug: "custom" },
-        { title: "Private Label", image: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80", slug: "private-label" },
-      ];
+  const products = productsData.products.map((p) => ({
+    title: isRTL ? p.title.ar : p.title.en,
+    image: p.image,
+    slug: p.slug,
+  }));
 
   return (
     <section id="products" className="py-20 lg:py-32 bg-white" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-12">
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+        <div className="text-center mb-16">
+          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.products.label}
           </span>
-          <p className={`text-[#122D8B]/60 mt-4 max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            {isRTL ? "منتجاتنا" : "Our Products"}
+          </h2>
+          <p className={`text-[#122D8B]/60 text-lg max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.products.subtitle}
           </p>
         </div>

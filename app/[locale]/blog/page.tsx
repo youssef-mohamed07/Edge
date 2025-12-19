@@ -7,9 +7,24 @@ import { getDictionary } from "../../i18n/dictionaries";
 import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
 import { Chatbot } from "../components/layout/Chatbot";
+import { PageHero } from "../components/PageHero";
+import { supabase } from "@/lib/supabase";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
+}
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: { en: string; ar: string };
+  excerpt: { en: string; ar: string };
+  content: { en: string; ar: string };
+  date: string;
+  category: { en: string; ar: string };
+  image: string;
+  gallery?: string[];
+  featured?: boolean;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -35,54 +50,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-const blogPosts = [
-  {
-    id: "1",
-    slug: "prime-minister-visit",
-    title: {
-      en: "The Visit of the Prime Minister and the Governor of Port Said",
-      ar: "زيارة رئيس الوزراء ومحافظ بورسعيد",
-    },
-    excerpt: {
-      en: "The Prime Minister inspects the Edge factory for ready-to-wear clothes in Port Said.",
-      ar: "رئيس الوزراء يتفقد مصنع إيدج للملابس الجاهزة في بورسعيد.",
-    },
-    date: "December 16, 2020",
-    category: { en: "News", ar: "أخبار" },
-    image: "https://edgeforgarments.com/wp-content/uploads/2020/11/125231717_230544125072450_6821586552934938452_n.jpg",
-    featured: true,
-  },
-  {
-    id: "2",
-    slug: "committee-visit",
-    title: {
-      en: "The Visit of the Distinguished Members of the Esteemed Committee",
-      ar: "زيارة الأعضاء المتميزين من اللجنة الموقرة",
-    },
-    excerpt: {
-      en: "The visit on the occasion of the inauguration of the new Edge Garment Factory.",
-      ar: "زيارة بمناسبة افتتاح مصنع إيدج الجديد للملابس.",
-    },
-    date: "December 16, 2020",
-    category: { en: "News", ar: "أخبار" },
-    image: "https://edgeforgarments.com/wp-content/uploads/2020/12/87313942_157047515755445_671847753994731520_o.jpg",
-  },
-  {
-    id: "3",
-    slug: "governor-visit",
-    title: {
-      en: "The Visit of Major General Adel Ghadhban, Governor of Port Said",
-      ar: "زيارة اللواء عادل الغضبان محافظ بورسعيد",
-    },
-    excerpt: {
-      en: "The visit of the Governor to the Edge Factory for Ready-Made Garments.",
-      ar: "زيارة المحافظ لمصنع إيدج للملابس الجاهزة.",
-    },
-    date: "November 12, 2020",
-    category: { en: "News", ar: "أخبار" },
-    image: "https://edgeforgarments.com/wp-content/uploads/2020/11/87025445_1791634644305092_4180343608236310528_n.jpg",
-  },
-];
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error || !data) {
+      console.error("Error fetching posts:", error);
+      return [];
+    }
+
+    return data.map((post) => ({
+      id: post.id,
+      slug: post.slug,
+      title: { en: post.title_en, ar: post.title_ar },
+      excerpt: { en: post.excerpt_en, ar: post.excerpt_ar },
+      content: { en: post.content_en, ar: post.content_ar },
+      category: { en: post.category_en, ar: post.category_ar },
+      image: post.image,
+      gallery: post.gallery || [],
+      featured: post.featured,
+      date: new Date(post.created_at).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    }));
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
+}
+
+export const revalidate = 0; // Disable caching
 
 export default async function BlogPage({ params }: PageProps) {
   const { locale } = await params;
@@ -92,6 +94,7 @@ export default async function BlogPage({ params }: PageProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
+  const blogPosts = await getBlogPosts();
   const featuredPost = blogPosts.find((post) => post.featured);
   const regularPosts = blogPosts.filter((post) => !post.featured);
 
@@ -99,36 +102,21 @@ export default async function BlogPage({ params }: PageProps) {
     <main className="min-h-screen bg-white" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
-      {/* Page Header */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80"
-            alt="Blog background"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#122D8B]/90 to-[#0a1a4f]/90" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-          <div className={`max-w-3xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}>
-            <h1
-              className={`text-4xl md:text-5xl lg:text-6xl text-white font-bold uppercase tracking-wide mb-6 ${
-                isRTL ? "font-[var(--font-cairo)]" : ""
-              }`}
-            >
-              {isRTL ? "المدونة والأخبار" : "Blog & News"}
-            </h1>
-            <p className={`text-white/80 text-lg lg:text-xl leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL
-                ? "تابع آخر أخبارنا وإنجازاتنا والزيارات الرسمية لمصنعنا"
-                : "Stay updated with our latest news, achievements, and official visits to our factory"}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Page Hero */}
+      <PageHero
+        title={isRTL ? "المدونة والأخبار" : "Blog & News"}
+        subtitle={
+          isRTL
+            ? "تابع آخر أخبارنا وإنجازاتنا والزيارات الرسمية لمصنعنا"
+            : "Stay updated with our latest news, achievements, and official visits to our factory"
+        }
+        image="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80"
+        isRTL={isRTL}
+        breadcrumbs={[
+          { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
+          { label: isRTL ? "الأخبار" : "News" },
+        ]}
+      />
 
       {/* Featured Post */}
       {featuredPost && (
@@ -186,45 +174,53 @@ export default async function BlogPage({ params }: PageProps) {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post) => (
-              <Link
-                key={post.id}
-                href={`/${locale}/blog/${post.slug}`}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={isRTL ? post.title.ar : post.title.en}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className={`p-6 ${isRTL ? "text-right" : ""}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className={`text-[#1A4AFF] text-xs font-semibold uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? post.category.ar : post.category.en}
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-slate-400 text-xs">{post.date}</span>
+          {blogPosts.length === 0 ? (
+            <div className="text-center py-16">
+              <p className={`text-slate-500 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "لا توجد مقالات حالياً" : "No articles available"}
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {regularPosts.map((post) => (
+                <Link
+                  key={post.id}
+                  href={`/${locale}/blog/${post.slug}`}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={isRTL ? post.title.ar : post.title.en}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
                   </div>
-                  <h3 className={`text-lg font-bold text-[#122D8B] mb-3 line-clamp-2 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? post.title.ar : post.title.en}
-                  </h3>
-                  <p className={`text-slate-500 text-sm line-clamp-2 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? post.excerpt.ar : post.excerpt.en}
-                  </p>
-                  <div className="flex items-center gap-1 text-[#1A4AFF] text-sm font-medium group-hover:gap-2 transition-all">
-                    <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
-                    <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                  <div className={`p-6 ${isRTL ? "text-right" : ""}`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className={`text-[#1A4AFF] text-xs font-semibold uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? post.category.ar : post.category.en}
+                      </span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-400 text-xs">{post.date}</span>
+                    </div>
+                    <h3 className={`text-lg font-bold text-[#122D8B] mb-3 line-clamp-2 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? post.title.ar : post.title.en}
+                    </h3>
+                    <p className={`text-slate-500 text-sm line-clamp-2 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? post.excerpt.ar : post.excerpt.en}
+                    </p>
+                    <div className="flex items-center gap-1 text-[#1A4AFF] text-sm font-medium group-hover:gap-2 transition-all">
+                      <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
+                      <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

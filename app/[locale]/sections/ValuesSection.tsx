@@ -39,11 +39,11 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
   return (
     <section id="values" className="py-20 lg:py-32" style={{ backgroundColor: "rgba(182, 198, 225, 0.3)" }} dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-12">
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+        <div className="text-center mb-16">
+          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.values.label}
           </span>
-          <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] mt-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.values.title}
           </h2>
         </div>

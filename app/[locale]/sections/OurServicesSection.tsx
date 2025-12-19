@@ -119,13 +119,14 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
   return (
     <section className="py-20 lg:py-28 px-6 lg:px-12 bg-white overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto">
-        <h2
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-14 ${
-            isRTL ? "text-right font-[var(--font-cairo)]" : ""
-          }`}
-        >
-          {dict.services.label}
-        </h2>
+        <div className="text-center mb-14">
+          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            {dict.services.label}
+          </span>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            {isRTL ? "خدماتنا" : "Our Services"}
+          </h2>
+        </div>
 
         <div className="relative h-[450px] md:h-[500px] flex items-center justify-center">
           {services.map((service, index) => (

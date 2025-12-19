@@ -1,0 +1,250 @@
+{
+  "products": [
+    {
+      "id": "jeans",
+      "slug": "jeans",
+      "title": {
+        "en": "Jeans",
+        "ar": "جينز"
+      },
+      "description": {
+        "en": "Classic and modern denim jeans for men, women, and children",
+        "ar": "جينز دنيم كلاسيكي وعصري للرجال والنساء والأطفال"
+      },
+      "longDescription": {
+        "en": "Our premium denim jeans are crafted with the finest quality cotton and innovative manufacturing techniques. We offer a wide range of styles from classic straight-leg to modern slim-fit designs, all made to meet international quality standards.",
+        "ar": "جينز الدنيم الفاخر لدينا مصنوع من أجود أنواع القطن وتقنيات التصنيع المبتكرة. نقدم مجموعة واسعة من الأنماط من الكلاسيكي المستقيم إلى التصميمات الضيقة العصرية، وكلها مصنوعة لتلبية معايير الجودة الدولية."
+      },
+      "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
+        "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
+        "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Slim, Regular, Relaxed fits", "Various washes available", "Premium denim quality", "Custom designs welcome"],
+        "ar": ["قصات ضيقة وعادية ومريحة", "غسلات متنوعة متاحة", "جودة دنيم فاخرة", "تصميمات مخصصة مرحب بها"]
+      },
+      "specifications": {
+        "en": {
+          "Material": "100% Cotton Denim / Cotton Blend",
+          "Weight": "10-14 oz",
+          "Sizes": "24-44",
+          "MOQ": "500 pieces per style"
+        },
+        "ar": {
+          "المادة": "100% قطن دنيم / مزيج قطن",
+          "الوزن": "10-14 أونصة",
+          "المقاسات": "24-44",
+          "الحد الأدنى للطلب": "500 قطعة لكل نمط"
+        }
+      },
+      "category": "bottoms"
+    },
+    {
+      "id": "denim-jackets",
+      "slug": "denim-jackets",
+      "title": {
+        "en": "Denim Jackets",
+        "ar": "جاكيتات دنيم"
+      },
+      "description": {
+        "en": "Premium denim outerwear with various styles and finishes",
+        "ar": "ملابس خارجية دنيم فاخرة بأنماط وتشطيبات متنوعة"
+      },
+      "longDescription": {
+        "en": "Our denim jackets combine timeless style with modern craftsmanship. From classic trucker styles to contemporary oversized designs, each jacket is made with attention to detail and durability in mind.",
+        "ar": "تجمع جاكيتات الدنيم لدينا بين الأناقة الخالدة والحرفية الحديثة. من أنماط التراكر الكلاسيكية إلى التصميمات المعاصرة الواسعة، كل جاكيت مصنوع مع الاهتمام بالتفاصيل والمتانة."
+      },
+      "image": "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&q=80",
+        "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&q=80",
+        "https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Trucker jackets", "Sherpa lined options", "Custom branding", "Various wash treatments"],
+        "ar": ["جاكيتات تراكر", "خيارات مبطنة بالشيربا", "علامات تجارية مخصصة", "معالجات غسيل متنوعة"]
+      },
+      "specifications": {
+        "en": {
+          "Material": "Premium Cotton Denim",
+          "Weight": "12-14 oz",
+          "Sizes": "XS-3XL",
+          "MOQ": "300 pieces per style"
+        },
+        "ar": {
+          "المادة": "دنيم قطن فاخر",
+          "الوزن": "12-14 أونصة",
+          "المقاسات": "XS-3XL",
+          "الحد الأدنى للطلب": "300 قطعة لكل نمط"
+        }
+      },
+      "category": "outerwear"
+    },
+    {
+      "id": "workwear",
+      "slug": "workwear",
+      "title": {
+        "en": "Workwear",
+        "ar": "ملابس العمل"
+      },
+      "description": {
+        "en": "Durable professional apparel built to last",
+        "ar": "ملابس مهنية متينة مصممة لتدوم"
+      },
+      "longDescription": {
+        "en": "Our workwear collection is designed for professionals who demand durability and functionality. Built with reinforced stitching and heavy-duty materials, these garments withstand the toughest working conditions.",
+        "ar": "مجموعة ملابس العمل لدينا مصممة للمحترفين الذين يطلبون المتانة والوظائف العملية. مصنوعة بخياطة معززة ومواد شديدة التحمل، هذه الملابس تتحمل أصعب ظروف العمل."
+      },
+      "image": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&q=80",
+        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+        "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Heavy-duty construction", "Reinforced stitching", "Multiple pocket options", "Safety compliant designs"],
+        "ar": ["بناء شديد التحمل", "خياطة معززة", "خيارات جيوب متعددة", "تصميمات متوافقة مع السلامة"]
+      },
+      "specifications": {
+        "en": {
+          "Material": "Heavy Cotton Twill / Canvas",
+          "Weight": "12-16 oz",
+          "Sizes": "S-4XL",
+          "MOQ": "500 pieces per style"
+        },
+        "ar": {
+          "المادة": "قطن تويل ثقيل / كانفاس",
+          "الوزن": "12-16 أونصة",
+          "المقاسات": "S-4XL",
+          "الحد الأدنى للطلب": "500 قطعة لكل نمط"
+        }
+      },
+      "category": "workwear"
+    },
+    {
+      "id": "shirts",
+      "slug": "shirts",
+      "title": {
+        "en": "Shirts",
+        "ar": "قمصان"
+      },
+      "description": {
+        "en": "Woven shirts and casual wear for all occasions",
+        "ar": "قمصان منسوجة وملابس كاجوال لجميع المناسبات"
+      },
+      "longDescription": {
+        "en": "Our shirt collection offers versatile options for every occasion. From classic denim shirts to elegant chambray designs, each piece is crafted with premium fabrics and impeccable finishing.",
+        "ar": "مجموعة القمصان لدينا تقدم خيارات متعددة لكل مناسبة. من قمصان الدنيم الكلاسيكية إلى تصميمات الشامبراي الأنيقة، كل قطعة مصنوعة من أقمشة فاخرة وتشطيب لا تشوبه شائبة."
+      },
+      "image": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&q=80",
+        "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&q=80",
+        "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Denim shirts", "Chambray options", "Casual and formal styles", "Custom patterns"],
+        "ar": ["قمصان دنيم", "خيارات شامبراي", "أنماط كاجوال ورسمية", "أنماط مخصصة"]
+      },
+      "specifications": {
+        "en": {
+          "Material": "Cotton Denim / Chambray / Twill",
+          "Weight": "4-8 oz",
+          "Sizes": "XS-3XL",
+          "MOQ": "500 pieces per style"
+        },
+        "ar": {
+          "المادة": "قطن دنيم / شامبراي / تويل",
+          "الوزن": "4-8 أونصة",
+          "المقاسات": "XS-3XL",
+          "الحد الأدنى للطلب": "500 قطعة لكل نمط"
+        }
+      },
+      "category": "tops"
+    },
+    {
+      "id": "custom",
+      "slug": "custom",
+      "title": {
+        "en": "Custom Garments",
+        "ar": "ملابس مخصصة"
+      },
+      "description": {
+        "en": "Tailored manufacturing for your unique designs",
+        "ar": "تصنيع مخصص لتصميماتك الفريدة"
+      },
+      "longDescription": {
+        "en": "Bring your vision to life with our custom manufacturing services. Our experienced team works closely with you from concept to production, ensuring every detail meets your exact specifications.",
+        "ar": "حقق رؤيتك مع خدمات التصنيع المخصصة لدينا. فريقنا ذو الخبرة يعمل معك عن كثب من المفهوم إلى الإنتاج، لضمان أن كل تفصيل يلبي مواصفاتك بالضبط."
+      },
+      "image": "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80",
+        "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
+        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Your designs, our expertise", "Full development support", "Prototype to production", "Flexible MOQs"],
+        "ar": ["تصميماتك، خبرتنا", "دعم تطوير كامل", "من النموذج للإنتاج", "حد أدنى مرن للطلب"]
+      },
+      "specifications": {
+        "en": {
+          "Material": "As per your requirements",
+          "Development Time": "7-14 days for samples",
+          "Production Time": "45-60 days",
+          "MOQ": "Flexible based on style"
+        },
+        "ar": {
+          "المادة": "حسب متطلباتك",
+          "وقت التطوير": "7-14 يوم للعينات",
+          "وقت الإنتاج": "45-60 يوم",
+          "الحد الأدنى للطلب": "مرن حسب النمط"
+        }
+      },
+      "category": "custom"
+    },
+    {
+      "id": "private-label",
+      "slug": "private-label",
+      "title": {
+        "en": "Private Label",
+        "ar": "العلامة الخاصة"
+      },
+      "description": {
+        "en": "White-label solutions for your brand",
+        "ar": "حلول العلامة البيضاء لعلامتك التجارية"
+      },
+      "longDescription": {
+        "en": "Launch your own clothing brand with our comprehensive private label services. We handle everything from design consultation to production, labeling, and packaging, delivering ready-to-sell products under your brand name.",
+        "ar": "أطلق علامتك التجارية الخاصة للملابس مع خدمات العلامة الخاصة الشاملة لدينا. نتعامل مع كل شيء من استشارات التصميم إلى الإنتاج والتسمية والتغليف، ونقدم منتجات جاهزة للبيع تحت اسم علامتك التجارية."
+      },
+      "image": "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&q=80",
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+        "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80"
+      ],
+      "features": {
+        "en": ["Complete branding package", "Custom labels and tags", "Packaging solutions", "Quality guaranteed"],
+        "ar": ["حزمة علامة تجارية كاملة", "ملصقات وبطاقات مخصصة", "حلول التغليف", "جودة مضمونة"]
+      },
+      "specifications": {
+        "en": {
+          "Services": "Full branding & packaging",
+          "Label Options": "Woven, printed, leather",
+          "Packaging": "Custom boxes, bags, tags",
+          "MOQ": "500 pieces per style"
+        },
+        "ar": {
+          "الخدمات": "علامة تجارية وتغليف كامل",
+          "خيارات الملصقات": "منسوجة، مطبوعة، جلد",
+          "التغليف": "صناديق وأكياس وبطاقات مخصصة",
+          "الحد الأدنى للطلب": "500 قطعة لكل نمط"
+        }
+      },
+      "category": "services"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { LocationIcon, PhoneIcon, EmailIcon, WhatsAppIcon } from "../../components/Icons";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
+import { PageHero } from "../components/PageHero";
 
 interface ContactPageContentProps {
   locale: Locale;
@@ -72,35 +73,17 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
 
   return (
     <>
-      {/* Page Header */}
-      <section className="relative py-24 lg:py-40 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
-            alt="Contact Background"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#122D8B]/85" />
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-          <div className={`max-w-3xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}>
-            <div className={`w-16 h-1 bg-[#1A4AFF] mb-8 ${isRTL ? "mr-0 ml-auto" : ""}`} />
-            <h1
-              className={`text-4xl md:text-5xl lg:text-6xl text-white font-bold uppercase tracking-wide mb-6 ${
-                isRTL ? "font-[var(--font-cairo)]" : ""
-              }`}
-            >
-              {dict.contact.title}
-            </h1>
-            <p className={`text-white/80 text-lg lg:text-xl leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {dict.contact.subtitle}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Page Hero */}
+      <PageHero
+        title={dict.contact.title}
+        subtitle={dict.contact.subtitle}
+        image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+        isRTL={isRTL}
+        breadcrumbs={[
+          { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
+          { label: isRTL ? "تواصل معنا" : "Contact" },
+        ]}
+      />
 
       {/* Contact Info Cards */}
       <section className="py-12 border-b border-[#D8DDE9]">

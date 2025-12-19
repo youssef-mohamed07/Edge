@@ -34,8 +34,11 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
 
           {/* Process Steps */}
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
+            <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              {isRTL ? "كيف نعمل" : "How We Work"}
+            </span>
             <h2
-              className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-10 ${
+              className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-14 ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             >

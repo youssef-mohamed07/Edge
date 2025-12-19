@@ -62,12 +62,15 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
             <div className="mb-8">
               <span
-                className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider ${
+                className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${
                   isRTL ? "font-[var(--font-cairo)]" : ""
                 }`}
               >
                 {dict.about.label}
               </span>
+              <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "من نحن" : "About Us"}
+              </h2>
             </div>
 
             <p
