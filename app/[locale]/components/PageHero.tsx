@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 
 interface Stat {
   number: string;
@@ -16,10 +16,16 @@ interface PageHeroProps {
   isRTL: boolean;
   breadcrumbs?: { label: string; href?: string }[];
   stats?: Stat[];
+  rotatingWords?: string[];
+  rotatingWordIndex?: number;
 }
 
 // Parse number from string like "450,000" or "133"
-function parseStatNumber(str: string): { value: number; suffix: string; hasComma: boolean } {
+function parseStatNumber(str: string): {
+  value: number;
+  suffix: string;
+  hasComma: boolean;
+} {
   const cleanStr = str.replace(/,/g, "");
   const match = cleanStr.match(/^(\d+)(.*)$/);
   if (match) {
@@ -40,7 +46,13 @@ function formatNumber(num: number, hasComma: boolean): string {
   return num.toString();
 }
 
-function AnimatedNumber({ number, isVisible }: { number: string; isVisible: boolean }) {
+function AnimatedNumber({
+  number,
+  isVisible,
+}: {
+  number: string;
+  isVisible: boolean;
+}) {
   const { value, suffix, hasComma } = parseStatNumber(number);
   const [displayValue, setDisplayValue] = useState(0);
 
@@ -78,12 +90,83 @@ function AnimatedNumber({ number, isVisible }: { number: string; isVisible: bool
   );
 }
 
-function AnimatedWord({ word, index, isVisible }: { word: string; index: number; isVisible: boolean }) {
+function RotatingWord({
+  words,
+  isVisible,
+  index,
+  isRTL,
+}: {
+  words: string[];
+  isVisible: boolean;
+  index: number;
+  isRTL?: boolean;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState<"up" | "down">("up");
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setDirection("up");
+
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+        setDirection("down");
+
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 300);
+      }, 300);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isVisible, words.length]);
+
+  return (
+    <span
+      className={`inline-block transition-all duration-500 align-baseline ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      }`}
+      style={{ transitionDelay: `${index * 60}ms` }}
+    >
+      <span className="relative inline-block overflow-hidden align-baseline">
+        <span
+          className="inline-block transition-all duration-300 ease-in-out text-white font-bold"
+          style={{
+            transform: isAnimating
+              ? direction === "up"
+                ? "translateY(-100%)"
+                : "translateY(0)"
+              : "translateY(0)",
+            opacity: isAnimating && direction === "up" ? 0 : 1,
+            fontFamily: isRTL ? "var(--font-cairo), sans-serif" : undefined,
+          }}
+        >
+          {words[currentIndex]}
+        </span>
+      </span>
+      &nbsp;
+    </span>
+  );
+}
+
+function AnimatedWord({
+  word,
+  index,
+  isVisible,
+}: {
+  word: string;
+  index: number;
+  isVisible: boolean;
+}) {
   return (
     <span
       className={`inline-block transition-all duration-500 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
+      } `}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
       {word}&nbsp;
@@ -91,7 +174,16 @@ function AnimatedWord({ word, index, isVisible }: { word: string; index: number;
   );
 }
 
-export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: PageHeroProps) {
+export function PageHero({
+  title,
+  subtitle,
+  image,
+  isRTL,
+  breadcrumbs,
+  stats,
+  rotatingWords,
+  rotatingWordIndex,
+}: PageHeroProps) {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
   const [isStatsInView, setIsStatsInView] = useState(false);
@@ -104,7 +196,7 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
 
   // Calculate total text animation duration
   const totalWords = titleWords.length + subtitleWords.length;
-  const textAnimationDuration = 300 + (totalWords * 60) + 500; // initial delay + words animation + buffer
+  const textAnimationDuration = 300 + totalWords * 60 + 500; // initial delay + words animation + buffer
 
   // Trigger text animation on mount
   useEffect(() => {
@@ -158,16 +250,31 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
     <section ref={sectionRef} className="relative overflow-hidden">
       {/* Single Background Image for entire section with parallax */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 h-[130%]" style={{ transform: `translateY(${scrollY}px)` }}>
-          <Image src={image} alt={title} fill className="object-cover" priority />
+        <div
+          className="absolute inset-0 h-[130%]"
+          style={{ transform: `translateY(${scrollY}px)` }}
+        >
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
         <div className="absolute inset-0 bg-[#122D8B]/85" />
       </div>
 
       {/* Hero Content */}
-      <div className={`relative z-10 ${stats ? "py-24 lg:py-36" : "py-28 lg:py-44"}`}>
+      <div
+        className={`relative z-10 ${
+          stats ? "py-24 lg:py-36" : "py-28 lg:py-44"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className={`max-w-4xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}>
+          <div
+            className={`max-w-4xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}
+          >
             {/* Breadcrumb */}
             {breadcrumbs && breadcrumbs.length > 0 && (
               <nav
@@ -176,26 +283,46 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
                 } ${isRTL ? "flex-row-reverse justify-end" : ""}`}
               >
                 {breadcrumbs.map((crumb, index) => (
-                  <span key={index} className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <span
+                    key={index}
+                    className={`flex items-center gap-2 ${
+                      isRTL ? "flex-row-reverse" : ""
+                    }`}
+                  >
                     {index > 0 && (
                       <svg
-                        className={`w-4 h-4 text-white/50 ${isRTL ? "rotate-180" : ""}`}
+                        className={`w-4 h-4 text-white/50 ${
+                          isRTL ? "rotate-180" : ""
+                        }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
                       </svg>
                     )}
                     {crumb.href ? (
                       <Link
                         href={crumb.href}
-                        className={`text-white/70 hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                        className={`text-white/70 hover:text-white transition-colors ${
+                          isRTL ? "font-[var(--font-cairo)]" : ""
+                        }`}
                       >
                         {crumb.label}
                       </Link>
                     ) : (
-                      <span className={`text-white ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{crumb.label}</span>
+                      <span
+                        className={`text-white ${
+                          isRTL ? "font-[var(--font-cairo)]" : ""
+                        }`}
+                      >
+                        {crumb.label}
+                      </span>
                     )}
                   </span>
                 ))}
@@ -203,13 +330,78 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
             )}
 
             <h1
-              className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6 ${
+              className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             >
-              {titleWords.map((word, index) => (
-                <AnimatedWord key={index} word={word} index={index} isVisible={isTextVisible} />
-              ))}
+              {rotatingWords && rotatingWordIndex !== undefined ? (
+                <>
+                  {isRTL ? (
+                    <>
+                      {/* RTL: Static words first */}
+                      <div className="leading-tight">
+                        {titleWords.map((word, index) => {
+                          if (index === rotatingWordIndex) return null;
+                          return (
+                            <AnimatedWord
+                              key={index}
+                              word={word}
+                              index={index}
+                              isVisible={isTextVisible}
+                            />
+                          );
+                        })}
+                      </div>
+                      {/* RTL: Rotating word second */}
+                      <div className="leading-tight">
+                        <RotatingWord
+                          words={rotatingWords}
+                          isVisible={isTextVisible}
+                          index={rotatingWordIndex}
+                          isRTL={isRTL}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* LTR: Rotating word first */}
+                      <div className="leading-tight">
+                        <RotatingWord
+                          words={rotatingWords}
+                          isVisible={isTextVisible}
+                          index={rotatingWordIndex}
+                          isRTL={isRTL}
+                        />
+                      </div>
+                      {/* LTR: Static words second */}
+                      <div className="leading-tight">
+                        {titleWords.map((word, index) => {
+                          if (index === rotatingWordIndex) return null;
+                          return (
+                            <AnimatedWord
+                              key={index}
+                              word={word}
+                              index={index}
+                              isVisible={isTextVisible}
+                            />
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <div className="leading-tight">
+                  {titleWords.map((word, index) => (
+                    <AnimatedWord
+                      key={index}
+                      word={word}
+                      index={index}
+                      isVisible={isTextVisible}
+                    />
+                  ))}
+                </div>
+              )}
             </h1>
 
             {subtitle && (
@@ -238,18 +430,25 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <div 
-                  key={stat.label} 
+                <div
+                  key={stat.label}
                   className={`text-center transition-all duration-700 ${
-                    isStatsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    isStatsVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
                   <div className="text-4xl md:text-5xl text-white font-bold mb-2">
-                    <AnimatedNumber number={stat.number} isVisible={isStatsVisible} />
+                    <AnimatedNumber
+                      number={stat.number}
+                      isVisible={isStatsVisible}
+                    />
                   </div>
                   <div
-                    className={`text-white/60 text-sm uppercase tracking-wide ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                    className={`text-white/60 text-sm uppercase tracking-wide ${
+                      isRTL ? "font-[var(--font-cairo)]" : ""
+                    }`}
                   >
                     {stat.label}
                   </div>
@@ -259,8 +458,6 @@ export function PageHero({ title, subtitle, image, isRTL, breadcrumbs, stats }: 
           </div>
         </div>
       )}
-
-
     </section>
   );
 }

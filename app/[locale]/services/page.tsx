@@ -15,7 +15,9 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = await params;
   if (!isValidLocale(locale)) return {};
 
@@ -23,7 +25,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const currentUrl = `${siteUrl}/${locale}/services`;
 
   return {
-    title: isRTL ? "خدماتنا | إيدج للملابس" : "Our Services | EDGE for Garments",
+    title: isRTL
+      ? "خدماتنا | إيدج للملابس"
+      : "Our Services | EDGE for Garments",
     description: isRTL
       ? "عملية تصنيع متكاملة من البداية للنهاية مصممة للجودة والكفاءة"
       : "A complete end-to-end manufacturing process designed for quality and efficiency",
@@ -57,88 +61,168 @@ export default async function ServicesPage({ params }: PageProps) {
         {
           iconName: "FabricInspectionIcon",
           title: "فحص الأقمشة",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-          description: "فحوصات جودة صارمة على جميع المواد الواردة لضمان أعلى المعايير.",
-          details: ["نظام فحص 4 نقاط", "التحقق من اتساق الألوان", "اختبار الانكماش", "تحليل الوزن والتركيب"],
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          description:
+            "فحوصات جودة صارمة على جميع المواد الواردة لضمان أعلى المعايير.",
+          details: [
+            "نظام فحص 4 نقاط",
+            "التحقق من اتساق الألوان",
+            "اختبار الانكماش",
+            "تحليل الوزن والتركيب",
+          ],
         },
         {
           iconName: "CuttingIcon",
           title: "القص",
-          image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+          image:
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
           description: "قص دقيق بآلات متقدمة لأنماط دقيقة وأقل هدر.",
-          details: ["صنع الباترون CAD/CAM", "آلات فرد أوتوماتيكية", "أنظمة قص محوسبة", "استخدام أمثل للقماش"],
+          details: [
+            "صنع الباترون CAD/CAM",
+            "آلات فرد أوتوماتيكية",
+            "أنظمة قص محوسبة",
+            "استخدام أمثل للقماش",
+          ],
         },
         {
           iconName: "SewingIcon",
           title: "الخياطة",
-          image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
-          description: "خياطة احترافية بأيدي حرفيين مهرة باستخدام معدات صناعية.",
-          details: ["آلات دنيم متخصصة", "آلات غرزة سلسلة متعددة الإبر", "أتمتة العراوي والأزرار", "فحص جودة مباشر"],
+          image:
+            "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
+          description:
+            "خياطة احترافية بأيدي حرفيين مهرة باستخدام معدات صناعية.",
+          details: [
+            "آلات دنيم متخصصة",
+            "آلات غرزة سلسلة متعددة الإبر",
+            "أتمتة العراوي والأزرار",
+            "فحص جودة مباشر",
+          ],
         },
         {
           iconName: "WashingIcon",
           title: "الغسيل",
-          image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+          image:
+            "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
           description: "تقنيات غسيل متخصصة للحصول على التشطيبات المطلوبة.",
-          details: ["غسيل حجري وإنزيمي", "تبييض وصبغ", "معالجات تنعيم", "خيارات صديقة للبيئة"],
+          details: [
+            "غسيل حجري وإنزيمي",
+            "تبييض وصبغ",
+            "معالجات تنعيم",
+            "خيارات صديقة للبيئة",
+          ],
         },
         {
           iconName: "EmbroideryIcon",
           title: "التطريز والطباعة",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description: "خدمات تطريز وطباعة مخصصة للعلامات التجارية.",
-          details: ["آلات تطريز متعددة الرؤوس", "طباعة الشاشة الحريرية", "طباعة النقل الحراري", "النقش بالليزر"],
+          details: [
+            "آلات تطريز متعددة الرؤوس",
+            "طباعة الشاشة الحريرية",
+            "طباعة النقل الحراري",
+            "النقش بالليزر",
+          ],
         },
         {
           iconName: "PackagingIcon",
           title: "التغليف ومراقبة الجودة",
-          image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+          image:
+            "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
           description: "مراقبة جودة شاملة وتغليف احترافي للتسليم.",
-          details: ["فحص نهائي 100%", "مسح كشف المعادن", "كي وطي احترافي", "وثائق التصدير"],
+          details: [
+            "فحص نهائي 100%",
+            "مسح كشف المعادن",
+            "كي وطي احترافي",
+            "وثائق التصدير",
+          ],
         },
       ]
     : [
         {
           iconName: "FabricInspectionIcon",
           title: "Fabric Inspection",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-          description: "Rigorous quality checks on all incoming materials to ensure premium standards.",
-          details: ["4-point inspection system", "Color consistency verification", "Shrinkage testing", "Weight and composition analysis"],
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          description:
+            "Rigorous quality checks on all incoming materials to ensure premium standards.",
+          details: [
+            "4-point inspection system",
+            "Color consistency verification",
+            "Shrinkage testing",
+            "Weight and composition analysis",
+          ],
         },
         {
           iconName: "CuttingIcon",
           title: "Cutting",
-          image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
-          description: "Precision cutting with advanced machinery for accurate patterns and minimal waste.",
-          details: ["CAD/CAM pattern making", "Automatic spreading machines", "Computerized cutting systems", "Optimal fabric utilization"],
+          image:
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+          description:
+            "Precision cutting with advanced machinery for accurate patterns and minimal waste.",
+          details: [
+            "CAD/CAM pattern making",
+            "Automatic spreading machines",
+            "Computerized cutting systems",
+            "Optimal fabric utilization",
+          ],
         },
         {
           iconName: "SewingIcon",
           title: "Sewing",
-          image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
-          description: "Expert stitching by skilled craftsmen using industrial-grade equipment.",
-          details: ["Specialized denim machinery", "Multi-needle chain stitch machines", "Bartack and buttonhole automation", "Inline quality inspection"],
+          image:
+            "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80",
+          description:
+            "Expert stitching by skilled craftsmen using industrial-grade equipment.",
+          details: [
+            "Specialized denim machinery",
+            "Multi-needle chain stitch machines",
+            "Bartack and buttonhole automation",
+            "Inline quality inspection",
+          ],
         },
         {
           iconName: "WashingIcon",
           title: "Washing",
-          image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
-          description: "Specialized washing techniques for desired finishes and fabric treatment.",
-          details: ["Stone wash and enzyme wash", "Bleaching and tinting", "Softening treatments", "Eco-friendly wash options"],
+          image:
+            "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+          description:
+            "Specialized washing techniques for desired finishes and fabric treatment.",
+          details: [
+            "Stone wash and enzyme wash",
+            "Bleaching and tinting",
+            "Softening treatments",
+            "Eco-friendly wash options",
+          ],
         },
         {
           iconName: "EmbroideryIcon",
           title: "Embroidery & Printing",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-          description: "Custom embroidery and printing services for branding and design elements.",
-          details: ["Multi-head embroidery machines", "Screen printing", "Heat transfer printing", "Laser engraving"],
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          description:
+            "Custom embroidery and printing services for branding and design elements.",
+          details: [
+            "Multi-head embroidery machines",
+            "Screen printing",
+            "Heat transfer printing",
+            "Laser engraving",
+          ],
         },
         {
           iconName: "PackagingIcon",
           title: "Packaging & Final QC",
-          image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
-          description: "Comprehensive quality control and professional packaging for delivery.",
-          details: ["100% final inspection", "Metal detection scanning", "Professional pressing and folding", "Export documentation"],
+          image:
+            "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+          description:
+            "Comprehensive quality control and professional packaging for delivery.",
+          details: [
+            "100% final inspection",
+            "Metal detection scanning",
+            "Professional pressing and folding",
+            "Export documentation",
+          ],
         },
       ];
 
@@ -148,12 +232,13 @@ export default async function ServicesPage({ params }: PageProps) {
 
       {/* Page Hero */}
       <PageHero
-        title={isRTL ? "خدماتنا" : "Our Services"}
-        subtitle={
+        title={isRTL ? "عملية انتاج مستدامة" : "Sustainable Production Process"}
+        rotatingWords={
           isRTL
-            ? "عملية تصنيع متكاملة من البداية للنهاية مصممة للجودة والكفاءة. من القماش إلى الملابس الجاهزة، نتولى كل شيء."
-            : "A complete end-to-end manufacturing process designed for quality and efficiency. From fabric to finished garment, we handle it all."
+            ? ["مستدامة", "موثوقة", "دقيقة"]
+            : ["Sustainable", "Reliable", "Precision"]
         }
+        rotatingWordIndex={isRTL ? 2 : 0}
         image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
         isRTL={isRTL}
         breadcrumbs={[
@@ -166,7 +251,11 @@ export default async function ServicesPage({ params }: PageProps) {
       <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-12">
-            <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            <h2
+              className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
+                isRTL ? "font-[var(--font-cairo)]" : ""
+              }`}
+            >
               {isRTL ? "دورة الإنتاج" : "Production Cycle"}
             </h2>
           </div>
