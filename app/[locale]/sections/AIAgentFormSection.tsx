@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 interface AIAgentFormSectionProps {
   locale: Locale;
@@ -173,7 +174,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} dir={isRTL ? "rtl" : "ltr"} className="py-20 lg:py-32 relative overflow-hidden">
+    <section ref={sectionRef} dir={isRTL ? "rtl" : "ltr"} className="py-8 lg:py-10 relative overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
@@ -189,33 +190,38 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
 
       <div className="max-w-4xl mx-auto px-6 lg:px-12 relative">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full mb-6 ${isRTL ? "flex-row-reverse" : ""}`}>
-            <div className="w-2 h-2 bg-[#1A4AFF] rounded-full animate-pulse" />
-            <span className={`text-white/90 text-sm font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? "مساعد ذكي" : "AI Assistant"}
-            </span>
+        <ScrollReveal direction="up" delay={0}>
+          <div className="text-center mb-12">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full mb-6 ${isRTL ? "flex-row-reverse" : ""}`}>
+              <div className="w-2 h-2 bg-[#1A4AFF] rounded-full animate-pulse" />
+              <span className={`text-white/90 text-sm font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "مساعد ذكي" : "AI Assistant"}
+              </span>
+            </div>
+            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              {isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
+            </h2>
+            <p className={`text-white/70 text-lg max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              {isRTL ? "أجب على بعض الأسئلة السريعة وسنقوم بتخصيص الحل المثالي لك" : "Answer a few quick questions and we'll tailor the perfect solution for you"}
+            </p>
           </div>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
-          </h2>
-          <p className={`text-white/70 text-lg max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "أجب على بعض الأسئلة السريعة وسنقوم بتخصيص الحل المثالي لك" : "Answer a few quick questions and we'll tailor the perfect solution for you"}
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#1A4AFF] to-[#4169E1] rounded-full transition-[width] duration-500 ease-out"
-              style={{ width: `${progress}%` }}
-            />
+        <ScrollReveal direction="up" delay={100}>
+          <div className="mb-8">
+            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#1A4AFF] to-[#4169E1] rounded-full transition-[width] duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Question Card */}
-        <div className="bg-white/10 rounded-3xl p-8 md:p-12 border border-white/20">
+        <ScrollReveal direction="up" delay={200}>
+          <div className="bg-white/10 rounded-3xl p-8 md:p-12 border border-white/20">
           {isComplete ? (
             <div className="text-center py-8">
               <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -345,6 +351,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
             </div>
           )}
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

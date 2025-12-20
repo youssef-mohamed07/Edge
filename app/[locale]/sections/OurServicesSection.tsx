@@ -118,13 +118,10 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
   };
 
   return (
-    <section className="py-20 lg:py-28 px-6 lg:px-12 bg-white overflow-hidden" dir={dir}>
+    <section className="py-8 lg:py-10 px-6 lg:px-12 bg-white overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto">
         <ScrollReveal>
-        <div className="text-center mb-14">
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {dict.services.label}
-          </span>
+        <div className="text-center mb-8">
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "خدماتنا" : "Our Services"}
           </h2>

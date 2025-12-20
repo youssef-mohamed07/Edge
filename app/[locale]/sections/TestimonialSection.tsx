@@ -130,10 +130,10 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
   };
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F8F9FA] overflow-hidden" dir={dir}>
+    <section className="py-8 lg:py-10 bg-[#F8F9FA] overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "آراء العملاء" : "Testimonials"}
           </span>

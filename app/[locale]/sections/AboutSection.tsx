@@ -22,10 +22,10 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
   return (
     <section id="about" className="py-20 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Image Side */}
-          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
-          <div className="relative lg:order-2">
+          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200} className="self-start lg:order-2">
+          <div className="relative">
             <div className="p-4 relative">
               <div
                 className={`absolute top-0 w-6 h-6 border-t-2 border-[#B6C6E1] ${
@@ -64,16 +64,9 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
           </ScrollReveal>
 
           {/* Content Side */}
-          <ScrollReveal direction={isRTL ? "right" : "left"}>
-          <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
+          <ScrollReveal direction={isRTL ? "right" : "left"} className="self-start lg:order-1">
+          <div className={`${isRTL ? "text-right" : ""}`}>
             <div className="mb-8">
-              <span
-                className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
-              >
-                {dict.about.label}
-              </span>
               <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? "من نحن" : "About Us"}
               </h2>

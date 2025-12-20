@@ -54,7 +54,7 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 lg:py-36 bg-gradient-to-b from-white to-[#F8F9FB] relative overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-gradient-to-b from-white to-[#F8F9FB] relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute top-10 left-10 w-32 h-32 bg-[#1A4AFF]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-[#122D8B]/5 rounded-full blur-3xl" />

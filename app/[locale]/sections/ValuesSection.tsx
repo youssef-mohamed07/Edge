@@ -55,21 +55,25 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {values.map((value, index) => (
-            <ScrollReveal key={value.title} delay={index * 100}>
+            <ScrollReveal key={value.title} delay={index * 150} direction={index % 2 === 0 ? "up" : "fade"}>
             <div
-              className={`bg-white p-8 border border-[#D8DDE9] hover:border-[#1A4AFF]/30 transition-colors group ${
-                isRTL ? "text-right" : ""
-              }`}
+              className={`bg-white p-8 border border-[#D8DDE9] hover:border-[#1A4AFF]/50 
+                transition-all duration-500 ease-out group cursor-pointer
+                hover:shadow-xl hover:shadow-[#1A4AFF]/10 hover:-translate-y-2 hover:scale-[1.02]
+                ${isRTL ? "text-right" : ""}`}
             >
               <div className={`mb-6 ${isRTL ? "flex justify-end" : ""}`}>
-                <value.icon className="w-12 h-12 text-[#122D8B] group-hover:text-[#1A4AFF] transition-colors" />
+                <div className="relative">
+                  <value.icon className="w-12 h-12 text-[#122D8B] group-hover:text-[#1A4AFF] transition-all duration-300 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-[#1A4AFF]/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 -z-10 blur-xl" />
+                </div>
               </div>
               <h3
-                className={`text-lg text-[#122D8B] mb-3 font-bold uppercase tracking-wide ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                className={`text-lg text-[#122D8B] mb-3 font-bold uppercase tracking-wide transition-colors duration-300 group-hover:text-[#1A4AFF] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               >
                 {value.title}
               </h3>
-              <p className={`text-[#122D8B]/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              <p className={`text-[#122D8B]/60 text-sm leading-relaxed transition-colors duration-300 group-hover:text-[#122D8B]/80 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {value.description}
               </p>
             </div>

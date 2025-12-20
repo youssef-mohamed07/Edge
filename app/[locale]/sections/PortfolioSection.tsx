@@ -47,22 +47,10 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-white" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-white" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image */}
-          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
-          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:order-2">
-            <Image
-              src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
-              alt="Our Process"
-              fill
-              className="object-cover"
-            />
-          </div>
-          </ScrollReveal>
-
-          {/* Process Steps */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Process Steps - Left Side */}
           <ScrollReveal direction={isRTL ? "right" : "left"}>
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
             <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
@@ -100,6 +88,18 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
                 </div>
               ))}
             </div>
+          </div>
+          </ScrollReveal>
+
+          {/* Image - Right Side */}
+          <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
+          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:order-2">
+            <Image
+              src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+              alt="Our Process"
+              fill
+              className="object-cover"
+            />
           </div>
           </ScrollReveal>
         </div>

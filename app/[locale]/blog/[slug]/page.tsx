@@ -8,6 +8,7 @@ import { Navbar } from "../../components/layout/Navbar";
 import { Footer } from "../../components/layout/Footer";
 import { Chatbot } from "../../components/layout/Chatbot";
 import { PageHero } from "../../components/PageHero";
+import { ScrollReveal } from "../../components/ScrollReveal";
 import { supabase } from "@/lib/supabase";
 
 interface PageProps {
@@ -199,7 +200,8 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article className="py-12 lg:py-20 -mt-1">
         <div className="max-w-4xl mx-auto px-6 lg:px-12">
           {/* Article Card */}
-          <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 md:p-12 lg:p-16 border border-slate-100">
+          <ScrollReveal direction="up" delay={0}>
+            <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 md:p-12 lg:p-16 border border-slate-100">
             {/* Content - Simple clean design */}
             <div className={`prose prose-lg max-w-none ${isRTL ? "text-right" : ""}`}>
               {contentParagraphs.length > 1 ? (
@@ -291,6 +293,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </article>
 
@@ -298,24 +301,27 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="py-20 lg:py-28 bg-gradient-to-b from-slate-50 to-slate-100">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             {/* Section Header */}
-            <div className={`flex items-center gap-4 mb-12 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-              <div className="w-14 h-14 bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1A4AFF]/20">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
+            <ScrollReveal direction="up" delay={0}>
+              <div className={`flex items-center gap-4 mb-12 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+                <div className="w-14 h-14 bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1A4AFF]/20">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </div>
+                <div className={isRTL ? "text-right" : ""}>
+                  <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "أخبار ذات صلة" : "Related News"}
+                  </h2>
+                  <p className={`text-slate-500 mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "اكتشف المزيد من أخبارنا" : "Discover more of our news"}
+                  </p>
+                </div>
               </div>
-              <div className={isRTL ? "text-right" : ""}>
-                <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "أخبار ذات صلة" : "Related News"}
-                </h2>
-                <p className={`text-slate-500 mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "اكتشف المزيد من أخبارنا" : "Discover more of our news"}
-                </p>
-              </div>
-            </div>
+            </ScrollReveal>
             
             <div className="grid md:grid-cols-2 gap-8">
-              {relatedPosts.map((relatedPost) => (
+              {relatedPosts.map((relatedPost, index) => (
+                <ScrollReveal key={relatedPost.id} direction="up" delay={index * 100}>
                 <Link
                   key={relatedPost.id}
                   href={`/${locale}/blog/${relatedPost.slug}`}
@@ -351,6 +357,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     </div>
                   </div>
                 </Link>
+                </ScrollReveal>
               ))}
             </div>
           </div>

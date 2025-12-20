@@ -99,7 +99,7 @@ export function ProductCategoriesSection({
                       <li
                         key={feature}
                         className={`flex items-center gap-2 text-sm text-[#122D8B]/70 ${
-                          isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""
+                          isRTL ? "font-[var(--font-cairo)]" : ""
                         }`}
                       >
                         <div className="w-1.5 h-1.5 bg-[#1A4AFF] rounded-full flex-shrink-0" />

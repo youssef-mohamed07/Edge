@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 interface TeamMember {
@@ -23,17 +23,36 @@ export function TeamCarousel({
   subtitle,
 }: TeamCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const activeMember = members[activeIndex];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-20 lg:py-32 bg-[#F8F9FB] overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#F8F9FB] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           className={`grid lg:grid-cols-2 gap-12 items-center`}
         >
           {/* Text Content - Left side for RTL, Right side for LTR */}
-          <div className={isRTL ? "text-right lg:order-1" : "lg:order-1"}>
+          <div className={`${isRTL ? "text-right lg:order-1" : "lg:order-1"} transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "translate-x-12" : "-translate-x-12"}`}`}>
             <p
               className={`text-[#1A4AFF] font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
             >
@@ -54,9 +73,9 @@ export function TeamCarousel({
 
             {/* Active Member Card with Image */}
             <div
-              className={`flex items-center gap-5 p-5 bg-white rounded-2xl shadow-lg border border-[#122D8B]/5 ${isRTL ? "justify-end" : ""}`}
+              className={`inline-flex items-center gap-5 p-5 bg-white rounded-2xl shadow-lg border border-[#122D8B]/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1`}
             >
-              {/* Text - on left */}
+              {/* Text */}
               <div className={isRTL ? "text-right" : ""}>
                 <h3
                   className={`text-xl font-bold text-[#122D8B] mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
@@ -69,7 +88,7 @@ export function TeamCarousel({
                   {activeMember?.role}
                 </p>
               </div>
-              {/* Member Image - on right */}
+              {/* Member Image - always on right of text */}
               <div className="relative w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
                 {activeMember?.image ? (
                   <Image
@@ -108,7 +127,7 @@ export function TeamCarousel({
 
           {/* Team Cards - Right side for RTL, Left side for LTR */}
           <div
-            className={`flex items-center justify-center gap-3 md:gap-4 h-[360px] md:h-[470px] lg:order-2`}
+            className={`flex items-center justify-center gap-3 md:gap-4 h-[360px] md:h-[470px] lg:order-2 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "-translate-x-12" : "translate-x-12"}`}`}
             style={{
               flexDirection: isRTL ? "row" : "row",
             }}
@@ -120,14 +139,15 @@ export function TeamCarousel({
                 <div
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className="relative cursor-pointer overflow-hidden shadow-lg rounded-2xl"
+                  className="relative cursor-pointer overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl"
                   style={{
                     width: isActive ? "280px" : "85px",
                     height: isActive ? "450px" : "380px",
                     filter: isActive ? "none" : "grayscale(100%)",
-                    transition: "width 0.3s ease, height 0.3s ease, filter 0.3s ease",
+                    transition: "width 0.4s ease, height 0.4s ease, filter 0.4s ease, box-shadow 0.3s ease",
                     zIndex: isActive ? 10 : 1,
                     borderRadius: isActive ? "24px" : "16px",
+                    transitionDelay: `${index * 50}ms`,
                   }}
                 >
                   {/* Image */}
@@ -136,15 +156,15 @@ export function TeamCarousel({
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500"
+                      style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-[#122D8B] to-[#1A4AFF] flex items-center justify-center">
                       <span
-                        className="text-white font-bold"
+                        className="text-white font-bold transition-all duration-300"
                         style={{
                           fontSize: isActive ? "3.5rem" : "1.25rem",
-                          transition: "font-size 0.3s ease",
                         }}
                       >
                         {member.name.charAt(0)}
@@ -154,22 +174,20 @@ export function TeamCarousel({
 
                   {/* Gradient Overlay */}
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 transition-all duration-300"
                     style={{
                       background: isActive
                         ? "linear-gradient(to top, rgba(18, 45, 139, 0.8), transparent, transparent)"
                         : "rgba(18, 45, 139, 0.3)",
-                      transition: "background 0.3s ease",
                     }}
                   />
 
                   {/* Content - Only show on active */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 p-4"
+                    className="absolute bottom-0 left-0 right-0 p-4 transition-all duration-300"
                     style={{
                       opacity: isActive ? 1 : 0,
                       transform: isActive ? "translateY(0)" : "translateY(16px)",
-                      transition: "opacity 0.3s ease, transform 0.3s ease",
                     }}
                   >
                     <h3
@@ -186,10 +204,9 @@ export function TeamCarousel({
 
                   {/* Vertical Name - Only show on inactive */}
                   <div
-                    className="absolute inset-0 flex items-center justify-center"
+                    className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
                     style={{
                       opacity: isActive ? 0 : 1,
-                      transition: "opacity 0.3s ease",
                     }}
                   >
                     <p

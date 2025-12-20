@@ -27,12 +27,10 @@ interface PartnersSectionProps {
 
 export function PartnersSection({ locale }: PartnersSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
-  // Intersection Observer for fade-in
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -50,35 +48,10 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
     return () => observer.disconnect();
   }, []);
 
-  // JavaScript-based infinite scroll
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let animationId: number;
-    let scrollPos = 0;
-    const speed = 1;
-
-    const animate = () => {
-      scrollPos += speed;
-      // Reset when we've scrolled half (since we have duplicated content)
-      const halfWidth = scrollContainer.scrollWidth / 2;
-      if (scrollPos >= halfWidth) {
-        scrollPos = 0;
-      }
-      scrollContainer.style.transform = `translateX(-${scrollPos}px)`;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationId);
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-white to-[#F8F9FB] overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-gradient-to-b from-white to-[#F8F9FB] overflow-hidden" dir="ltr">
       {/* Header */}
-      <div className={`max-w-4xl mx-auto px-6 text-center mb-14 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+      <div className={`max-w-4xl mx-auto px-6 text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <span className={`text-[#1A4AFF] text-xs font-semibold uppercase tracking-widest block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
           {isRTL ? "شركاؤنا في النجاح" : "TRUSTED PARTNERS"}
         </span>
@@ -93,43 +66,33 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
         </p>
       </div>
 
-      {/* Logos Marquee - JavaScript Infinite Scroll */}
-      <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+      {/* Infinite Logo Marquee */}
+      <div className="relative">
         {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#F8F9FB] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
         
         <div className="overflow-hidden">
-          <div ref={scrollRef} className="flex" style={{ width: "max-content" }}>
-            {/* First set of logos */}
-            {partners.map((partner) => (
+          <div 
+            className="flex hover:[animation-play-state:paused]"
+            style={{
+              width: "max-content",
+              animation: "marquee-ltr 40s linear infinite",
+            }}
+          >
+            {/* Repeat logos 4 times to fill screen completely */}
+            {[...partners, ...partners, ...partners, ...partners].map((partner, index) => (
               <div 
-                key={`a-${partner.id}`}
-                className="flex-shrink-0 bg-white rounded-2xl flex items-center justify-center p-5 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 mx-2"
-                style={{ width: "180px", height: "90px" }}
+                key={index}
+                className="flex-shrink-0 mx-3 bg-white rounded-xl flex items-center justify-center p-4 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300"
+                style={{ width: "150px", height: "75px" }}
               >
                 <Image
                   src={partner.logo}
                   alt={partner.name}
-                  width={140}
-                  height={60}
-                  className="object-contain max-h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
-                />
-              </div>
-            ))}
-            {/* Second set - duplicate for seamless loop */}
-            {partners.map((partner) => (
-              <div 
-                key={`b-${partner.id}`}
-                className="flex-shrink-0 bg-white rounded-2xl flex items-center justify-center p-5 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 mx-2"
-                style={{ width: "180px", height: "90px" }}
-              >
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  width={140}
-                  height={60}
-                  className="object-contain max-h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+                  width={120}
+                  height={50}
+                  className="object-contain max-h-[50px] opacity-60 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
             ))}

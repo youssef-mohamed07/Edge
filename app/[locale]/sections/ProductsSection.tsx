@@ -23,14 +23,11 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
   }));
 
   return (
-    <section id="products" className="py-16 lg:py-24 bg-[#F8F9FB]" dir={dir}>
+    <section id="products" className="py-8 lg:py-10 bg-[#F8F9FB]" dir={dir}>
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <ScrollReveal>
-        <div className="text-center mb-12">
-          <span className={`text-[#1A4AFF] text-xs font-semibold uppercase tracking-wider block mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {dict.products.label}
-          </span>
+        <div className="text-center mb-6">
           <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "منتجاتنا" : "Our Products"}
           </h2>

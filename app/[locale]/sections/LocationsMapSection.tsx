@@ -125,11 +125,11 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="py-16 md:py-24 bg-[#F8F9FB] overflow-hidden"
+      className="py-8 lg:py-10 bg-[#F8F9FB] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2
             className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 transition-all duration-700 ${
               isVisible
@@ -327,14 +327,14 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-12 max-w-5xl mx-auto">
+        <div className={`grid grid-cols-1 sm:grid-cols-3 gap-5 mt-12 max-w-5xl mx-auto`}>
           {/* Continents */}
           <div
             className={`flex items-center gap-4 p-5 bg-white rounded-xl border-2 border-gray-100 transition-all duration-200 shadow-sm hover:shadow-lg hover:border-[#1A4AFF] hover:scale-[1.02] ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-6"
-            } ${isRTL ? "flex-row-reverse" : ""}`}
+            }`}
             style={{ transitionDelay: "800ms" }}
           >
             <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] flex items-center justify-center flex-shrink-0">
@@ -352,11 +352,9 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                 />
               </svg>
             </div>
-            <div className={isRTL ? "text-right" : ""}>
+            <div>
               <p
-                className={`text-3xl font-bold text-[#1A4AFF] leading-none ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
+                className={`text-3xl font-bold text-[#1A4AFF] leading-none`}
               >
                 <Counter end={4} isVisible={markersVisible} prefix="+" />
               </p>
@@ -376,7 +374,7 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-6"
-            } ${isRTL ? "flex-row-reverse" : ""}`}
+            }`}
             style={{ transitionDelay: "950ms" }}
           >
             <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] flex items-center justify-center flex-shrink-0">
@@ -394,11 +392,9 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                 />
               </svg>
             </div>
-            <div className={isRTL ? "text-right" : ""}>
+            <div>
               <p
-                className={`text-3xl font-bold text-[#1A4AFF] leading-none ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
+                className={`text-3xl font-bold text-[#1A4AFF] leading-none`}
               >
                 <Counter end={85} isVisible={markersVisible} prefix="+" />
               </p>
@@ -418,7 +414,7 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-6"
-            } ${isRTL ? "flex-row-reverse" : ""}`}
+            }`}
             style={{ transitionDelay: "1100ms" }}
           >
             <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] flex items-center justify-center flex-shrink-0">
@@ -436,11 +432,9 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                 />
               </svg>
             </div>
-            <div className={isRTL ? "text-right" : ""}>
+            <div>
               <p
-                className={`text-3xl font-bold text-[#1A4AFF] leading-none ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
+                className={`text-3xl font-bold text-[#1A4AFF] leading-none`}
               >
                 <Counter end={30} isVisible={markersVisible} prefix="+" />
               </p>

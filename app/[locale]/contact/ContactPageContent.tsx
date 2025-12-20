@@ -248,7 +248,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 lg:py-32 bg-white">
+      <section className="py-8 lg:py-10 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div ref={formRef} className={`grid lg:grid-cols-2 gap-12 lg:gap-20 ${isRTL ? "direction-rtl" : ""}`}>
             {/* Form */}

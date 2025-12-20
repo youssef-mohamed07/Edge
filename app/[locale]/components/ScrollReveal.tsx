@@ -17,41 +17,52 @@ export function ScrollReveal({
   className = "",
   delay = 0,
   direction = "up",
-  duration = 700,
-  distance = 50,
+  duration = 800,
+  distance = 60,
   once = true,
 }: ScrollRevealProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  // Set mounted after hydration
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    
+    const currentRef = ref.current;
+    if (!currentRef) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once && ref.current) {
-            observer.unobserve(ref.current);
+          // Add delay before showing
+          setTimeout(() => {
+            setIsVisible(true);
+          }, 100);
+          
+          if (once) {
+            observer.unobserve(currentRef);
           }
         } else if (!once) {
           setIsVisible(false);
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
+        threshold: 0,
+        rootMargin: "100px 0px 0px 0px",
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(currentRef);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.unobserve(currentRef);
     };
-  }, [once]);
+  }, [once, isMounted]);
 
   const getInitialTransform = () => {
     switch (direction) {
@@ -64,11 +75,20 @@ export function ScrollReveal({
       case "right":
         return `translateX(-${distance}px)`;
       case "fade":
-        return "none";
+        return "translateY(30px)";
       default:
         return `translateY(${distance}px)`;
     }
   };
+
+  // Before mount, render children normally (for SSR)
+  if (!isMounted) {
+    return (
+      <div className={className} style={{ opacity: 0 }}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -76,8 +96,8 @@ export function ScrollReveal({
       className={className}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "none" : getInitialTransform(),
-        transition: `opacity ${duration}ms ease-out, transform ${duration}ms ease-out`,
+        transform: isVisible ? "translate(0, 0)" : getInitialTransform(),
+        transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)`,
         transitionDelay: `${delay}ms`,
       }}
     >

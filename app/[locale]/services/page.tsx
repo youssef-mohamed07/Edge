@@ -248,9 +248,9 @@ export default async function ServicesPage({ params }: PageProps) {
       />
 
       {/* Production Cycle */}
-      <section className="py-20 lg:py-32">
+      <section className="py-8 lg:py-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <h2
               className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
                 isRTL ? "font-[var(--font-cairo)]" : ""

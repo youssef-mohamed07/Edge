@@ -36,10 +36,10 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-white">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className={`text-center mb-10 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className={`text-center mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "زُر مصنعنا" : "Visit our factory"}
           </h2>

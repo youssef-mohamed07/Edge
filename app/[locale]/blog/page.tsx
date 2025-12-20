@@ -8,6 +8,7 @@ import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
 import { Chatbot } from "../components/layout/Chatbot";
 import { PageHero } from "../components/PageHero";
+import { ScrollReveal } from "../components/ScrollReveal";
 import { supabase } from "@/lib/supabase";
 
 interface PageProps {
@@ -122,45 +123,47 @@ export default async function BlogPage({ params }: PageProps) {
       {featuredPost && (
         <section className="py-12 lg:py-16 bg-slate-50">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <Link href={`/${locale}/blog/${featuredPost.slug}`} className="group block">
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-xl lg:order-1">
-                  <Image
-                    src={featuredPost.image}
-                    alt={isRTL ? featuredPost.title.ar : featuredPost.title.en}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className={`absolute top-4 ${isRTL ? "right-4" : "left-4"}`}>
-                    <span className={`inline-block bg-[#1A4AFF] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? "مميز" : "Featured"}
-                    </span>
+            <ScrollReveal direction="up" delay={0}>
+              <Link href={`/${locale}/blog/${featuredPost.slug}`} className="group block">
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-xl lg:order-1">
+                    <Image
+                      src={featuredPost.image}
+                      alt={isRTL ? featuredPost.title.ar : featuredPost.title.en}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className={`absolute top-4 ${isRTL ? "right-4" : "left-4"}`}>
+                      <span className={`inline-block bg-[#1A4AFF] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? "مميز" : "Featured"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={`lg:order-2 ${isRTL ? "text-right" : ""}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className={`text-[#1A4AFF] text-sm font-semibold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? featuredPost.category.ar : featuredPost.category.en}
+                      </span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-500 text-sm">{featuredPost.date}</span>
+                    </div>
+                    <h2 className={`text-2xl lg:text-3xl xl:text-4xl font-bold text-[#122D8B] mb-4 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? featuredPost.title.ar : featuredPost.title.en}
+                    </h2>
+                    <p className={`text-slate-600 text-lg leading-relaxed mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? featuredPost.excerpt.ar : featuredPost.excerpt.en}
+                    </p>
+                    <div className="inline-flex items-center gap-2 text-[#1A4AFF] font-semibold group-hover:gap-3 transition-all">
+                      <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
+                      <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <div className={`lg:order-2 ${isRTL ? "text-right" : ""}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className={`text-[#1A4AFF] text-sm font-semibold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? featuredPost.category.ar : featuredPost.category.en}
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-slate-500 text-sm">{featuredPost.date}</span>
-                  </div>
-                  <h2 className={`text-2xl lg:text-3xl xl:text-4xl font-bold text-[#122D8B] mb-4 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? featuredPost.title.ar : featuredPost.title.en}
-                  </h2>
-                  <p className={`text-slate-600 text-lg leading-relaxed mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? featuredPost.excerpt.ar : featuredPost.excerpt.en}
-                  </p>
-                  <div className="inline-flex items-center gap-2 text-[#1A4AFF] font-semibold group-hover:gap-3 transition-all">
-                    <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
-                    <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </ScrollReveal>
           </div>
         </section>
       )}
@@ -168,11 +171,13 @@ export default async function BlogPage({ params }: PageProps) {
       {/* Blog Posts Grid */}
       <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="mb-12">
-            <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? "جميع المقالات" : "All Articles"}
-            </h2>
-          </div>
+          <ScrollReveal direction="up" delay={0}>
+            <div className="mb-12">
+              <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "جميع المقالات" : "All Articles"}
+              </h2>
+            </div>
+          </ScrollReveal>
 
           {blogPosts.length === 0 ? (
             <div className="text-center py-16">
@@ -182,42 +187,43 @@ export default async function BlogPage({ params }: PageProps) {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPosts.map((post) => (
-                <Link
-                  key={post.id}
-                  href={`/${locale}/blog/${post.slug}`}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={isRTL ? post.title.ar : post.title.en}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className={`p-6 ${isRTL ? "text-right" : ""}`}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className={`text-[#1A4AFF] text-xs font-semibold uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                        {isRTL ? post.category.ar : post.category.en}
-                      </span>
-                      <span className="text-slate-300">•</span>
-                      <span className="text-slate-400 text-xs">{post.date}</span>
+              {regularPosts.map((post, index) => (
+                <ScrollReveal key={post.id} direction="up" delay={index * 100}>
+                  <Link
+                    href={`/${locale}/blog/${post.slug}`}
+                    className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 block h-full"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={isRTL ? post.title.ar : post.title.en}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
                     </div>
-                    <h3 className={`text-lg font-bold text-[#122D8B] mb-3 line-clamp-2 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? post.title.ar : post.title.en}
-                    </h3>
-                    <p className={`text-slate-500 text-sm line-clamp-2 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? post.excerpt.ar : post.excerpt.en}
-                    </p>
-                    <div className="flex items-center gap-1 text-[#1A4AFF] text-sm font-medium group-hover:gap-2 transition-all">
-                      <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
-                      <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <div className={`p-6 ${isRTL ? "text-right" : ""}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className={`text-[#1A4AFF] text-xs font-semibold uppercase ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                          {isRTL ? post.category.ar : post.category.en}
+                        </span>
+                        <span className="text-slate-300">•</span>
+                        <span className="text-slate-400 text-xs">{post.date}</span>
+                      </div>
+                      <h3 className={`text-lg font-bold text-[#122D8B] mb-3 line-clamp-2 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? post.title.ar : post.title.en}
+                      </h3>
+                      <p className={`text-slate-500 text-sm line-clamp-2 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? post.excerpt.ar : post.excerpt.en}
+                      </p>
+                      <div className="flex items-center gap-1 text-[#1A4AFF] text-sm font-medium group-hover:gap-2 transition-all">
+                        <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
+                        <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </ScrollReveal>
               ))}
             </div>
           )}

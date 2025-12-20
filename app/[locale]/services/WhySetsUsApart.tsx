@@ -126,11 +126,11 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
   }, []);
 
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-8 lg:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <h2
           ref={titleRef}
-          className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-16 transition-all duration-700 ${
+          className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-8 transition-all duration-700 ${
             isRTL ? "font-[var(--font-cairo)] text-right" : ""
           } ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >

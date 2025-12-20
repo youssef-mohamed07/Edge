@@ -39,13 +39,10 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F8F9FA]">
+    <section className="py-8 lg:py-10 bg-[#F8F9FA]">
       <div className="max-w-4xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
-        <div className={`mb-14 ${isRTL ? "text-right" : "text-center"}`}>
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "الأسئلة الشائعة" : "FAQ"}
-          </span>
+        <div className={`mb-8 ${isRTL ? "text-right" : "text-center"}`}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.faq.title}
           </h2>

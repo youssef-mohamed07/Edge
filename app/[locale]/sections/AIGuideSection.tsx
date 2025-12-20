@@ -50,7 +50,7 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-white">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-white">
       <div className="max-w-3xl mx-auto px-6 lg:px-12">
         <div className={`text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           {/* Subtitle */}
