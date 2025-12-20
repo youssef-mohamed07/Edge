@@ -78,7 +78,7 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
         {/* Quote Text */}
         <blockquote className="text-center mb-10">
           <p
-            className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#122D8B] leading-relaxed ${
+            className={`text-xl md:text-2xl lg:text-3xl font-bold text-[#122D8B] leading-relaxed ${
               isRTL ? "font-[var(--font-cairo)]" : ""
             }`}
           >

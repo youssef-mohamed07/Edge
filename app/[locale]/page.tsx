@@ -64,15 +64,15 @@ export default async function HomePage({ params }: PageProps) {
       <HeroSection locale={locale} dict={dict} />
       <QuoteSection locale={locale} />
       <OurServicesSection locale={locale} dict={dict} />
+      <PartnersSection locale={locale} dict={dict} />
       <AIAgentFormSection locale={locale} />
       <ProductsSection locale={locale} dict={dict} />
       <PortfolioSection locale={locale} dict={dict} />
-      <PartnersSection locale={locale} dict={dict} />
       <FactoryVideoSection locale={locale} />
       <TestimonialSection locale={locale} dict={dict} />
-      <AIGuideSection locale={locale} />
-      <LocationsMapSection locale={locale} />
       <FAQSection locale={locale} dict={dict} />
+      <LocationsMapSection locale={locale} />
+      <AIGuideSection locale={locale} />
       <Footer locale={locale} dict={dict} />
       <Chatbot locale={locale} />
     </main>

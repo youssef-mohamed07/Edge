@@ -15,6 +15,28 @@ interface Question {
   options: { value: string; label: string; labelAr: string }[];
 }
 
+const countryCodes = [
+  { code: "+20", country: "Egypt", flag: "🇪🇬" },
+  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦" },
+  { code: "+971", country: "UAE", flag: "🇦🇪" },
+  { code: "+974", country: "Qatar", flag: "🇶🇦" },
+  { code: "+965", country: "Kuwait", flag: "🇰🇼" },
+  { code: "+968", country: "Oman", flag: "🇴🇲" },
+  { code: "+973", country: "Bahrain", flag: "🇧🇭" },
+  { code: "+962", country: "Jordan", flag: "🇯🇴" },
+  { code: "+961", country: "Lebanon", flag: "🇱🇧" },
+  { code: "+90", country: "Turkey", flag: "🇹🇷" },
+  { code: "+1", country: "USA/Canada", flag: "🇺🇸" },
+  { code: "+44", country: "UK", flag: "🇬🇧" },
+  { code: "+49", country: "Germany", flag: "🇩🇪" },
+  { code: "+33", country: "France", flag: "🇫🇷" },
+  { code: "+39", country: "Italy", flag: "🇮🇹" },
+  { code: "+34", country: "Spain", flag: "🇪🇸" },
+  { code: "+31", country: "Netherlands", flag: "🇳🇱" },
+  { code: "+86", country: "China", flag: "🇨🇳" },
+  { code: "+91", country: "India", flag: "🇮🇳" },
+];
+
 const questions: Question[] = [
   {
     id: "garmentType",
@@ -68,9 +90,9 @@ const questions: Question[] = [
     ],
   },
   {
-    id: "market",
-    question: "Target market?",
-    questionAr: "السوق المستهدف؟",
+    id: "location",
+    question: "Where based?",
+    questionAr: "مكانك فين؟",
     options: [
       { value: "local", label: "Local", labelAr: "محلي" },
       { value: "international", label: "International", labelAr: "دولي" },
@@ -85,7 +107,6 @@ const questions: Question[] = [
     options: [
       { value: "call", label: "Yes, call me", labelAr: "نعم، اتصلوا بي" },
       { value: "email", label: "Yes, email me", labelAr: "نعم، راسلوني" },
-      { value: "info", label: "No, just provide info", labelAr: "لا، فقط أرسلوا المعلومات" },
       { value: "other", label: "Other", labelAr: "أخرى" },
     ],
   },
@@ -99,6 +120,8 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [otherInputs, setOtherInputs] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+20");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -111,6 +134,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
 
   const currentQuestion = questions[currentStep];
   const progress = ((currentStep + 1) / (questions.length + 1)) * 100;
+  const consultationType = answers["consultation"];
 
   const handleSelect = (value: string) => {
     setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
@@ -138,10 +162,14 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   };
 
   const handleSubmit = async () => {
-    if (!email.trim()) return;
+    const contactInfo = consultationType === "call" ? `${countryCode}${phone}` : email;
+    if (!contactInfo.trim()) return;
+    
     setIsSubmitting(true);
     const formData = {
-      email,
+      email: consultationType === "email" ? email : "",
+      phone: consultationType === "call" ? `${countryCode}${phone}` : "",
+      contactMethod: consultationType,
       answers: questions.map((q) => ({
         question: q.question,
         answer: answers[q.id] === "other" ? otherInputs[q.id] : answers[q.id],
@@ -170,7 +198,16 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
     setAnswers({});
     setOtherInputs({});
     setEmail("");
+    setPhone("");
+    setCountryCode("+20");
     setIsComplete(false);
+  };
+
+  const isContactValid = () => {
+    if (consultationType === "call") {
+      return phone.trim().length >= 8;
+    }
+    return email.trim().length > 0 && email.includes("@");
   };
 
   return (
@@ -182,7 +219,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
       />
       <div className="absolute inset-0 bg-[#122D8B]/90" />
 
-      {/* Decorative - no blur effects to prevent jitter */}
+      {/* Decorative */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#1A4AFF]/10 rounded-full" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1A4AFF]/5 rounded-full" />
@@ -198,7 +235,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                 {isRTL ? "مساعد ذكي" : "AI Assistant"}
               </span>
             </div>
-            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
             </h2>
             <p className={`text-white/70 text-lg max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
@@ -307,41 +344,95 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
             </div>
           ) : (
             <div>
-              <h3 className={`text-xl md:text-2xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "أخيراً، أدخل بريدك الإلكتروني" : "Finally, enter your email"}
-              </h3>
-              <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "سنرسل لك تفاصيل الحل المخصص لك" : "We'll send you the details of your customized solution"}
-              </p>
-              <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="example@company.com"
-                  className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#1A4AFF]"
-                  dir="ltr"
-                />
-                <button
-                  onClick={handleSubmit}
-                  disabled={!email.trim() || isSubmitting}
-                  className={`px-8 py-4 bg-[#1A4AFF] hover:bg-[#1A4AFF]/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
-                >
-                  {isSubmitting ? (
-                    <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                  ) : (
-                    <>
-                      <span>{isRTL ? "إرسال" : "Submit"}</span>
-                      <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
+              {consultationType === "call" ? (
+                <>
+                  <h3 className={`text-xl md:text-2xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "أدخل رقم هاتفك" : "Enter your phone number"}
+                  </h3>
+                  <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "سنتصل بك قريباً" : "We'll call you soon"}
+                  </p>
+                  <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <select
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      className="px-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-[#1A4AFF] min-w-[140px]"
+                      dir="ltr"
+                    >
+                      {countryCodes.map((c) => (
+                        <option key={c.code} value={c.code} className="bg-[#122D8B] text-white">
+                          {c.flag} {c.code}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                      placeholder="1234567890"
+                      className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#1A4AFF]"
+                      dir="ltr"
+                    />
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!isContactValid() || isSubmitting}
+                      className={`px-8 py-4 bg-[#1A4AFF] hover:bg-[#1A4AFF]/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                    >
+                      {isSubmitting ? (
+                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                      ) : (
+                        <>
+                          <span>{isRTL ? "إرسال" : "Submit"}</span>
+                          <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className={`text-xl md:text-2xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "أدخل بريدك الإلكتروني" : "Enter your email"}
+                  </h3>
+                  <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "سنراسلك قريباً" : "We'll email you soon"}
+                  </p>
+                  <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="example@company.com"
+                      className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-[#1A4AFF]"
+                      dir="ltr"
+                    />
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!isContactValid() || isSubmitting}
+                      className={`px-8 py-4 bg-[#1A4AFF] hover:bg-[#1A4AFF]/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                    >
+                      {isSubmitting ? (
+                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                      ) : (
+                        <>
+                          <span>{isRTL ? "إرسال" : "Submit"}</span>
+                          <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
               <button onClick={handleBack} className={`mt-8 flex items-center gap-2 text-white/60 hover:text-white ${isRTL ? "flex-row-reverse" : ""}`}>
                 <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

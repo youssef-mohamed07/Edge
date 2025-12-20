@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useRef, Fragment } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 
@@ -10,23 +10,47 @@ interface HeroSectionProps {
   dict: Dictionary;
 }
 
-function AnimatedWord({
-  word,
-  index,
+function TypewriterText({
+  text,
   isVisible,
+  delay = 0,
+  className = "",
 }: {
-  word: string;
-  index: number;
+  text: string;
   isVisible: boolean;
+  delay?: number;
+  className?: string;
 }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const startDelay = setTimeout(() => {
+      setIsTyping(true);
+      let currentIndex = 0;
+
+      const typeInterval = setInterval(() => {
+        if (currentIndex <= text.length) {
+          setDisplayedText(text.slice(0, currentIndex));
+          currentIndex++;
+        } else {
+          clearInterval(typeInterval);
+          setIsTyping(false);
+        }
+      }, 80);
+
+      return () => clearInterval(typeInterval);
+    }, delay);
+
+    return () => clearTimeout(startDelay);
+  }, [isVisible, text, delay]);
+
   return (
-    <span
-      className={`inline-block transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      }`}
-      style={{ transitionDelay: `${index * 150}ms` }}
-    >
-      {word}&nbsp;
+    <span className={className}>
+      {displayedText}
+      {isTyping && <span className="animate-pulse">|</span>}
     </span>
   );
 }
@@ -34,61 +58,74 @@ function AnimatedWord({
 function RotatingWord({
   words,
   isVisible,
-  index,
+  delay = 0,
 }: {
   words: string[];
   isVisible: boolean;
-  index: number;
+  delay?: number;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [direction, setDirection] = useState<"up" | "down">("up");
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [showCursor, setShowCursor] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
 
   useEffect(() => {
     if (!isVisible) return;
+    const startDelay = setTimeout(() => setStartAnimation(true), delay);
+    return () => clearTimeout(startDelay);
+  }, [isVisible, delay]);
 
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setDirection("up");
+  useEffect(() => {
+    if (!startAnimation) return;
 
-      setTimeout(() => {
+    const currentWord = words[currentIndex];
+
+    if (!isDeleting) {
+      // Typing
+      if (displayedText.length < currentWord.length) {
+        setIsTyping(true);
+        const timeout = setTimeout(() => {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        }, 100);
+        return () => clearTimeout(timeout);
+      } else {
+        // Finished typing, wait then start deleting
+        setIsTyping(false);
+        const timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      // Deleting
+      if (displayedText.length > 0) {
+        setIsTyping(true);
+        const timeout = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, 50);
+        return () => clearTimeout(timeout);
+      } else {
+        // Finished deleting, move to next word
+        setIsDeleting(false);
         setCurrentIndex((prev) => (prev + 1) % words.length);
-        setDirection("down");
+      }
+    }
+  }, [startAnimation, displayedText, isDeleting, currentIndex, words]);
 
-        setTimeout(() => {
-          setIsAnimating(false);
-        }, 300);
-      }, 300);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isVisible, words.length]);
+  // Cursor blink
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor((prev) => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
 
   return (
-    <span
-      className={`inline-block transition-all duration-700 align-baseline  ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      }`}
-      style={{ transitionDelay: `${index * 150}ms` }}
-    >
-      <span className="relative inline-block overflow-hidden align-baseline">
-        <span
-          className="inline-block transition-all duration-300 ease-in-out bg-linear-to-r from-[#1A4AFF] via-[#4F7FFF] to-[#1A4AFF] bg-clip-text text-transparent"
-          style={{
-            transform: isAnimating
-              ? direction === "up"
-                ? "translateY(-100%)"
-                : "translateY(0)"
-              : "translateY(0)",
-            opacity: isAnimating && direction === "up" ? 0 : 1,
-            textShadow: "none",
-            WebkitBackgroundClip: "text",
-          }}
-        >
-          {words[currentIndex]}
-        </span>
-      </span>
-      &nbsp;
+    <span className="bg-gradient-to-r from-[#1A4AFF] via-[#4F7FFF] to-[#1A4AFF] bg-clip-text text-transparent">
+      {displayedText}
+      <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity text-[#1A4AFF]`}>|</span>
     </span>
   );
 }
@@ -100,19 +137,16 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const titleWords = dict.hero.title.split(" ");
   const subtitleWords = dict.hero.subtitle.split(" ");
 
-  // Words to rotate through for the "Quality" word
+  // Words to rotate through
   const rotatingWords = isRTL
-    ? ["عالية", "موثوقة", "دقيقة"]
+    ? ["الجودة", "الموثوقية", "الثقة"]
     : ["Quality", "Reliability", "Trust"];
 
-  // Find the index of "Quality" or equivalent word to replace with rotating animation
-  const qualityWordIndex = titleWords.findIndex(
-    (word) =>
-      word.toLowerCase() === "quality" || word === "عالية" || word === "الجودة"
-  );
+  // Static title parts
+  const titlePart1 = isRTL ? "صناعة الملابس" : "CRAFTING";
+  const titlePart2 = isRTL ? "بـ" : "GARMENTS WITH";
 
   // Trigger animation on mount
   useEffect(() => {
@@ -176,40 +210,20 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             letterSpacing: isRTL ? "0" : "0.02em",
           }}
         >
-          {titleWords.map((word, index) => {
-            if (index === qualityWordIndex) {
-              return (
-                <Fragment key={index}>
-                  <br />
-                  <RotatingWord
-                    words={rotatingWords}
-                    isVisible={isVisible}
-                    index={index}
-                  />
-                </Fragment>
-              );
-            }
-            return (
-              <AnimatedWord
-                key={index}
-                word={word}
-                index={index}
-                isVisible={isVisible}
-              />
-            );
-          })}
+          <TypewriterText text={titlePart1} isVisible={isVisible} delay={500} />
+          <br />
+          <TypewriterText text={titlePart2} isVisible={isVisible} delay={1500} />
+          <br />
+          <RotatingWord words={rotatingWords} isVisible={isVisible} delay={2500} />
         </h1>
 
         <Link
           href={`/${locale}/contact`}
-          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full ${
+          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           } ${isRTL ? "font-(--font-cairo)" : ""}`}
           style={{
-            transition: isVisible ? "all 0.3s ease" : "all 0.7s ease",
-            transitionDelay: isVisible
-              ? "0s"
-              : `${(titleWords.length + subtitleWords.length) * 150 + 300}ms`,
+            transitionDelay: isVisible ? "0s" : "3500ms",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = "white";
