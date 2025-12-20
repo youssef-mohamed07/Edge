@@ -134,70 +134,23 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedPosts = await getRelatedPosts(slug);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       {/* Hero Section */}
-      <section className="relative py-28 lg:py-44 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src={post.image} alt={isRTL ? post.title.ar : post.title.en} fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/95 via-[#122D8B]/80 to-[#122D8B]/60" />
-        </div>
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#1A4AFF]/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#1A4AFF]/10 rounded-full blur-3xl" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-          <div className={`max-w-4xl ${isRTL ? "mr-0 ml-auto text-right" : ""}`}>
-            {/* Breadcrumb */}
-            <nav className={`flex items-center gap-2 mb-6 text-sm ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-              <Link href={`/${locale}`} className={`text-white/70 hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "الرئيسية" : "Home"}
-              </Link>
-              <svg className={`w-4 h-4 text-white/50 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              <Link href={`/${locale}/blog`} className={`text-white/70 hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "الأخبار" : "News"}
-              </Link>
-            </nav>
-            
-            <div className={`flex items-center gap-4 mb-6 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-              <span className={`inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 rounded-full border border-white/20 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                </svg>
-                {isRTL ? post.category.ar : post.category.en}
-              </span>
-              <span className={`inline-flex items-center gap-2 text-white/80 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {post.date}
-              </span>
-            </div>
-            
-            <h1 className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? post.title.ar : post.title.en}
-            </h1>
-            
-            <p className={`text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? post.excerpt.ar : post.excerpt.en}
-            </p>
-          </div>
-        </div>
-        
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="rgb(248 250 252)" />
-          </svg>
-        </div>
-      </section>
+      <PageHero
+        title={isRTL ? post.title.ar : post.title.en}
+        subtitle={isRTL ? post.excerpt.ar : post.excerpt.en}
+        image={post.image}
+        isRTL={isRTL}
+        breadcrumbs={[
+          { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
+          { label: isRTL ? "الأخبار" : "News", href: `/${locale}/blog` },
+        ]}
+      />
 
       {/* Article Content */}
-      <article className="py-12 lg:py-20 -mt-1">
+      <article className="py-12 lg:py-20 bg-[#D8DDE9]">
         <div className="max-w-4xl mx-auto px-6 lg:px-12">
           {/* Article Card */}
           <ScrollReveal direction="up" delay={0}>
@@ -298,7 +251,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       </article>
 
       {relatedPosts.length > 0 && (
-        <section className="py-20 lg:py-28 bg-gradient-to-b from-slate-50 to-slate-100">
+        <section className="py-20 lg:py-28 bg-[#D8DDE9]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             {/* Section Header */}
             <ScrollReveal direction="up" delay={0}>

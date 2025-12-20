@@ -11,6 +11,7 @@ import {
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface ValuesSectionProps {
   locale: Locale;
@@ -40,16 +41,18 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
       ];
 
   return (
-    <section id="values" className="py-20 lg:py-32" style={{ backgroundColor: "rgba(182, 198, 225, 0.3)" }} dir={dir}>
+    <section id="values" className="py-20 lg:py-32 bg-[#D8DDE9]" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
         <div className="text-center mb-16">
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.values.label}
           </span>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {dict.values.title}
-          </h2>
+          <TypewriterTitle
+            text={dict.values.title}
+            isVisible={true}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+          />
         </div>
         </ScrollReveal>
 

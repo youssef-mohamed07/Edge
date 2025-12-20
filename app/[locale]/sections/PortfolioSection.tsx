@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface PortfolioSectionProps {
   locale: Locale;
@@ -47,7 +48,7 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-white" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Process Steps - Left Side */}
@@ -56,13 +57,15 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
             <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "كيف نعمل" : "How We Work"}
             </span>
-            <h2
-              className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-14 ${
-                isRTL ? "font-[var(--font-cairo)]" : ""
-              }`}
-            >
-              {dict.portfolio.label}
-            </h2>
+            <div className="mb-14">
+              <TypewriterTitle
+                text={dict.portfolio.label}
+                isVisible={true}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${
+                  isRTL ? "font-[var(--font-cairo)]" : ""
+                }`}
+              />
+            </div>
 
             <div className="space-y-8">
               {processSteps.map((step, index) => (

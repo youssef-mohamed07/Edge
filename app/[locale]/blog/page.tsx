@@ -10,6 +10,7 @@ import { Chatbot } from "../components/layout/Chatbot";
 import { PageHero } from "../components/PageHero";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { supabase } from "@/lib/supabase";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -100,7 +101,7 @@ export default async function BlogPage({ params }: PageProps) {
   const regularPosts = blogPosts.filter((post) => !post.featured);
 
   return (
-    <main className="min-h-screen bg-white" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       {/* Page Hero */}
@@ -121,7 +122,7 @@ export default async function BlogPage({ params }: PageProps) {
 
       {/* Featured Post */}
       {featuredPost && (
-        <section className="py-12 lg:py-16 bg-slate-50">
+        <section className="py-12 lg:py-16 bg-[#D8DDE9]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <ScrollReveal direction="up" delay={0}>
               <Link href={`/${locale}/blog/${featuredPost.slug}`} className="group block">
@@ -169,13 +170,15 @@ export default async function BlogPage({ params }: PageProps) {
       )}
 
       {/* Blog Posts Grid */}
-      <section className="py-16 lg:py-24">
+      <section className="py-16 lg:py-24 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <ScrollReveal direction="up" delay={0}>
             <div className="mb-12">
-              <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "جميع المقالات" : "All Articles"}
-              </h2>
+              <TypewriterTitle
+                text={isRTL ? "جميع المقالات" : "All Articles"}
+                isVisible={true}
+                className={`text-2xl lg:text-3xl font-bold text-[#122D8B] mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              />
             </div>
           </ScrollReveal>
 

@@ -1,21 +1,72 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
-import { ScrollReveal } from "../components/ScrollReveal";
 
 interface OurServicesSectionProps {
   locale: Locale;
   dict: Dictionary;
 }
 
-export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
+function TypewriterTitle({ text, isVisible, isRTL }: { text: string; isVisible: boolean; isRTL: boolean }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    setIsTyping(true);
+    let currentIndex = 0;
+
+    const typeInterval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setDisplayedText(text.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typeInterval);
+        setIsTyping(false);
+      }
+    }, 80);
+
+    return () => clearInterval(typeInterval);
+  }, [isVisible, text]);
+
+  return (
+    <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+      {displayedText}
+      {isTyping && <span className="animate-pulse text-[#1A4AFF]">|</span>}
+    </h2>
+  );
+}
+
+export function OurServicesSection({ locale }: OurServicesSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
+
+  const title = isRTL ? "خدماتنا" : "Our Services";
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const services = isRTL
     ? [
@@ -118,23 +169,18 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
   };
 
   return (
-    <section className="py-8 lg:py-10 px-6 lg:px-12 bg-white overflow-hidden" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 px-6 lg:px-12 bg-[#D8DDE9] overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto">
-        <ScrollReveal>
-        <div className="text-center mb-8">
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "خدماتنا" : "Our Services"}
-          </h2>
-          <p className={`text-gray-600 mt-4 text-lg max-w-3xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+        <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <TypewriterTitle text={title} isVisible={isVisible} isRTL={isRTL} />
+          <p className={`text-gray-600 mt-4 text-lg max-w-3xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"} ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL 
               ? "نقدم حلول تصنيع ملابس متكاملة، نتعامل مع كل خطوة بعناية ودقة واتساق"
               : "We offer complete garment manufacturing solutions, handling every step with care, precision, and consistency."}
           </p>
         </div>
-        </ScrollReveal>
 
-        <ScrollReveal delay={200}>
-        <div className="relative h-[450px] md:h-[500px] flex items-center justify-center">
+        <div className={`relative h-[450px] md:h-[500px] flex items-center justify-center transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
           {services.map((service, index) => (
             <Link
               key={service.id}
@@ -169,9 +215,8 @@ export function OurServicesSection({ locale, dict }: OurServicesSectionProps) {
             </Link>
           ))}
         </div>
-        </ScrollReveal>
 
-        <div className="flex justify-center gap-3 mt-8">
+        <div className={`flex justify-center gap-3 mt-8 transition-all duration-1000 delay-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           {services.map((_, index) => (
             <button
               key={index}

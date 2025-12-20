@@ -45,7 +45,7 @@ export default async function ContactPage({ params }: PageProps) {
   const dict = getDictionary(locale);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#D8DDE9]">
       <Navbar locale={locale} dict={dict} />
       <ContactPageContent locale={locale} dict={dict} />
       <Footer locale={locale} dict={dict} />

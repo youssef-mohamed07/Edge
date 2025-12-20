@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface ValueCard {
   title: string;
@@ -126,23 +127,29 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
   }, []);
 
   return (
-    <section className="py-8 lg:py-10 bg-white">
+    <section className="py-8 lg:py-10 bg-[#D8DDE9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <h2
+        <div
           ref={titleRef}
-          className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-8 transition-all duration-700 ${
-            isRTL ? "font-[var(--font-cairo)] text-right" : ""
-          } ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`mb-8 text-center transition-all duration-700 ${
+            titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
-          {isRTL ? "ما يميزنا في إدارة إنتاجك" : "What sets us apart in managing your production"}
-        </h2>
+          <TypewriterTitle
+            text={isRTL ? "ما يميزنا في إدارة إنتاجك" : "What sets us apart in managing your production"}
+            isVisible={titleVisible}
+            className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
+              isRTL ? "font-[var(--font-cairo)]" : ""
+            }`}
+          />
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {values.map((value, index) => (
             <div
               key={value.title}
               ref={(el) => { cardRefs.current[index] = el; }}
-              className={`group relative rounded-3xl overflow-hidden aspect-square cursor-pointer transition-all duration-700 ${
+              className={`group relative rounded-3xl overflow-hidden aspect-square transition-all duration-700 ${
                 visibleCards.has(index)
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-12 scale-95"

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { getDirection, type Locale } from "../../i18n/config";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface Location {
   id: string;
@@ -19,6 +20,72 @@ interface Location {
 
 const locations: Location[] = [
   {
+    id: "usa",
+    nameEn: "United States",
+    nameAr: "الولايات المتحدة",
+    descEn: "North America Partner",
+    descAr: "شريك أمريكا الشمالية",
+    country: "USA",
+    countryAr: "أمريكا",
+    x: 22,
+    y: 42,
+  },
+  {
+    id: "uk",
+    nameEn: "United Kingdom",
+    nameAr: "المملكة المتحدة",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "UK",
+    countryAr: "بريطانيا",
+    x: 46,
+    y: 28,
+  },
+  {
+    id: "germany",
+    nameEn: "Germany",
+    nameAr: "ألمانيا",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "Germany",
+    countryAr: "ألمانيا",
+    x: 50,
+    y: 30,
+  },
+  {
+    id: "france",
+    nameEn: "France",
+    nameAr: "فرنسا",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "France",
+    countryAr: "فرنسا",
+    x: 47,
+    y: 32,
+  },
+  {
+    id: "italy",
+    nameEn: "Italy",
+    nameAr: "إيطاليا",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "Italy",
+    countryAr: "إيطاليا",
+    x: 51,
+    y: 35,
+  },
+  {
+    id: "spain",
+    nameEn: "Spain",
+    nameAr: "إسبانيا",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "Spain",
+    countryAr: "إسبانيا",
+    x: 44,
+    y: 36,
+  },
+  {
     id: "egypt",
     nameEn: "Port Said, Egypt",
     nameAr: "بورسعيد، مصر",
@@ -26,22 +93,31 @@ const locations: Location[] = [
     descAr: "المقر الرئيسي",
     country: "Egypt",
     countryAr: "مصر",
-    // Port Said - northeast Egypt on Mediterranean
-    x: 55.3,
-    y: 43.5,
+    x: 54,
+    y: 42,
     isHQ: true,
   },
   {
-    id: "france",
-    nameEn: "Paris, France",
-    nameAr: "باريس، فرنسا",
-    descEn: "European Partner",
-    descAr: "الشريك الأوروبي",
-    country: "France",
-    countryAr: "فرنسا",
-    // Paris - northern France
-    x: 47.5,
-    y: 33,
+    id: "uae",
+    nameEn: "United Arab Emirates",
+    nameAr: "الإمارات العربية المتحدة",
+    descEn: "Middle East Partner",
+    descAr: "شريك الشرق الأوسط",
+    country: "UAE",
+    countryAr: "الإمارات",
+    x: 60,
+    y: 42,
+  },
+  {
+    id: "australia",
+    nameEn: "Australia",
+    nameAr: "أستراليا",
+    descEn: "Oceania Partner",
+    descAr: "شريك أوقيانوسيا",
+    country: "Australia",
+    countryAr: "أستراليا",
+    x: 82,
+    y: 72,
   },
 ];
 
@@ -100,8 +176,9 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
   const [markersVisible, setMarkersVisible] = useState(false);
+
+  const title = isRTL ? "شركاؤنا العالميون" : "Our Global Partners";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -125,7 +202,7 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="py-8 lg:py-10 bg-[#F8F9FB] overflow-hidden"
+      className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
@@ -137,7 +214,7 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                 : "opacity-0 translate-y-6"
             } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
           >
-            {isRTL ? "شركاؤنا العالميون" : "Our Global Partners"}
+            <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
           <p
             className={`text-[#122D8B]/60 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
@@ -183,24 +260,20 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                 style={{
                   left: `${location.x}%`,
                   top: `${location.y}%`,
-                  transitionDelay: `${index * 300}ms`,
+                  transitionDelay: `${index * 150}ms`,
                 }}
                 onMouseEnter={() => setActiveLocation(location.id)}
                 onMouseLeave={() => setActiveLocation(null)}
               >
-                {/* Outer pulse ring */}
-                <span
-                  className="absolute inset-0 w-16 h-16 -m-5 rounded-full border-2 border-[#1A4AFF] animate-ping opacity-30"
-                  style={{ animationDuration: "2s" }}
-                />
+                {/* Pulse ring for HQ */}
+                {location.isHQ && (
+                  <span
+                    className="absolute inset-0 w-12 h-12 -m-4 rounded-full border-2 border-[#1A4AFF] animate-ping opacity-30"
+                    style={{ animationDuration: "2s" }}
+                  />
+                )}
 
-                {/* Middle pulse ring */}
-                <span
-                  className="absolute inset-0 w-12 h-12 -m-3 rounded-full bg-[#1A4AFF] animate-ping opacity-20"
-                  style={{ animationDuration: "1.5s", animationDelay: "0.5s" }}
-                />
-
-                {/* Marker body */}
+                {/* Marker body - Pin shape like in the image */}
                 <div
                   className={`relative cursor-pointer transition-all duration-300 ${
                     activeLocation === location.id
@@ -208,121 +281,41 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
                       : "hover:scale-125"
                   }`}
                 >
-                  {/* Pin shape */}
-                  <div
-                    className="w-6 h-6 rounded-full shadow-lg flex items-center justify-center bg-gradient-to-br from-[#1A4AFF] to-[#122D8B]"
-                    style={{ boxShadow: "0 4px 15px rgba(26, 74, 255, 0.5)" }}
+                  {/* Pin SVG shape */}
+                  <svg
+                    width="24"
+                    height="32"
+                    viewBox="0 0 24 32"
+                    fill="none"
+                    className="drop-shadow-lg"
+                    style={{ filter: "drop-shadow(0 4px 6px rgba(26, 74, 255, 0.4))" }}
                   >
-                    <div className="w-2 h-2 rounded-full bg-white" />
-                  </div>
-                  {/* Pin tail */}
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[10px] border-t-[#122D8B]"
-                    style={{ marginTop: "-3px" }}
-                  />
+                    <path
+                      d="M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20s12-11 12-20c0-6.627-5.373-12-12-12z"
+                      fill="#122D8B"
+                    />
+                    <circle cx="12" cy="11" r="5" fill="white" />
+                  </svg>
                 </div>
 
-                {/* Tooltip - Statistics Card */}
+                {/* Tooltip */}
                 <div
-                  className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-8 px-6 py-4 bg-white rounded-2xl shadow-xl border border-[#1A4AFF]/20 whitespace-nowrap transition-all duration-300 z-20 ${
+                  className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-4 px-4 py-2 bg-white rounded-xl shadow-xl border border-[#1A4AFF]/20 whitespace-nowrap transition-all duration-300 z-20 ${
                     activeLocation === location.id
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-2 pointer-events-none"
                   }`}
                 >
-                  <div className="flex gap-6">
-                    {/* Continents */}
-                    <div
-                      className={`text-center ${
-                        isRTL ? "font-[var(--font-cairo)]" : ""
-                      }`}
-                    >
-                      <p className="text-2xl font-bold text-[#1A4AFF]">
-                        <Counter
-                          end={4}
-                          isVisible={activeLocation === location.id}
-                          prefix="+"
-                        />
-                      </p>
-                      <p className="text-xs text-[#122D8B] font-medium">
-                        {isRTL ? "قارات" : "Continents"}
-                      </p>
-                    </div>
-                    {/* Clients */}
-                    <div
-                      className={`text-center ${
-                        isRTL ? "font-[var(--font-cairo)]" : ""
-                      }`}
-                    >
-                      <p className="text-2xl font-bold text-[#1A4AFF]">
-                        <Counter
-                          end={85}
-                          isVisible={activeLocation === location.id}
-                          prefix="+"
-                        />
-                      </p>
-                      <p className="text-xs text-[#122D8B] font-medium">
-                        {isRTL ? "عملاء" : "Clients"}
-                      </p>
-                    </div>
-                    {/* Countries */}
-                    <div
-                      className={`text-center ${
-                        isRTL ? "font-[var(--font-cairo)]" : ""
-                      }`}
-                    >
-                      <p className="text-2xl font-bold text-[#1A4AFF]">
-                        <Counter
-                          end={30}
-                          isVisible={activeLocation === location.id}
-                          prefix="+"
-                        />
-                      </p>
-                      <p className="text-xs text-[#122D8B] font-medium">
-                        {isRTL ? "دولة" : "Countries"}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-white" />
+                  <p className={`text-sm font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? location.nameAr : location.nameEn}
+                  </p>
+                  <p className={`text-xs text-[#1A4AFF] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? location.descAr : location.descEn}
+                  </p>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white" />
                 </div>
               </div>
             ))}
-
-            {/* Connection line with animation */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none z-5"
-              preserveAspectRatio="none"
-            >
-              {/* Glow effect */}
-              <line
-                x1={`${locations[0].x}%`}
-                y1={`${locations[0].y}%`}
-                x2={`${locations[1].x}%`}
-                y2={`${locations[1].y}%`}
-                stroke="#1A4AFF"
-                strokeWidth="6"
-                strokeLinecap="round"
-                className={`transition-all duration-1000 blur-sm ${
-                  markersVisible ? "opacity-30" : "opacity-0"
-                }`}
-                style={{ transitionDelay: "600ms" }}
-              />
-              {/* Main line */}
-              <line
-                x1={`${locations[0].x}%`}
-                y1={`${locations[0].y}%`}
-                x2={`${locations[1].x}%`}
-                y2={`${locations[1].y}%`}
-                stroke="#1A4AFF"
-                strokeWidth="2.5"
-                strokeDasharray="8 6"
-                strokeLinecap="round"
-                className={`transition-all duration-1000 ${
-                  markersVisible ? "opacity-70" : "opacity-0"
-                }`}
-                style={{ transitionDelay: "600ms" }}
-              />
-            </svg>
           </div>
         </div>
 

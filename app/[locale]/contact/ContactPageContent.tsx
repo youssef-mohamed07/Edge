@@ -5,6 +5,7 @@ import { LocationIcon, PhoneIcon, EmailIcon, WhatsAppIcon } from "../../componen
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 import { PageHero } from "../components/PageHero";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 // Animated Counter Component
 function AnimatedCounter({ end, suffix, isVisible, duration = 2000 }: { end: number; suffix: string; isVisible: boolean; duration?: number }) {
@@ -178,7 +179,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       />
 
       {/* Contact Info Cards */}
-      <section className="py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50/50">
+      <section className="py-16 lg:py-20 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, index) => (
@@ -248,18 +249,22 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-8 lg:py-10 bg-white">
+      <section className="py-8 lg:py-10 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div ref={formRef} className={`grid lg:grid-cols-2 gap-12 lg:gap-20 ${isRTL ? "direction-rtl" : ""}`}>
+          <div ref={formRef} className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch ${isRTL ? "direction-rtl" : ""}`}>
             {/* Form */}
-            <div className={`${isRTL ? "lg:order-2 text-right" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transition: "all 0.8s ease-out" }}>
+            <div className={`flex flex-col ${isRTL ? "lg:order-2 text-right" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transition: "all 0.8s ease-out" }}>
               <div className="mb-8">
                 <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL ? "راسلنا" : "Get in Touch"}
                 </span>
-                <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "أرسل لنا رسالة" : "Send Us a Message"}
-                </h2>
+                <div className="mb-4">
+                  <TypewriterTitle
+                    text={isRTL ? "أرسل لنا رسالة" : "Send Us a Message"}
+                    isVisible={formVisible}
+                    className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                  />
+                </div>
                 <p className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL
                     ? "املأ النموذج أدناه وسيتواصل معك فريقنا خلال 24 ساعة."
@@ -432,8 +437,8 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
             </div>
 
             {/* Map & Info Side */}
-            <div className={`${isRTL ? "lg:order-1" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transition: "all 0.8s ease-out", transitionDelay: "200ms" }}>
-              <div className="aspect-[4/3] bg-[#D8DDE9] relative overflow-hidden rounded-2xl shadow-lg mb-8">
+            <div className={`flex flex-col ${isRTL ? "lg:order-1" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transition: "all 0.8s ease-out", transitionDelay: "200ms" }}>
+              <div className="flex-1 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] bg-[#D8DDE9] relative overflow-hidden rounded-2xl shadow-lg mb-8">
                 <iframe
                   src="https://maps.google.com/maps?q=%D9%85%D8%B5%D9%86%D8%B9%20%D8%A5%D9%8A%D8%AF%D8%AC%20%D9%84%D9%84%D9%85%D9%84%D8%A7%D8%A8%D8%B3%20%D8%A7%D9%84%D8%AC%D8%A7%D9%87%D8%B2%D8%A9&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   width="100%"

@@ -167,7 +167,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const galleryImages = product.gallery.length > 0 ? product.gallery : [product.image];
 
   return (
-    <main className="min-h-screen bg-white" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       <PageHero
@@ -182,7 +182,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="py-12 lg:py-20">
+      <section className="py-12 lg:py-20 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className={`grid lg:grid-cols-2 gap-12 ${isRTL ? "lg:flex-row-reverse" : ""}`}>
             <div className="space-y-4">
@@ -231,7 +231,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </section>
 
       {Object.keys(specifications).length > 0 && (
-        <section className="py-16 bg-[#F8F9FC]">
+        <section className="py-16 bg-[#D8DDE9]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <h2 className={`text-2xl font-bold text-[#122D8B] mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "المواصفات" : "Specifications"}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -247,7 +247,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       )}
 
       {relatedProducts.length > 0 && (
-        <section className="py-16">
+        <section className="py-16 bg-[#D8DDE9]">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <h2 className={`text-2xl font-bold text-[#122D8B] mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "منتجات ذات صلة" : "Related Products"}</h2>
             <div className="grid md:grid-cols-3 gap-8">

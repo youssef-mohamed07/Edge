@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface AIAgentFormSectionProps {
   locale: Locale;
@@ -211,7 +212,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} dir={isRTL ? "rtl" : "ltr"} className="py-8 lg:py-10 relative overflow-hidden">
+    <section id="ai-agent" ref={sectionRef} dir={isRTL ? "rtl" : "ltr"} className="py-8 lg:py-10 relative overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
@@ -235,9 +236,13 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                 {isRTL ? "مساعد ذكي" : "AI Assistant"}
               </span>
             </div>
-            <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
-            </h2>
+            <div className="mb-4">
+              <TypewriterTitle
+                text={isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
+                isVisible={true}
+                className={`text-2xl md:text-3xl lg:text-4xl font-bold text-white ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              />
+            </div>
             <p className={`text-white/70 text-lg max-w-2xl mx-auto ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "أجب على بعض الأسئلة السريعة وسنقوم بتخصيص الحل المثالي لك" : "Answer a few quick questions and we'll tailor the perfect solution for you"}
             </p>

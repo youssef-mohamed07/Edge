@@ -6,14 +6,6 @@ import { getDictionary } from "../../i18n/dictionaries";
 import { Navbar } from "../components/layout/Navbar";
 import { Footer } from "../components/layout/Footer";
 import { Chatbot } from "../components/layout/Chatbot";
-import {
-  ReliabilityIcon,
-  QualityIcon,
-  ProfessionalismIcon,
-  InnovationIcon,
-  TransparencyIcon,
-  FlexibilityIcon,
-} from "../../components/Icons";
 import { PageHero } from "../components/PageHero";
 import { Timeline } from "../components/Timeline";
 import { LocationsMapSection } from "../sections/LocationsMapSection";
@@ -21,6 +13,7 @@ import { TeamCarousel } from "../components/TeamCarousel";
 import { FAQSection } from "../sections/FAQSection";
 import { PartnersSection } from "../sections/PartnersSection";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -59,36 +52,34 @@ export default async function AboutPage({ params }: PageProps) {
 
   const milestones = isRTL
     ? [
-        { year: "2008", title: "تأسيس الشركة", description: "تأسست إيدج في المنطقة الحرة ببورسعيد" },
-        { year: "2012", title: "التوسع الدولي", description: "بدأنا خدمة العلامات التجارية الأوروبية" },
-        { year: "2016", title: "تطوير المنشأة", description: "توسيع القدرة الإنتاجية بنسبة 200%" },
-        { year: "2020", title: "التركيز على الاستدامة", description: "تطبيق الممارسات الصديقة للبيئة" },
-        { year: "2024", title: "التحول الرقمي", description: "اعتماد تقنيات الصناعة 4.0" },
+        { year: "2017", title: "التأسيس", description: "تأسست في جنوب بورسعيد بمصنع 2,400 متر مربع ورؤية واضحة." },
+        { year: "2020", title: "شهادة الجودة", description: "حصلنا على شهادة Sedex للجودة، مؤكدين الممارسات الأخلاقية والمسؤولة." },
+        { year: "2022", title: "التوسع", description: "توسعنا إلى 26,000 متر مربع، ننتج 8,000 قطعة يومياً مع 216 موظف ماهر." },
+        { year: "2025", title: "الريادة", description: "معترف بنا كشركة رائدة في تصنيع الملابس في مصر، موثوق بها من العلامات المحلية والدولية." },
       ]
     : [
-        { year: "2008", title: "Company Founded", description: "EDGE established in Port Said Free Zone" },
-        { year: "2012", title: "International Expansion", description: "Started serving European brands" },
-        { year: "2016", title: "Facility Upgrade", description: "Expanded production capacity by 200%" },
-        { year: "2020", title: "Sustainability Focus", description: "Implemented eco-friendly practices" },
-        { year: "2024", title: "Digital Transformation", description: "Adopted Industry 4.0 technologies" },
+        { year: "2017", title: "Founded", description: "Founded in South Port Said with a 2,400 m² factory and a clear vision." },
+        { year: "2020", title: "Quality Certification", description: "Achieved Sedex quality certification, confirming ethical and responsible practices." },
+        { year: "2022", title: "Expansion", description: "Expanded to 26,000 m², producing 8,000 garments daily with 216 skilled employees." },
+        { year: "2025", title: "Industry Leader", description: "Recognized as a leading garment manufacturer in Egypt, trusted by local and international brands." },
       ];
 
   const values = isRTL
     ? [
-        { icon: ReliabilityIcon, title: "الموثوقية", description: "تسليم ثابت وشراكات يمكن الاعتماد عليها" },
-        { icon: QualityIcon, title: "الجودة", description: "اهتمام دقيق بالتفاصيل في كل غرزة" },
-        { icon: ProfessionalismIcon, title: "الاحترافية", description: "معايير رائدة في الصناعة وخبرة عالية" },
-        { icon: InnovationIcon, title: "الابتكار", description: "تبني التقنيات والأساليب الجديدة" },
-        { icon: TransparencyIcon, title: "الشفافية", description: "تواصل مفتوح وعمليات واضحة" },
-        { icon: FlexibilityIcon, title: "المرونة", description: "حلول قابلة للتكيف مع المتطلبات الفريدة" },
+        { title: "الموثوقية", description: "تسليم ثابت وشراكات يمكن الاعتماد عليها", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" },
+        { title: "الجودة", description: "اهتمام دقيق بالتفاصيل في كل غرزة", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },
+        { title: "الاحترافية", description: "معايير رائدة في الصناعة وخبرة عالية", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" },
+        { title: "الابتكار", description: "تبني التقنيات والأساليب الجديدة", image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" },
+        { title: "الشفافية", description: "تواصل مفتوح وعمليات واضحة", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" },
+        { title: "المرونة", description: "حلول قابلة للتكيف مع المتطلبات الفريدة", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" },
       ]
     : [
-        { icon: ReliabilityIcon, title: "Reliability", description: "Consistent delivery and dependable partnerships" },
-        { icon: QualityIcon, title: "Quality", description: "Meticulous attention to detail in every stitch" },
-        { icon: ProfessionalismIcon, title: "Professionalism", description: "Industry-leading standards and expertise" },
-        { icon: InnovationIcon, title: "Innovation", description: "Embracing new technologies and methods" },
-        { icon: TransparencyIcon, title: "Transparency", description: "Open communication and clear processes" },
-        { icon: FlexibilityIcon, title: "Flexibility", description: "Adaptable solutions for unique requirements" },
+        { title: "Reliability", description: "Consistent delivery and dependable partnerships", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" },
+        { title: "Quality", description: "Meticulous attention to detail in every stitch", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },
+        { title: "Professionalism", description: "Industry-leading standards and expertise", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" },
+        { title: "Innovation", description: "Embracing new technologies and methods", image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" },
+        { title: "Transparency", description: "Open communication and clear processes", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" },
+        { title: "Flexibility", description: "Adaptable solutions for unique requirements", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" },
       ];
 
   const stats = isRTL
@@ -120,16 +111,16 @@ export default async function AboutPage({ params }: PageProps) {
       ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#D8DDE9]">
       <Navbar locale={locale} dict={dict} />
 
-      {/* Page Hero with Stats */}
+      {/* Custom About Hero */}
       <PageHero
-        title={isRTL ? "عن إيدج" : "About EDGE"}
+        title={isRTL ? "عن إيدج" : "About us"}
         subtitle={
           isRTL
-            ? "شركة مصرية رائدة في تصنيع الدنيم الفاخر والملابس الجاهزة للعلامات التجارية العالمية منذ عام 2008."
-            : "A leading Egyptian manufacturer delivering premium denim and woven garments to brands worldwide since 2008."
+            ? "منذ 2017، تقوم إيدج للملابس بتحويل الأفكار إلى دنيم عالي الجودة وملابس جاهزة، بدقة وعناية وموثوقية."
+            : "Since 2017, Edge for Garments has been transforming ideas into high-quality denim and ready-made apparel, with precision, care, and reliability."
         }
         image="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
         isRTL={isRTL}
@@ -140,15 +131,8 @@ export default async function AboutPage({ params }: PageProps) {
         stats={stats}
       />
 
-      {/* Timeline */}
-      <Timeline
-        milestones={milestones}
-        isRTL={isRTL}
-        title={isRTL ? "رحلتنا" : "Our Journey"}
-      />
-
       {/* About Company Section */}
-      <section className="py-12 lg:py-16 bg-white">
+      <section className="py-12 lg:py-16 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <ScrollReveal direction={isRTL ? "right" : "left"} delay={0}>
@@ -179,7 +163,7 @@ export default async function AboutPage({ params }: PageProps) {
             <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
               <div className={`relative h-[400px] lg:h-[500px] ${isRTL ? "lg:order-1" : "lg:order-2"}`}>
                 <Image
-                  src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
                   alt="EDGE Factory"
                   fill
                   className="object-cover rounded-2xl"
@@ -190,26 +174,26 @@ export default async function AboutPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Stats Section - Modern Layout with Team Images on Sides */}
-      <section className="py-12 lg:py-16 bg-[#F8F9FB]">
+      {/* Mission & Vision Section - Modern Layout with Factory Images */}
+      <section className="py-12 lg:py-16 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-            {/* Left Image - Team Member */}
+            {/* Left Image - Factory Sewing */}
             <ScrollReveal direction="left" delay={0} className="h-full">
-              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-lg">
+              <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-lg group">
                 <Image
-                  src="https://edgeforgarments.com/wp-content/uploads/2020/09/shleel.jpg"
-                  alt={isRTL ? "السيد شليل" : "Elsayed Sheleil"}
+                  src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
+                  alt={isRTL ? "خط الإنتاج" : "Production Line"}
                   fill
-                  className="object-cover object-top"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/80 via-transparent to-transparent" />
-                <div className={`absolute bottom-6 ${isRTL ? "right-6" : "left-6"}`}>
-                  <p className={`text-white font-bold text-lg ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "السيد شليل" : "Elsayed Sheleil"}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/70 via-[#122D8B]/20 to-transparent" />
+                <div className={`absolute bottom-5 ${isRTL ? "right-5 left-5 text-right" : "left-5 right-5"}`}>
+                  <p className={`text-white font-bold text-lg mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "خط الإنتاج" : "Production Line"}
                   </p>
-                  <p className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "رئيس مجلس الإدارة" : "Chairman"}
+                  <p className={`text-white/80 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "أحدث معدات الخياطة" : "State-of-the-art sewing equipment"}
                   </p>
                 </div>
               </div>
@@ -219,16 +203,18 @@ export default async function AboutPage({ params }: PageProps) {
             <ScrollReveal direction="up" delay={200} className="h-full">
               <div className="flex flex-col gap-4 h-full">
                 {/* Mission Card */}
-                <div className="bg-[#1A4AFF] rounded-3xl p-8 text-white flex-1 flex flex-col justify-center">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+                <div className={`bg-[#1A4AFF] rounded-2xl p-6 text-white flex-1 shadow-lg ${isRTL ? "text-right" : ""}`}>
+                  <div className={`flex items-center gap-3 mb-3 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h3 className={`text-xl font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? "مهمتنا" : "Our Mission"}
+                    </h3>
                   </div>
-                  <h3 className={`text-2xl font-bold mb-3 ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
-                    {isRTL ? "مهمتنا" : "Our Mission"}
-                  </h3>
-                  <p className={`text-white/90 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
+                  <p className={`text-white/90 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL
                       ? "إنتاج ملابس دنيم عالية الجودة تجمع بين الراحة والمتانة والأناقة، مع الحفاظ على الممارسات الأخلاقية وتجاوز توقعات العملاء."
                       : "To produce high-quality denim and apparel that combine comfort, durability, and style, while maintaining ethical practices and exceeding customer expectations."}
@@ -236,17 +222,19 @@ export default async function AboutPage({ params }: PageProps) {
                 </div>
 
                 {/* Vision Card */}
-                <div className="bg-[#1E1E2D] rounded-3xl p-8 text-white flex-1 flex flex-col justify-center">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
+                <div className={`bg-[#1E1E2D] rounded-2xl p-6 text-white flex-1 shadow-lg ${isRTL ? "text-right" : ""}`}>
+                  <div className={`flex items-center gap-3 mb-3 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    </div>
+                    <h3 className={`text-xl font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? "رؤيتنا" : "Our Vision"}
+                    </h3>
                   </div>
-                  <h3 className={`text-2xl font-bold mb-3 ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
-                    {isRTL ? "رؤيتنا" : "Our Vision"}
-                  </h3>
-                  <p className={`text-white/80 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
+                  <p className={`text-white/80 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL
                       ? "أن نكون شركة تصنيع رائدة معروفة بالجودة والابتكار والاستدامة."
                       : "To be a leading manufacturer recognized for quality, innovation, and sustainability."}
@@ -255,22 +243,22 @@ export default async function AboutPage({ params }: PageProps) {
               </div>
             </ScrollReveal>
 
-            {/* Right Image - Team Member */}
+            {/* Right Image - Factory Quality Control */}
             <ScrollReveal direction="right" delay={400} className="h-full">
-              <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-lg">
+              <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-lg group">
                 <Image
-                  src="https://edgeforgarments.com/wp-content/uploads/2020/09/shehab.jpg"
-                  alt={isRTL ? "محمد شهاب" : "Mohamed Shehab"}
+                  src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&q=80"
+                  alt={isRTL ? "مراقبة الجودة" : "Quality Control"}
                   fill
-                  className="object-cover object-top"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/80 via-transparent to-transparent" />
-                <div className={`absolute bottom-6 ${isRTL ? "right-6" : "left-6"}`}>
-                  <p className={`text-white font-bold text-lg ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "محمد شهاب" : "Mohamed Shehab"}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/70 via-[#122D8B]/20 to-transparent" />
+                <div className={`absolute bottom-5 ${isRTL ? "right-5 left-5 text-right" : "left-5 right-5"}`}>
+                  <p className={`text-white font-bold text-lg mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "مراقبة الجودة" : "Quality Control"}
                   </p>
-                  <p className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "المدير التنفيذي" : "Executive Director"}
+                  <p className={`text-white/80 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "فحص دقيق لكل قطعة" : "Rigorous inspection for every piece"}
                   </p>
                 </div>
               </div>
@@ -278,6 +266,16 @@ export default async function AboutPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Partners Section (Logos) */}
+      <PartnersSection locale={locale} dict={dict} />
+
+      {/* Timeline - Our Success Story */}
+      <Timeline
+        milestones={milestones}
+        isRTL={isRTL}
+        title={isRTL ? "قصة نجاحنا" : "Our Success Story"}
+      />
 
       {/* Team Section - Interactive Carousel */}
       <TeamCarousel
@@ -288,13 +286,15 @@ export default async function AboutPage({ params }: PageProps) {
       />
 
       {/* Values */}
-      <section className="py-12 lg:py-16" style={{ backgroundColor: "#F8F9FB" }}>
+      <section className="py-12 lg:py-16 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <ScrollReveal direction="up" delay={0}>
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "قيمنا" : "Our Values"}
-              </h2>
+            <div className="mb-8 text-center">
+              <TypewriterTitle
+                text={isRTL ? "قيمنا" : "Our Values"}
+                isVisible={true}
+                className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              />
             </div>
           </ScrollReveal>
 
@@ -302,19 +302,50 @@ export default async function AboutPage({ params }: PageProps) {
             {values.map((value, index) => (
               <ScrollReveal key={value.title} direction="up" delay={index * 100}>
                 <div
-                  className={`p-8 bg-white border border-[#D8DDE9] hover:border-[#1A4AFF]/30 transition-colors group rounded-xl hover:shadow-lg ${
-                    isRTL ? "text-right" : ""
-                  }`}
+                  className={`group relative rounded-3xl overflow-hidden aspect-square transition-all duration-700`}
                 >
-                  <value.icon
-                    className={`w-12 h-12 text-[#122D8B] group-hover:text-[#1A4AFF] transition-colors mb-6 ${
-                      isRTL ? "mr-0 ml-auto" : ""
+                  {/* Background Image */}
+                  <Image
+                    src={value.image}
+                    alt={value.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-[#122D8B]/80 transition-all duration-500 group-hover:bg-[#122D8B]/90" />
+                  
+                  {/* Content */}
+                  <div className={`absolute inset-0 p-8 flex flex-col justify-end ${isRTL ? "text-right" : ""}`}>
+                    <h3
+                      className={`text-white text-xl font-bold mb-2 transition-transform duration-500 group-hover:-translate-y-2 ${
+                        isRTL ? "font-[var(--font-cairo)]" : ""
+                      }`}
+                    >
+                      {value.title}
+                    </h3>
+                    <p
+                      className={`text-white/80 text-sm transition-all duration-500 group-hover:text-white ${
+                        isRTL ? "font-[var(--font-cairo)]" : ""
+                      }`}
+                    >
+                      {value.description}
+                    </p>
+                    
+                    {/* Animated line */}
+                    <div
+                      className={`h-0.5 bg-[#1A4AFF] mt-4 transition-all duration-500 w-12 group-hover:w-full ${
+                        isRTL ? "origin-right ml-auto" : "origin-left"
+                      }`}
+                    />
+                  </div>
+
+                  {/* Corner accent */}
+                  <div
+                    className={`absolute top-4 w-8 h-8 border-t-2 border-[#1A4AFF] ${
+                      isRTL ? "right-4 border-r-2" : "left-4 border-l-2"
                     }`}
                   />
-                  <h3 className={`text-lg text-[#122D8B] mb-3 font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {value.title}
-                  </h3>
-                  <p className={`text-[#122D8B]/60 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{value.description}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -322,60 +353,8 @@ export default async function AboutPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Code of Conduct Section */}
-      <section className="py-12 lg:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <ScrollReveal direction="up" delay={0}>
-            <div className="text-center mb-12">
-              <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "سياسة قواعد السلوك" : "Code of Conduct Policy"}
-              </h2>
-            </div>
-          </ScrollReveal>
-          <div className="grid lg:grid-cols-2 gap-8">
-            <ScrollReveal direction="left" delay={100}>
-              <div className={`p-8 border border-[#D8DDE9] rounded-xl hover:shadow-lg transition-shadow ${isRTL ? "text-right" : ""}`}>
-                <h3 className={`text-xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "حماية ممتلكات الشركة" : "Protection of Company Property"}
-                </h3>
-                <p className={`text-[#122D8B]/70 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL
-                    ? "يجب على جميع الموظفين التعامل مع ممتلكات شركتنا، سواء كانت مادية أو غير ملموسة، باحترام وعناية. يجب على الموظفين عدم إساءة استخدام معدات الشركة أو استخدامها بشكل تافه."
-                    : "All employees should treat our company's property, whether material or intangible, with respect and care. Employees shouldn't misuse company equipment or use it frivolously."}
-                </p>
-                <p className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL
-                    ? "يجب احترام جميع أنواع الملكية الفكرية. وهذا يشمل العلامات التجارية وحقوق النشر والممتلكات الأخرى (المعلومات والتقارير وما إلى ذلك). يجب على الموظفين استخدامها فقط لإكمال واجباتهم الوظيفية."
-                    : "Should respect all kinds of incorporeal property. This includes trademarks, copyright and other property (information, reports etc.) Employees should use them only to complete their job duties."}
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal direction="right" delay={200}>
-              <div className={`p-8 border border-[#D8DDE9] rounded-xl hover:shadow-lg transition-shadow ${isRTL ? "text-right" : ""}`}>
-                <h3 className={`text-xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "السلامة من الحرائق" : "Fire Safety"}
-                </h3>
-                <p className={`text-[#122D8B]/70 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL
-                    ? "خطة إخلاء الحريق سارية المفعول. يحتوي كل طابق من المنشأة على خطة إخلاء من الحريق. صندوق مكافحة الحرائق: معدات مكافحة حرائق كافية في صندوق مكافحة حرائق موضوع في كل طابق."
-                    : "Fire Evacuation Plan in effect. Each floor of the facility contains a Fire Evacuation Plan. Fire Fighting Box: Sufficient firefighting equipment in a fire fighting box placed on each floor."}
-                </p>
-                <p className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL
-                    ? "خطة الإخلاء سارية المفعول ومرئية للموظفين مع مسار الإخلاء محدد بوضوح بأسهم ذات رؤوس حمراء تحدد المسار الدقيق للإخلاء."
-                    : "Evacuation plan in effect and visible to employees with evacuation route clearly marked by arrows with red arrow heads marking the exact route of evacuation."}
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
       {/* Locations Map Section */}
       <LocationsMapSection locale={locale} />
-
-      {/* Partners Section */}
-      <PartnersSection locale={locale} dict={dict} />
 
       {/* FAQ Section */}
       <FAQSection locale={locale} dict={dict} />

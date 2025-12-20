@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface AboutSectionProps {
   locale: Locale;
@@ -67,9 +68,11 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
           <ScrollReveal direction={isRTL ? "right" : "left"} className="self-start lg:order-1">
           <div className={`${isRTL ? "text-right" : ""}`}>
             <div className="mb-8">
-              <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "من نحن" : "About Us"}
-              </h2>
+              <TypewriterTitle
+                text={isRTL ? "من نحن" : "About Us"}
+                isVisible={true}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              />
             </div>
 
             <p

@@ -98,22 +98,22 @@ export default async function ProductsPage({ params }: PageProps) {
     features: isRTL ? p.features.ar : p.features.en,
   }));
 
-  const capabilities = isRTL
+  const stats = isRTL
     ? [
-        { label: "الحد الأدنى للطلب", value: "500 قطعة" },
-        { label: "مدة التسليم", value: "45-60 يوم" },
-        { label: "تطوير العينات", value: "7-14 يوم" },
-        { label: "الطاقة السنوية", value: "+1M قطعة" },
+        { number: "500", label: "الحد الأدنى للطلب", suffix: " قطعة" },
+        { number: "45-60", label: "مدة التسليم", suffix: " يوم" },
+        { number: "7-14", label: "تطوير العينات", suffix: " يوم" },
+        { number: "1M+", label: "الطاقة السنوية", suffix: " قطعة" },
       ]
     : [
-        { label: "Minimum Order Quantity", value: "500 pcs" },
-        { label: "Lead Time", value: "45-60 days" },
-        { label: "Sample Development", value: "7-14 days" },
-        { label: "Annual Capacity", value: "1M+ pieces" },
+        { number: "500", label: "Minimum Order", suffix: " pcs" },
+        { number: "45-60", label: "Lead Time", suffix: " days" },
+        { number: "7-14", label: "Sample Dev", suffix: " days" },
+        { number: "1M+", label: "Annual Capacity", suffix: "" },
       ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#D8DDE9]">
       <Navbar locale={locale} dict={dict} />
 
       <PageHero
@@ -127,20 +127,8 @@ export default async function ProductsPage({ params }: PageProps) {
           { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
           { label: isRTL ? "منتجاتنا" : "Products" },
         ]}
+        stats={stats.map(s => ({ number: s.number + s.suffix, label: s.label }))}
       />
-
-      <section className="py-8 border-b border-[#D8DDE9]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {capabilities.map((cap) => (
-              <div key={cap.label} className={`text-center lg:text-left ${isRTL ? "lg:text-right" : ""}`}>
-                <div className={`text-[#122D8B]/50 text-sm uppercase tracking-wide mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{cap.label}</div>
-                <div className={`text-[#122D8B] text-xl font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{cap.value}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <ProductCategoriesSection 
         locale={locale}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef, Fragment } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface Stat {
   number: string;
@@ -18,6 +18,9 @@ interface PageHeroProps {
   stats?: Stat[];
   rotatingWords?: string[];
   rotatingWordIndex?: number;
+  // New props for subtitle with rotating words
+  subtitleTemplate?: string; // e.g., "A (word) production process"
+  subtitleRotatingWords?: string[];
 }
 
 // Parse number from string like "450,000" or "133"
@@ -153,6 +156,78 @@ function RotatingWord({
   );
 }
 
+// Typewriter effect for rotating words in subtitle
+function TypewriterRotatingWord({
+  words,
+  isVisible,
+  delay = 0,
+}: {
+  words: string[];
+  isVisible: boolean;
+  delay?: number;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const startDelay = setTimeout(() => setStartAnimation(true), delay);
+    return () => clearTimeout(startDelay);
+  }, [isVisible, delay]);
+
+  useEffect(() => {
+    if (!startAnimation) return;
+
+    const currentWord = words[currentIndex];
+
+    if (!isDeleting) {
+      // Typing
+      if (displayedText.length < currentWord.length) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        }, 100);
+        return () => clearTimeout(timeout);
+      } else {
+        // Finished typing, wait then start deleting
+        const timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      // Deleting
+      if (displayedText.length > 0) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, 50);
+        return () => clearTimeout(timeout);
+      } else {
+        // Finished deleting, move to next word
+        setIsDeleting(false);
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+      }
+    }
+  }, [startAnimation, displayedText, isDeleting, currentIndex, words]);
+
+  // Cursor blink
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor((prev) => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <span className="text-[#1A4AFF] font-bold">
+      {displayedText}
+      <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity`}>|</span>
+    </span>
+  );
+}
+
 function AnimatedWord({
   word,
   index,
@@ -183,6 +258,8 @@ export function PageHero({
   stats,
   rotatingWords,
   rotatingWordIndex,
+  subtitleTemplate,
+  subtitleRotatingWords,
 }: PageHeroProps) {
   const [isStatsVisible, setIsStatsVisible] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
@@ -334,7 +411,53 @@ export function PageHero({
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             >
-              {rotatingWords && rotatingWordIndex !== undefined ? (
+              {subtitleTemplate && subtitleRotatingWords ? (
+                // Title with integrated rotating word
+                <div className="leading-tight">
+                  {isRTL ? (
+                    // Arabic: "عملية إنتاج" + rotating word (blue)
+                    <>
+                      {titleWords.map((word, index) => (
+                        <AnimatedWord
+                          key={index}
+                          word={word}
+                          index={index}
+                          isVisible={isTextVisible}
+                        />
+                      ))}
+                      <TypewriterRotatingWord
+                        words={subtitleRotatingWords}
+                        isVisible={isTextVisible}
+                        delay={500 + titleWords.length * 60}
+                      />
+                    </>
+                  ) : (
+                    // English: "A" + rotating word (blue) + "production process" - all in one line
+                    <>
+                      <span
+                        className={`transition-all duration-500 ${
+                          isTextVisible ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
+                        A{" "}
+                      </span>
+                      <TypewriterRotatingWord
+                        words={subtitleRotatingWords}
+                        isVisible={isTextVisible}
+                        delay={300}
+                      />
+                      <span
+                        className={`transition-all duration-500 ${
+                          isTextVisible ? "opacity-100" : "opacity-0"
+                        }`}
+                        style={{ transitionDelay: "500ms" }}
+                      >
+                        {" "}{title}
+                      </span>
+                    </>
+                  )}
+                </div>
+              ) : rotatingWords && rotatingWordIndex !== undefined ? (
                 <>
                   {isRTL ? (
                     <>
@@ -404,7 +527,7 @@ export function PageHero({
               )}
             </h1>
 
-            {subtitle && (
+            {subtitle && !subtitleTemplate && (
               <p
                 className={`text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl ${
                   isRTL ? "font-[var(--font-cairo)]" : ""

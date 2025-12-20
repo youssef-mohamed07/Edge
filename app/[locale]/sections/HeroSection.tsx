@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
@@ -217,8 +216,13 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
           <RotatingWord words={rotatingWords} isVisible={isVisible} delay={2500} />
         </h1>
 
-        <Link
-          href={`/${locale}/contact`}
+        <button
+          onClick={() => {
+            const aiSection = document.getElementById("ai-agent");
+            if (aiSection) {
+              aiSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
           className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           } ${isRTL ? "font-(--font-cairo)" : ""}`}
@@ -239,7 +243,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
           }}
         >
           {dict.hero.cta}
-        </Link>
+        </button>
       </div>
     </section>
   );

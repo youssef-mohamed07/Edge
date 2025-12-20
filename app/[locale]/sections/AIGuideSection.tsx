@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface AIGuideSectionProps {
   locale: Locale;
@@ -50,7 +51,7 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-white">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
       <div className="max-w-3xl mx-auto px-6 lg:px-12">
         <div className={`text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           {/* Subtitle */}
@@ -59,11 +60,15 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
           </p>
 
           {/* Main Question */}
-          <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-[#122D8B] mb-10 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL 
-              ? "هل لديك أقمشة أو تصميمات معينة في ذهنك؟" 
-              : "Do you have specific fabrics or designs in mind?"}
-          </h2>
+          <div className="mb-10">
+            <TypewriterTitle
+              text={isRTL 
+                ? "هل لديك أقمشة أو تصميمات معينة في ذهنك؟" 
+                : "Do you have specific fabrics or designs in mind?"}
+              isVisible={isVisible}
+              className={`text-2xl md:text-3xl lg:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+            />
+          </div>
 
           {/* Input Field */}
           <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">

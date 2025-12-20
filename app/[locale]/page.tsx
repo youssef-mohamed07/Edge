@@ -59,7 +59,7 @@ export default async function HomePage({ params }: PageProps) {
   const dict = getDictionary(locale);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#D8DDE9]">
       <Navbar locale={locale} dict={dict} />
       <HeroSection locale={locale} dict={dict} />
       <QuoteSection locale={locale} />

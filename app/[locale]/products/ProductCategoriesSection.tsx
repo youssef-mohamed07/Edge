@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface ProductCategory {
   title: string;
@@ -24,17 +25,17 @@ export function ProductCategoriesSection({
   productCategories,
 }: ProductCategoriesSectionProps) {
   return (
-    <section className="py-20 lg:py-32">
+    <section className="py-20 lg:py-32 bg-[#D8DDE9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
           <div className="text-center mb-14">
-            <h2
+            <TypewriterTitle
+              text={isRTL ? "فئات المنتجات" : "Product Categories"}
+              isVisible={true}
               className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
-            >
-              {isRTL ? "فئات المنتجات" : "Product Categories"}
-            </h2>
+            />
           </div>
         </ScrollReveal>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { TypewriterTitle } from "./TypewriterTitle";
 
 interface Milestone {
   year: string;
@@ -108,7 +109,7 @@ export function Timeline({ milestones, isRTL, title }: TimelineProps) {
   }, []);
 
   return (
-    <section className="py-8 lg:py-10" style={{ backgroundColor: "#F8F9FB" }}>
+    <section className="py-8 lg:py-10 bg-[#D8DDE9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           ref={titleRef}
@@ -116,9 +117,11 @@ export function Timeline({ milestones, isRTL, title }: TimelineProps) {
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {title}
-          </h2>
+          <TypewriterTitle
+            text={title}
+            isVisible={titleVisible}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+          />
         </div>
 
         <div className="relative">

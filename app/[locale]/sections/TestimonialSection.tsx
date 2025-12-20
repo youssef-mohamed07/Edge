@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
-import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 // Real Google Reviews
 const reviews = [
@@ -94,10 +94,30 @@ interface TestimonialSectionProps {
 
 export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
+  const title = dict.testimonials.title;
   const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJw_A5OCWf-RQRIMNBKb8Zpv0";
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -130,24 +150,22 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
   };
 
   return (
-    <section className="py-8 lg:py-10 bg-[#F8F9FA] overflow-hidden" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <ScrollReveal>
-        <div className="text-center mb-8">
+        <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "آراء العملاء" : "Testimonials"}
           </span>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {dict.testimonials.title}
+            <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
-          <div className="flex items-center justify-center gap-2 text-[#122D8B]/60">
+          <div className={`flex items-center justify-center gap-2 text-[#122D8B]/60 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
             <GoogleIcon />
             <span className={`text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "تقييمات حقيقية من Google" : "Real reviews from Google"}
             </span>
           </div>
         </div>
-        </ScrollReveal>
 
         {/* Carousel */}
         <div className="relative h-[380px] flex items-center justify-center mb-12">
@@ -210,8 +228,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
         </div>
 
         {/* Add Review CTA */}
-        <ScrollReveal delay={400}>
-        <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+        <div className={`bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`} style={{ transitionDelay: "600ms" }}>
           <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
             <div className="w-14 h-14 bg-[#1A4AFF]/10 rounded-full flex items-center justify-center flex-shrink-0">
               <GoogleIcon />
@@ -237,7 +254,6 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
             {isRTL ? "اكتب تقييم" : "Write a Review"}
           </a>
         </div>
-        </ScrollReveal>
       </div>
     </section>
   );

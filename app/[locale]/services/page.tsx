@@ -10,6 +10,7 @@ import { AnimatedServiceStep, type IconName } from "./AnimatedServiceStep";
 import { WhySetsUsApart } from "./WhySetsUsApart";
 import { AIGuideSection } from "../sections/AIGuideSection";
 import { FAQSection } from "../sections/FAQSection";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -26,8 +27,8 @@ export async function generateMetadata({
 
   return {
     title: isRTL
-      ? "خدماتنا | إيدج للملابس"
-      : "Our Services | EDGE for Garments",
+      ? "عملية الإنتاج | إيدج للملابس"
+      : "Production Process | EDGE for Garments",
     description: isRTL
       ? "عملية تصنيع متكاملة من البداية للنهاية مصممة للجودة والكفاءة"
       : "A complete end-to-end manufacturing process designed for quality and efficiency",
@@ -227,23 +228,25 @@ export default async function ServicesPage({ params }: PageProps) {
       ];
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-[#D8DDE9]">
       <Navbar locale={locale} dict={dict} />
 
       {/* Page Hero */}
       <PageHero
-        title={isRTL ? "عملية انتاج مستدامة" : "Sustainable Production Process"}
-        rotatingWords={
-          isRTL
-            ? ["مستدامة", "موثوقة", "دقيقة"]
-            : ["Sustainable", "Reliable", "Precision"]
+        title={isRTL ? "عملية إنتاج" : "production process"}
+        subtitleTemplate={
+          isRTL ? "(word)" : "(word)"
         }
-        rotatingWordIndex={isRTL ? 2 : 0}
+        subtitleRotatingWords={
+          isRTL
+            ? ["مستدامة", "دقيقة", "موثوقة", "متكاملة"]
+            : ["sustainable", "precision", "reliable", "complete"]
+        }
         image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
         isRTL={isRTL}
         breadcrumbs={[
           { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
-          { label: isRTL ? "خدماتنا" : "Services" },
+          { label: isRTL ? "الإنتاج" : "Production" },
         ]}
       />
 
@@ -251,13 +254,13 @@ export default async function ServicesPage({ params }: PageProps) {
       <section className="py-8 lg:py-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-6">
-            <h2
+            <TypewriterTitle
+              text={isRTL ? "دورة الإنتاج" : "Production Cycle"}
+              isVisible={true}
               className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
-            >
-              {isRTL ? "دورة الإنتاج" : "Production Cycle"}
-            </h2>
+            />
           </div>
 
           <div className="space-y-16">

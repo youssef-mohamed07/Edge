@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { getDirection, type Locale } from "../../i18n/config";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 interface FactoryVideoSectionProps {
   locale: Locale;
@@ -15,7 +16,7 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // YouTube video ID
+  const title = isRTL ? "زُر مصنعنا" : "Visit our factory";
   const videoId = "P2my3iEba4k";
 
   useEffect(() => {
@@ -36,12 +37,12 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-white">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className={`text-center mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "زُر مصنعنا" : "Visit our factory"}
+            <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
         </div>
 

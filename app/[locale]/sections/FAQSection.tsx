@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
-import { ScrollReveal } from "../components/ScrollReveal";
+import { TypewriterTitle } from "../components/TypewriterTitle";
 
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -26,8 +26,12 @@ interface FAQSectionProps {
 
 export function FAQSection({ locale, dict }: FAQSectionProps) {
   const [openId, setOpenId] = useState<number | null>(1);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
+
+  const title = dict.faq.title;
 
   const faqs = [
     { id: 1, question: dict.faq.q1, answer: dict.faq.a1 },
@@ -38,24 +42,42 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
     { id: 6, question: dict.faq.q6, answer: dict.faq.a6 },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-8 lg:py-10 bg-[#F8F9FA]">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
       <div className="max-w-4xl mx-auto px-6 lg:px-12">
-        <ScrollReveal>
-        <div className={`mb-8 ${isRTL ? "text-right" : "text-center"}`}>
+        <div className={`mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${isRTL ? "text-right" : "text-center"}`}>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {dict.faq.title}
+            <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
-          <p className={`text-[#122D8B]/60 text-lg ${isRTL ? "font-[var(--font-cairo)]" : "max-w-xl mx-auto"}`}>
+          <p className={`text-[#122D8B]/60 text-lg transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"} ${isRTL ? "font-[var(--font-cairo)]" : "max-w-xl mx-auto"}`}>
             {dict.faq.subtitle}
           </p>
         </div>
-        </ScrollReveal>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <ScrollReveal key={faq.id} delay={index * 100}>
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div
+              key={faq.id}
+              className={`bg-white rounded-2xl overflow-hidden shadow-sm transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              style={{ transitionDelay: `${400 + index * 100}ms` }}
+            >
               <button
                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
                 className={`w-full px-6 py-5 flex items-center hover:bg-[#F8F9FA]/50 transition-colors ${
@@ -73,12 +95,10 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
                 </p>
               </div>
             </div>
-            </ScrollReveal>
           ))}
         </div>
 
-        <ScrollReveal delay={600}>
-        <div className="mt-12 text-center">
+        <div className={`mt-12 text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "1000ms" }}>
           <p className={`text-[#122D8B]/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "لا زال لديك أسئلة؟" : "Still have questions?"}
           </p>
@@ -94,7 +114,6 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
             </svg>
           </Link>
         </div>
-        </ScrollReveal>
       </div>
     </section>
   );

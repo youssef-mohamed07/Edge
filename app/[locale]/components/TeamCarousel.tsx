@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { TypewriterTitle } from "./TypewriterTitle";
 
 interface TeamMember {
   name: string;
@@ -46,7 +47,7 @@ export function TeamCarousel({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#F8F9FB] overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           className={`grid lg:grid-cols-2 gap-12 items-center`}
@@ -58,11 +59,13 @@ export function TeamCarousel({
             >
               {subtitle}
             </p>
-            <h2
-              className={`text-4xl md:text-5xl lg:text-6xl font-bold text-[#122D8B] mb-6 leading-tight ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-            >
-              {title}
-            </h2>
+            <div className="mb-6">
+              <TypewriterTitle
+                text={title}
+                isVisible={isVisible}
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold text-[#122D8B] leading-tight ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              />
+            </div>
             <p
               className={`text-[#122D8B]/60 text-lg mb-8 leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
             >
@@ -139,6 +142,7 @@ export function TeamCarousel({
                 <div
                   key={index}
                   onClick={() => setActiveIndex(index)}
+                  onMouseEnter={() => setActiveIndex(index)}
                   className="relative cursor-pointer overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl"
                   style={{
                     width: isActive ? "280px" : "85px",

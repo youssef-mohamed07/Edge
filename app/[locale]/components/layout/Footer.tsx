@@ -37,41 +37,43 @@ export function Footer({ locale, dict }: FooterProps) {
     : ["Denim Manufacturing", "Garment Production", "Quality Control", "Custom Design", "Fabric Sourcing"];
 
   return (
-    <footer style={{ backgroundColor: "#122D8B" }} dir={dir}>
-      {/* Newsletter Section */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className={isRTL ? "text-right md:order-1" : ""}>
-              <h3 className={`text-xl font-bold text-white mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {dict.footer.newsletter.title}
-              </h3>
-              <p className={`text-white/60 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {dict.footer.newsletter.subtitle}
-              </p>
+    <footer dir={dir}>
+      {/* Main Footer Content */}
+      <div style={{ backgroundColor: "#122D8B" }}>
+        {/* Newsletter Section */}
+        <div className="border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className={isRTL ? "text-right md:order-1" : ""}>
+                <h3 className={`text-xl font-bold text-white mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  {dict.footer.newsletter.title}
+                </h3>
+                <p className={`text-white/60 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  {dict.footer.newsletter.subtitle}
+                </p>
+              </div>
+              <form className={`flex gap-3 w-full md:w-auto ${isRTL ? "md:order-2" : ""}`}>
+                <input
+                  type="email"
+                  placeholder={dict.footer.newsletter.placeholder}
+                  className={`flex-1 md:w-72 px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-full focus:outline-none focus:border-[#1A4AFF] transition-colors text-sm ${
+                    isRTL ? "text-right font-[var(--font-cairo)]" : ""
+                  }`}
+                />
+                <button
+                  type="submit"
+                  className={`px-6 py-3 bg-[#1A4AFF] text-white font-semibold rounded-full hover:bg-[#1A4AFF]/90 transition-colors text-sm whitespace-nowrap ${
+                    isRTL ? "font-[var(--font-cairo)]" : ""
+                  }`}
+                >
+                  {dict.footer.newsletter.button}
+                </button>
+              </form>
             </div>
-            <form className={`flex gap-3 w-full md:w-auto ${isRTL ? "md:order-2" : ""}`}>
-              <input
-                type="email"
-                placeholder={dict.footer.newsletter.placeholder}
-                className={`flex-1 md:w-72 px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-full focus:outline-none focus:border-[#1A4AFF] transition-colors text-sm ${
-                  isRTL ? "text-right font-[var(--font-cairo)]" : ""
-                }`}
-              />
-              <button
-                type="submit"
-                className={`px-6 py-3 bg-[#1A4AFF] text-white font-semibold rounded-full hover:bg-[#1A4AFF]/90 transition-colors text-sm whitespace-nowrap ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
-              >
-                {dict.footer.newsletter.button}
-              </button>
-            </form>
           </div>
         </div>
-      </div>
 
-      {/* Main Footer */}
+        {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
         <div className={`grid md:grid-cols-2 lg:grid-cols-4 gap-10 ${isRTL ? "text-right" : ""}`}>
           {/* Brand Column */}
@@ -211,17 +213,38 @@ export function Footer({ locale, dict }: FooterProps) {
                 © {new Date().getFullYear()} EDGE for Garments. {dict.footer.rights}
               </p>
               <span className="text-white/20 hidden md:inline">|</span>
-              <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
-                <Image
-                  src="/assets/logos/ddrZXWxdKnWCthtq49D_Ommh20E.png"
-                  alt="SEDEX Certified"
-                  width={24}
-                  height={24}
-                  className="h-6 w-auto"
-                />
-                <span className={`text-white/40 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                  {isRTL ? "معتمد من SEDEX" : "Certified by SEDEX"}
-                </span>
+              <div className="flex items-center gap-2">
+                {isRTL ? (
+                  <>
+                    <div className="bg-white rounded-md px-3 py-1.5">
+                      <Image
+                        src="/assets/logos/sedex-logo.png"
+                        alt="SEDEX"
+                        width={100}
+                        height={40}
+                        className="h-7 w-auto"
+                      />
+                    </div>
+                    <span className="text-white/40 text-xs font-[var(--font-cairo)]">
+                      معتمد من
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-white/40 text-xs">
+                      Certified by
+                    </span>
+                    <div className="bg-white rounded-md px-3 py-1.5">
+                      <Image
+                        src="/assets/logos/sedex-logo.png"
+                        alt="SEDEX"
+                        width={100}
+                        height={40}
+                        className="h-7 w-auto"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className={`flex items-center gap-5 ${isRTL ? "flex-row-reverse" : ""}`}>
@@ -246,6 +269,7 @@ export function Footer({ locale, dict }: FooterProps) {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );
