@@ -20,6 +20,18 @@ const partners = [
   { id: 11, name: "Partner 11", logo: "/assets/logos/11.png" },
 ];
 
+// Calculate animation duration based on content width for consistent speed
+// Logo card width (220px) + margin (20px) = 240px per logo
+// 11 logos * 2 (half of 4 repeats) = 22 logos for half width
+// Half width = 22 * 240 = 5280px
+// Speed: 150px/second for smooth, consistent movement across all screens
+const LOGO_WIDTH = 220;
+const LOGO_MARGIN = 20;
+const LOGO_COUNT = partners.length;
+const HALF_WIDTH = LOGO_COUNT * 2 * (LOGO_WIDTH + LOGO_MARGIN);
+const SPEED_PX_PER_SEC = 150;
+const ANIMATION_DURATION = HALF_WIDTH / SPEED_PX_PER_SEC; // ~35 seconds
+
 interface PartnersSectionProps {
   locale: Locale;
   dict: Dictionary;
@@ -70,15 +82,15 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
             className="flex hover:[animation-play-state:paused]"
             style={{
               width: "max-content",
-              animation: "marquee-ltr 40s linear infinite",
+              animation: `marquee-ltr ${ANIMATION_DURATION}s linear infinite`,
             }}
           >
             {/* Repeat logos 4 times to fill screen completely */}
             {[...partners, ...partners, ...partners, ...partners].map((partner, index) => (
               <div 
                 key={index}
-                className="flex-shrink-0 mx-5 bg-white rounded-2xl flex items-center justify-center p-6 border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                style={{ width: "220px", height: "120px" }}
+                className="flex-shrink-0 bg-white rounded-2xl flex items-center justify-center p-6 border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                style={{ width: `${LOGO_WIDTH}px`, height: "120px", margin: `0 ${LOGO_MARGIN / 2}px` }}
               >
                 <Image
                   src={partner.logo}

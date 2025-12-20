@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { getDirection, type Locale } from "../../i18n/config";
 import type { Dictionary } from "../../i18n/dictionaries";
@@ -182,17 +181,11 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
 
         <div className={`relative h-[450px] md:h-[500px] flex items-center justify-center transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
           {services.map((service, index) => (
-            <Link
+            <div
               key={service.id}
-              href={`/${locale}/services`}
-              className="absolute w-[300px] md:w-[380px] transition-all duration-500 ease-out cursor-pointer"
+              className="absolute w-[300px] md:w-[380px] transition-all duration-500 ease-out"
               style={getCardStyle(index)}
-              onClick={(e) => {
-                if (index !== activeIndex) {
-                  e.preventDefault();
-                  setActiveIndex(index);
-                }
-              }}
+              onClick={() => setActiveIndex(index)}
             >
               <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "4/5" }}>
                 <Image src={service.image} alt={service.title} fill className="object-cover" />
@@ -212,7 +205,7 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
                   </p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
