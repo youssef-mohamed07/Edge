@@ -167,7 +167,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const galleryImages = product.gallery.length > 0 ? product.gallery : [product.image];
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       <PageHero

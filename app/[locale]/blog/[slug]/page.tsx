@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedPosts = await getRelatedPosts(slug);
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       {/* Hero Section */}

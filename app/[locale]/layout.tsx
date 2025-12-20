@@ -107,7 +107,7 @@ export default async function LocaleLayout({
         <link rel="alternate" hrefLang="ar" href={`${siteUrl}/ar`} />
         <link rel="alternate" hrefLang="x-default" href={`${siteUrl}/en`} />
       </head>
-      <body className={`${manrope.variable} ${cairo.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${manrope.variable} ${cairo.variable} antialiased overflow-x-hidden`} suppressHydrationWarning>
         {children}
       </body>
     </html>

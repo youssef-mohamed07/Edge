@@ -112,7 +112,7 @@ export default async function AboutPage({ params }: PageProps) {
       ];
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9]">
+    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden">
       <Navbar locale={locale} dict={dict} />
 
       {/* Custom About Hero */}

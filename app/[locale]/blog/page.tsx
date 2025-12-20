@@ -101,7 +101,7 @@ export default async function BlogPage({ params }: PageProps) {
   const regularPosts = blogPosts.filter((post) => !post.featured);
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9]" dir={dir}>
+    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       {/* Page Hero */}
