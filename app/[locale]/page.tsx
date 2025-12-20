@@ -65,9 +65,9 @@ export default async function HomePage({ params }: PageProps) {
       <QuoteSection locale={locale} />
       <OurServicesSection locale={locale} dict={dict} />
       <PartnersSection locale={locale} dict={dict} />
-      <AIAgentFormSection locale={locale} />
       <ProductsSection locale={locale} dict={dict} />
       <PortfolioSection locale={locale} dict={dict} />
+      <AIAgentFormSection locale={locale} />
       <FactoryVideoSection locale={locale} />
       <TestimonialSection locale={locale} dict={dict} />
       <FAQSection locale={locale} dict={dict} />

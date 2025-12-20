@@ -23,7 +23,7 @@ export async function generateMetadata({
   if (!isValidLocale(locale)) return {};
 
   const isRTL = locale === "ar";
-  const currentUrl = `${siteUrl}/${locale}/services`;
+  const currentUrl = `${siteUrl}/${locale}/production-process`;
 
   return {
     title: isRTL
@@ -35,15 +35,15 @@ export async function generateMetadata({
     alternates: {
       canonical: currentUrl,
       languages: {
-        en: `${siteUrl}/en/services`,
-        ar: `${siteUrl}/ar/services`,
-        "x-default": `${siteUrl}/en/services`,
+        en: `${siteUrl}/en/production-process`,
+        ar: `${siteUrl}/ar/production-process`,
+        "x-default": `${siteUrl}/en/production-process`,
       },
     },
   };
 }
 
-export default async function ServicesPage({ params }: PageProps) {
+export default async function ProductionProcessPage({ params }: PageProps) {
   const { locale } = await params;
   if (!isValidLocale(locale)) notFound();
 

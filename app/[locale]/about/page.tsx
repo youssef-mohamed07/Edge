@@ -11,6 +11,7 @@ import { Timeline } from "../components/Timeline";
 import { LocationsMapSection } from "../sections/LocationsMapSection";
 import { TeamCarousel } from "../components/TeamCarousel";
 import { FAQSection } from "../sections/FAQSection";
+import { AIGuideSection } from "../sections/AIGuideSection";
 import { PartnersSection } from "../sections/PartnersSection";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TypewriterTitle } from "../components/TypewriterTitle";
@@ -358,6 +359,9 @@ export default async function AboutPage({ params }: PageProps) {
 
       {/* FAQ Section */}
       <FAQSection locale={locale} dict={dict} />
+
+      {/* AI Guide Section */}
+      <AIGuideSection locale={locale} />
 
       <Footer locale={locale} dict={dict} />
       <Chatbot locale={locale} />
