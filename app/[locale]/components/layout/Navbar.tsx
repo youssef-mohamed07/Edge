@@ -75,8 +75,8 @@ export function Navbar({ locale, dict }: NavbarProps) {
                   href={link.href}
                   className={`px-5 py-2 font-medium tracking-wide transition-all rounded-full ${
                     isActive(link.href)
-                      ? "bg-royal-azure text-white"
-                      : "text-true-cobalt hover:bg-true-cobalt/5"
+                      ? "bg-[#1A4AFF] text-white"
+                      : "text-[#122D8B] hover:bg-[#122D8B]/5"
                   } ${isRTL ? "text-sm font-[var(--font-cairo)]" : "text-xs"}`}
                 >
                   {link.label}
@@ -104,16 +104,16 @@ export function Navbar({ locale, dict }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden relative z-[60] w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 ${
+            className={`lg:hidden relative z-[60] flex-shrink-0 w-10 h-10 min-w-[40px] max-w-[40px] min-h-[40px] max-h-[40px] flex items-center justify-center rounded-full transition-all duration-300 ${
               isOpen ? "bg-white shadow-lg" : "bg-white/10 backdrop-blur-sm"
             }`}
             aria-label="Toggle menu"
           >
-            <span className={`transition-transform duration-300 ${isOpen ? "rotate-90" : "rotate-0"}`}>
+            <span className={`flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-90" : "rotate-0"}`}>
               {isOpen ? (
-                <CloseIcon className="w-5 h-5 text-true-cobalt" />
+                <CloseIcon className="w-5 h-5 flex-shrink-0 text-[#122D8B]" />
               ) : (
-                <MenuIcon className="w-5 h-5 text-white" />
+                <MenuIcon className="w-5 h-5 flex-shrink-0 text-white" />
               )}
             </span>
           </button>
@@ -128,7 +128,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-true-cobalt/95 backdrop-blur-md"
+          className="absolute inset-0 bg-[#122D8B]/95 backdrop-blur-md"
           onClick={() => setIsOpen(false)}
         />
 
@@ -141,12 +141,12 @@ export function Navbar({ locale, dict }: NavbarProps) {
           {/* Close Button Inside Menu */}
           <button
             onClick={() => setIsOpen(false)}
-            className={`mb-6 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors ${
+            className={`mb-6 w-12 h-12 min-w-[48px] max-w-[48px] min-h-[48px] max-h-[48px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors flex-shrink-0 ${
               isRTL ? "self-start" : "self-end"
             }`}
             aria-label="Close menu"
           >
-            <CloseIcon className="w-6 h-6 text-white" />
+            <CloseIcon className="w-6 h-6 flex-shrink-0 text-white" />
           </button>
 
           <div className="space-y-2">
@@ -157,7 +157,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
                 onClick={() => setIsOpen(false)}
                 className={`block px-5 py-4 text-lg font-medium rounded-xl transition-all duration-300 ${
                   isActive(link.href)
-                    ? "bg-royal-azure text-white"
+                    ? "bg-[#1A4AFF] text-white"
                     : "text-white/80 hover:bg-white/10 hover:text-white"
                 } ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}
                 style={{
@@ -174,7 +174,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
               onClick={() => setIsOpen(false)}
               className={`block px-5 py-4 text-lg font-medium rounded-xl transition-all duration-300 ${
                 pathname === `/${locale}/contact`
-                  ? "bg-royal-azure text-white"
+                  ? "bg-[#1A4AFF] text-white"
                   : "text-white/80 hover:bg-white/10 hover:text-white"
               } ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}
               style={{

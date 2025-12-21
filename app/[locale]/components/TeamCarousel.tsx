@@ -111,10 +111,10 @@ export function TeamCarousel({
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                  className={`h-2.5 rounded-full transition-all duration-300 flex-shrink-0 ${
                     index === activeIndex
-                      ? "w-8 bg-royal-azure"
-                      : "w-2.5 bg-true-cobalt/20 hover:bg-true-cobalt/40"
+                      ? "w-8 min-w-[32px] max-w-[32px] bg-royal-azure"
+                      : "w-2.5 min-w-[10px] max-w-[10px] bg-true-cobalt/20 hover:bg-true-cobalt/40"
                   }`}
                 />
               ))}
