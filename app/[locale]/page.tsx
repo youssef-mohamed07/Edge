@@ -59,7 +59,7 @@ export default async function HomePage({ params }: PageProps) {
   const dict = getDictionary(locale);
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden">
+    <main className="min-h-screen bg-alabaster-grey overflow-x-hidden">
       <Navbar locale={locale} dict={dict} />
       <HeroSection locale={locale} dict={dict} />
       <QuoteSection locale={locale} />
@@ -70,9 +70,11 @@ export default async function HomePage({ params }: PageProps) {
       <AIAgentFormSection locale={locale} />
       <FactoryVideoSection locale={locale} />
       <TestimonialSection locale={locale} dict={dict} />
-      <FAQSection locale={locale} dict={dict} />
+       <AIGuideSection locale={locale} />
+  
       <LocationsMapSection locale={locale} />
-      <AIGuideSection locale={locale} />
+          <FAQSection locale={locale} dict={dict} />
+     
       <Footer locale={locale} dict={dict} />
       <Chatbot locale={locale} />
     </main>

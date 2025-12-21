@@ -113,7 +113,7 @@ export default async function ProductsPage({ params }: PageProps) {
       ];
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden">
+    <main className="min-h-screen bg-alabaster-grey overflow-x-hidden">
       <Navbar locale={locale} dict={dict} />
 
       <PageHero

@@ -29,7 +29,7 @@ const LOGO_WIDTH = 220;
 const LOGO_MARGIN = 20;
 const LOGO_COUNT = partners.length;
 const HALF_WIDTH = LOGO_COUNT * 2 * (LOGO_WIDTH + LOGO_MARGIN);
-const SPEED_PX_PER_SEC = 150;
+const SPEED_PX_PER_SEC = 80;
 const ANIMATION_DURATION = HALF_WIDTH / SPEED_PX_PER_SEC; // ~35 seconds
 
 interface PartnersSectionProps {
@@ -63,10 +63,10 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden" dir="ltr">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey overflow-hidden" dir="ltr">
       {/* Header */}
       <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
           <TypewriterTitle text={title} isVisible={isVisible} />
         </h2>
       </div>
@@ -74,8 +74,8 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
       {/* Infinite Logo Marquee */}
       <div className="relative">
         {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#D8DDE9] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#D8DDE9] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-alabaster-grey to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-alabaster-grey to-transparent z-10 pointer-events-none" />
         
         <div className="overflow-hidden">
           <div 

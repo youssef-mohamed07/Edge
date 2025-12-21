@@ -45,14 +45,14 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} id="products" className="py-8 lg:py-10 bg-[#D8DDE9]" dir={dir}>
+    <section ref={sectionRef} id="products" className="py-8 lg:py-10 bg-alabaster-grey" dir={dir}>
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className={`text-center mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <h2 className={`text-3xl md:text-4xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
-          <p className={`text-[#122D8B]/60 max-w-xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"} ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <p className={`text-true-cobalt/60 max-w-xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"} ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.products.subtitle}
           </p>
         </div>
@@ -73,7 +73,7 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#122D8B]/70 via-[#122D8B]/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/70 via-true-cobalt/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3 className={`text-white text-sm font-bold ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
                       {product.title}
@@ -89,7 +89,7 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
         <div className={`text-center mt-10 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "800ms" }}>
           <Link
             href={`/${locale}/products`}
-            className={`inline-flex items-center gap-2 px-6 py-3 bg-[#122D8B] text-white font-semibold text-sm rounded-lg hover:bg-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+            className={`inline-flex items-center gap-2 px-6 py-3 bg-true-cobalt text-white font-semibold text-sm rounded-lg hover:bg-royal-azure transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
           >
             {dict.products.viewAll}
             <span>{isRTL ? "←" : "→"}</span>

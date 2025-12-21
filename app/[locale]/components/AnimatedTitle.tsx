@@ -88,7 +88,7 @@ export function TypewriterText({
     >
       {displayText}
       {showCursor && (
-        <span className="animate-pulse text-[#1A4AFF] ml-1">|</span>
+        <span className="animate-pulse text-royal-azure ml-1">|</span>
       )}
     </span>
   );
@@ -104,7 +104,7 @@ export function GradientText({ text, className = '', isRTL = false }: GradientTe
   return (
     <span 
       className={`
-        bg-gradient-to-r from-[#122D8B] via-[#1A4AFF] to-[#60A5FA] 
+        bg-gradient-to-r from-true-cobalt via-royal-azure to-[#60A5FA] 
         bg-clip-text text-transparent
         animate-[gradientShift_3s_ease_infinite]
         ${isRTL ? 'font-[var(--font-cairo)]' : ''}

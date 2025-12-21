@@ -221,7 +221,7 @@ function TypewriterRotatingWord({
   }, []);
 
   return (
-    <span className="text-[#1A4AFF] font-bold">
+    <span className="text-royal-azure font-bold">
       {displayedText}
       <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity`}>|</span>
     </span>
@@ -339,13 +339,13 @@ export function PageHero({
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-[#122D8B]/85" />
+        <div className="absolute inset-0 bg-true-cobalt/85" />
       </div>
 
       {/* Hero Content */}
       <div
         className={`relative z-10 ${
-          stats ? "py-24 lg:py-36" : "py-28 lg:py-44"
+          stats ? "py-16 lg:py-24" : "py-28 lg:py-44"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -432,28 +432,30 @@ export function PageHero({
                       />
                     </>
                   ) : (
-                    // English: "A" + rotating word (blue) + "production process" - all in one line
+                    // English: "A" + rotating word (blue) on first line, "production process" on second line
                     <>
-                      <span
-                        className={`transition-all duration-500 ${
-                          isTextVisible ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        A{" "}
-                      </span>
-                      <TypewriterRotatingWord
-                        words={subtitleRotatingWords}
-                        isVisible={isTextVisible}
-                        delay={300}
-                      />
-                      <span
+                      <div>
+                        <span
+                          className={`transition-all duration-500 ${
+                            isTextVisible ? "opacity-100" : "opacity-0"
+                          }`}
+                        >
+                          A{" "}
+                        </span>
+                        <TypewriterRotatingWord
+                          words={subtitleRotatingWords}
+                          isVisible={isTextVisible}
+                          delay={300}
+                        />
+                      </div>
+                      <div
                         className={`transition-all duration-500 ${
                           isTextVisible ? "opacity-100" : "opacity-0"
                         }`}
                         style={{ transitionDelay: "500ms" }}
                       >
-                        {" "}{title}
-                      </span>
+                        {title}
+                      </div>
                     </>
                   )}
                 </div>
@@ -549,7 +551,7 @@ export function PageHero({
 
       {/* Stats Section - Integrated seamlessly */}
       {stats && stats.length > 0 && (
-        <div ref={statsRef} className="relative z-10 py-10 lg:py-14">
+        <div ref={statsRef} className="relative z-10 py-6 lg:py-10">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
@@ -562,14 +564,14 @@ export function PageHero({
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  <div className="text-4xl md:text-5xl text-white font-bold mb-2">
+                  <div className="text-4xl md:text-5xl text-white font-bold leading-none">
                     <AnimatedNumber
                       number={stat.number}
                       isVisible={isStatsVisible}
                     />
                   </div>
                   <div
-                    className={`text-white/60 text-sm uppercase tracking-wide ${
+                    className={`text-white/60 text-sm uppercase tracking-wide mt-1 ${
                       isRTL ? "font-[var(--font-cairo)]" : ""
                     }`}
                   >

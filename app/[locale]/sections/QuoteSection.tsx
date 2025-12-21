@@ -32,7 +32,6 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
     : "What began as 100 m² in 2017 is now 2,400+ m². Proof of what commitment can build.";
 
   const authorName = isRTL ? "السيد شليل" : "Mr Sayed Al Shelil";
-  const authorRole = isRTL ? "رئيس مجلس الإدارة" : "Chairman";
 
   const words = quoteText.split(" ");
 
@@ -54,10 +53,10 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] relative overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey relative overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-[#1A4AFF]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-[#122D8B]/5 rounded-full blur-3xl" />
+      <div className="absolute top-10 left-10 w-32 h-32 bg-royal-azure/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 right-10 w-40 h-40 bg-true-cobalt/5 rounded-full blur-3xl" />
       
       <div className="max-w-5xl mx-auto px-6 lg:px-12 relative">
         {/* Quote Icon */}
@@ -67,7 +66,7 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
           }`}
         >
           <svg
-            className="w-16 h-16 text-[#1A4AFF]/20"
+            className="w-16 h-16 text-royal-azure/20"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -78,7 +77,7 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
         {/* Quote Text */}
         <blockquote className="text-center mb-10">
           <p
-            className={`text-xl md:text-2xl lg:text-3xl font-bold text-[#122D8B] leading-relaxed ${
+            className={`text-xl md:text-2xl lg:text-3xl font-bold text-true-cobalt leading-relaxed ${
               isRTL ? "font-[var(--font-cairo)]" : ""
             }`}
           >
@@ -96,7 +95,7 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
           style={{ transitionDelay: `${words.length * 100 + 300}ms` }}
         >
           {/* Author Image */}
-          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#1A4AFF]/20">
+          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-royal-azure/20">
             <Image
               src="https://edgeforgarments.com/wp-content/uploads/2020/09/shleel.jpg"
               alt={authorName}
@@ -108,16 +107,13 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
           
           {/* Author Info */}
           <div className="text-center">
-            <p className={`text-lg font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            <p className={`text-lg font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {authorName}
-            </p>
-            <p className={`text-sm text-[#122D8B]/60 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {authorRole}
             </p>
           </div>
 
           {/* Decorative Line */}
-          <div className="w-16 h-1 bg-gradient-to-r from-[#1A4AFF] to-[#122D8B] rounded-full mt-2" />
+          <div className="w-16 h-1 bg-gradient-to-r from-royal-azure to-true-cobalt rounded-full mt-2" />
         </div>
       </div>
     </section>

@@ -29,30 +29,30 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
           <div className="relative">
             <div className="p-4 relative">
               <div
-                className={`absolute top-0 w-6 h-6 border-t-2 border-[#B6C6E1] ${
+                className={`absolute top-0 w-6 h-6 border-t-2 border-powder-blue ${
                   isRTL ? "right-0 border-r-2" : "left-0 border-l-2"
                 }`}
               />
               <div
-                className={`absolute bottom-0 w-6 h-6 border-b-2 border-[#B6C6E1] ${
+                className={`absolute bottom-0 w-6 h-6 border-b-2 border-powder-blue ${
                   isRTL ? "left-0 border-l-2" : "right-0 border-r-2"
                 }`}
               />
 
-              <div className="aspect-[4/3] bg-[#D8DDE9] relative overflow-hidden">
+              <div className="aspect-[4/3] bg-alabaster-grey relative overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
                   alt="EDGE Factory - Garment Manufacturing"
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#122D8B]/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-true-cobalt/30 to-transparent" />
               </div>
             </div>
 
             {/* Stats Badge */}
             <div
-              className={`absolute -bottom-6 bg-[#122D8B] text-white p-6 hidden lg:block ${
+              className={`absolute -bottom-6 bg-true-cobalt text-white p-6 hidden lg:block ${
                 isRTL ? "-left-6 text-right" : "-right-6"
               }`}
             >
@@ -71,32 +71,32 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
               <TypewriterTitle
                 text={isRTL ? "من نحن" : "About Us"}
                 isVisible={true}
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               />
             </div>
 
             <p
-              className={`text-[#122D8B]/70 text-lg leading-relaxed mb-6 ${
+              className={`text-true-cobalt/70 text-lg leading-relaxed mb-6 ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             >
               {isRTL ? (
                 <>
-                  <strong className="text-[#122D8B] font-[var(--font-cairo)]">إيدج للملابس</strong>{" "}
-                  <span className="text-[#122D8B]" dir="ltr">
+                  <strong className="text-true-cobalt font-[var(--font-cairo)]">إيدج للملابس</strong>{" "}
+                  <span className="text-true-cobalt" dir="ltr">
                     (EDGE for Garments)
                   </span>{" "}
                   هي شركة مصرية رائدة في تصنيع الدنيم الفاخر والملابس الجاهزة، مقرها بورسعيد.
                 </>
               ) : (
                 <>
-                  <strong className="text-[#122D8B]">EDGE for Garments</strong> is a leading Egyptian
+                  <strong className="text-true-cobalt">EDGE for Garments</strong> is a leading Egyptian
                   manufacturer based in Port Said, specializing in premium denim and woven garments.
                 </>
               )}
             </p>
 
-            <p className={`text-[#122D8B]/70 leading-relaxed mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            <p className={`text-true-cobalt/70 leading-relaxed mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL
                 ? "منشأتنا الحديثة تتولى دورة الإنتاج الكاملة - من فحص الأقمشة الأولي مروراً بالقص والخياطة والغسيل والتشطيب، وصولاً إلى التغليف النهائي ومراقبة الجودة."
                 : "Our state-of-the-art facility handles the complete production cycle — from initial fabric inspection through cutting, sewing, washing, and finishing, to final packaging and quality control."}
@@ -111,13 +111,13 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
                 >
                   {isRTL ? (
                     <>
-                      <span className="text-[#122D8B] font-medium font-[var(--font-cairo)]">{point}</span>
-                      <div className="w-2 h-2 bg-[#1A4AFF] flex-shrink-0" />
+                      <span className="text-true-cobalt font-medium font-[var(--font-cairo)]">{point}</span>
+                      <div className="w-2 h-2 bg-royal-azure flex-shrink-0" />
                     </>
                   ) : (
                     <>
-                      <div className="w-2 h-2 bg-[#1A4AFF] flex-shrink-0" />
-                      <span className="text-[#122D8B] font-medium">{point}</span>
+                      <div className="w-2 h-2 bg-royal-azure flex-shrink-0" />
+                      <span className="text-true-cobalt font-medium">{point}</span>
                     </>
                   )}
                 </div>
@@ -126,7 +126,7 @@ export function AboutSection({ locale, dict }: AboutSectionProps) {
 
             <Link
               href={`/${locale}/about`}
-              className={`inline-flex items-center px-6 py-3 border-2 border-[#122D8B] text-[#122D8B] font-semibold text-sm uppercase tracking-wide hover:bg-[#122D8B] hover:text-white transition-all ${
+              className={`inline-flex items-center px-6 py-3 border-2 border-true-cobalt text-true-cobalt font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt hover:text-white transition-all ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             >

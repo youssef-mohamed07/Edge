@@ -228,7 +228,7 @@ export default async function ProductionProcessPage({ params }: PageProps) {
       ];
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden">
+    <main className="min-h-screen bg-alabaster-grey overflow-x-hidden">
       <Navbar locale={locale} dict={dict} />
 
       {/* Page Hero */}
@@ -257,7 +257,7 @@ export default async function ProductionProcessPage({ params }: PageProps) {
             <TypewriterTitle
               text={isRTL ? "دورة الإنتاج" : "Production Cycle"}
               isVisible={true}
-              className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
+              className={`text-3xl md:text-4xl font-bold text-true-cobalt ${
                 isRTL ? "font-[var(--font-cairo)]" : ""
               }`}
             />

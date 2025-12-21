@@ -29,7 +29,7 @@ export function PageLoader({ isRTL = false }: PageLoaderProps) {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#122D8B] to-[#1A4AFF] animate-[fadeOut_0.5s_ease-out_1.5s_forwards]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-true-cobalt to-royal-azure animate-[fadeOut_0.5s_ease-out_1.5s_forwards]">
       <div className="text-center">
         {/* Logo or Brand */}
         <div className="mb-8">
@@ -70,7 +70,7 @@ interface LoadingSpinnerProps {
   color?: string;
 }
 
-export function LoadingSpinner({ size = 'md', color = '#1A4AFF' }: LoadingSpinnerProps) {
+export function LoadingSpinner({ size = 'md', color = 'var(--color-royal-azure)' }: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',

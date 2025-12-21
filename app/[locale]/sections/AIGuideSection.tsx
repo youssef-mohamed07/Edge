@@ -51,11 +51,11 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey">
       <div className="max-w-3xl mx-auto px-6 lg:px-12">
         <div className={`text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           {/* Subtitle */}
-          <p className={`text-[#122D8B]/70 text-sm md:text-base font-medium mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <p className={`text-true-cobalt/70 text-sm md:text-base font-medium mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "مساعدنا الذكي يوجه متطلباتك." : "Our AI agent guides your requirements."}
           </p>
 
@@ -66,7 +66,7 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
                 ? "هل لديك أقمشة أو تصميمات معينة في ذهنك؟" 
                 : "Do you have specific fabrics or designs in mind?"}
               isVisible={isVisible}
-              className={`text-2xl md:text-3xl lg:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              className={`text-2xl md:text-3xl lg:text-4xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
             />
           </div>
 
@@ -78,12 +78,12 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={isRTL ? "اكتب هنا" : "Type here"}
-              className={`w-full px-8 py-4 border-2 border-[#122D8B]/20 rounded-full text-center text-[#122D8B] placeholder-[#122D8B]/40 focus:outline-none focus:border-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              className={`w-full px-8 py-4 border-2 border-true-cobalt/20 rounded-full text-center text-true-cobalt placeholder-true-cobalt/40 focus:outline-none focus:border-royal-azure transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
             />
             {inputValue && (
               <button
                 type="submit"
-                className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-[#1A4AFF] text-white rounded-full flex items-center justify-center hover:bg-[#122D8B] transition-colors ${isRTL ? "left-2" : "right-2"}`}
+                className={`absolute top-1/2 -translate-y-1/2 w-10 h-10 bg-royal-azure text-white rounded-full flex items-center justify-center hover:bg-true-cobalt transition-colors ${isRTL ? "left-2" : "right-2"}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

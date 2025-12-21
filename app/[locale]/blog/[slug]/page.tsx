@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedPosts = await getRelatedPosts(slug);
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden" dir={dir}>
+    <main className="min-h-screen bg-alabaster-grey overflow-x-hidden" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       {/* Hero Section */}
@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       />
 
       {/* Article Content */}
-      <article className="py-12 lg:py-20 bg-[#D8DDE9]">
+      <article className="py-12 lg:py-20 bg-alabaster-grey">
         <div className="max-w-4xl mx-auto px-6 lg:px-12">
           {/* Article Card */}
           <ScrollReveal direction="up" delay={0}>
@@ -181,12 +181,12 @@ export default async function BlogPostPage({ params }: PageProps) {
             {post.gallery && post.gallery.length > 0 && (
               <div className="mt-16 pt-12 border-t border-slate-200">
                 <div className={`flex items-center gap-3 mb-8 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-royal-azure to-true-cobalt rounded-xl flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h3 className={`text-2xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <h3 className={`text-2xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "معرض الصور" : "Photo Gallery"}
                   </h3>
                 </div>
@@ -236,7 +236,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {/* Back Button */}
                 <Link 
                   href={`/${locale}/blog`} 
-                  className={`inline-flex items-center gap-3 bg-gradient-to-r from-[#1A4AFF] to-[#122D8B] text-white font-semibold px-6 py-3 rounded-full hover:shadow-lg hover:shadow-[#1A4AFF]/30 transition-all duration-300 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
+                  className={`inline-flex items-center gap-3 bg-gradient-to-r from-royal-azure to-true-cobalt text-white font-semibold px-6 py-3 rounded-full hover:shadow-lg hover:shadow-royal-azure/30 transition-all duration-300 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
                 >
                   <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -251,18 +251,18 @@ export default async function BlogPostPage({ params }: PageProps) {
       </article>
 
       {relatedPosts.length > 0 && (
-        <section className="py-20 lg:py-28 bg-[#D8DDE9]">
+        <section className="py-20 lg:py-28 bg-alabaster-grey">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             {/* Section Header */}
             <ScrollReveal direction="up" delay={0}>
               <div className={`flex items-center gap-4 mb-12 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-                <div className="w-14 h-14 bg-gradient-to-br from-[#1A4AFF] to-[#122D8B] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1A4AFF]/20">
+                <div className="w-14 h-14 bg-gradient-to-br from-royal-azure to-true-cobalt rounded-2xl flex items-center justify-center shadow-lg shadow-royal-azure/20">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                   </svg>
                 </div>
                 <div className={isRTL ? "text-right" : ""}>
-                  <h2 className={`text-2xl lg:text-3xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <h2 className={`text-2xl lg:text-3xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "أخبار ذات صلة" : "Related News"}
                   </h2>
                   <p className={`text-slate-500 mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
@@ -284,7 +284,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <Image src={relatedPost.image} alt={isRTL ? relatedPost.title.ar : relatedPost.title.en} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className={`absolute top-4 ${isRTL ? "right-4" : "left-4"}`}>
-                      <span className={`inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-[#122D8B] text-xs font-bold px-3 py-1.5 rounded-full ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      <span className={`inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-true-cobalt text-xs font-bold px-3 py-1.5 rounded-full ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
@@ -299,10 +299,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                       </svg>
                       <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{relatedPost.date}</span>
                     </div>
-                    <h3 className={`text-xl font-bold text-[#122D8B] mb-4 line-clamp-2 group-hover:text-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <h3 className={`text-xl font-bold text-true-cobalt mb-4 line-clamp-2 group-hover:text-royal-azure transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {isRTL ? relatedPost.title.ar : relatedPost.title.en}
                     </h3>
-                    <div className={`flex items-center gap-2 text-[#1A4AFF] font-semibold group-hover:gap-3 transition-all ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className={`flex items-center gap-2 text-royal-azure font-semibold group-hover:gap-3 transition-all ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
                       <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "اقرأ المزيد" : "Read More"}</span>
                       <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

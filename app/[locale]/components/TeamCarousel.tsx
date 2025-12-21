@@ -47,7 +47,7 @@ export function TeamCarousel({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           className={`grid lg:grid-cols-2 gap-12 items-center`}
@@ -55,38 +55,31 @@ export function TeamCarousel({
           {/* Text Content - Left side for RTL, Right side for LTR */}
           <div className={`${isRTL ? "text-right lg:order-1" : "lg:order-1"} transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "translate-x-12" : "-translate-x-12"}`}`}>
             <p
-              className={`text-[#1A4AFF] font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              className={`text-royal-azure font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
             >
               {subtitle}
             </p>
-            <div className="mb-6">
+            <div className="mb-8">
               <TypewriterTitle
                 text={title}
                 isVisible={isVisible}
-                className={`text-4xl md:text-5xl lg:text-6xl font-bold text-[#122D8B] leading-tight ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold text-true-cobalt leading-tight ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               />
             </div>
-            <p
-              className={`text-[#122D8B]/60 text-lg mb-8 leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-            >
-              {isRTL
-                ? "فريقنا من الخبراء المتخصصين يعملون معاً لتقديم أفضل المنتجات والخدمات لعملائنا."
-                : "Our team of dedicated experts work together to deliver the best products and services to our clients."}
-            </p>
 
             {/* Active Member Card with Image */}
             <div
-              className={`inline-flex items-center gap-5 p-5 bg-white rounded-2xl shadow-lg border border-[#122D8B]/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1`}
+              className={`inline-flex items-center gap-5 p-5 bg-white rounded-2xl shadow-lg border border-true-cobalt/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1`}
             >
               {/* Text */}
               <div className={isRTL ? "text-right" : ""}>
                 <h3
-                  className={`text-xl font-bold text-[#122D8B] mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                  className={`text-xl font-bold text-true-cobalt mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                 >
                   {activeMember?.name}
                 </h3>
                 <p
-                  className={`text-[#1A4AFF] font-medium text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                  className={`text-royal-azure font-medium text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                 >
                   {activeMember?.role}
                 </p>
@@ -101,7 +94,7 @@ export function TeamCarousel({
                     className="object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-[#122D8B] to-[#1A4AFF] flex items-center justify-center">
+                  <div className="w-full h-full bg-gradient-to-br from-true-cobalt to-royal-azure flex items-center justify-center">
                     <span className="text-white text-2xl font-bold">
                       {activeMember?.name.charAt(0)}
                     </span>
@@ -120,8 +113,8 @@ export function TeamCarousel({
                   onClick={() => setActiveIndex(index)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
                     index === activeIndex
-                      ? "w-8 bg-[#1A4AFF]"
-                      : "w-2.5 bg-[#122D8B]/20 hover:bg-[#122D8B]/40"
+                      ? "w-8 bg-royal-azure"
+                      : "w-2.5 bg-true-cobalt/20 hover:bg-true-cobalt/40"
                   }`}
                 />
               ))}
@@ -143,7 +136,7 @@ export function TeamCarousel({
                   key={index}
                   onClick={() => setActiveIndex(index)}
                   onMouseEnter={() => setActiveIndex(index)}
-                  className="relative cursor-pointer overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl"
+                  className="relative overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl"
                   style={{
                     width: isActive ? "280px" : "85px",
                     height: isActive ? "450px" : "380px",
@@ -164,7 +157,7 @@ export function TeamCarousel({
                       style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
                     />
                   ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#122D8B] to-[#1A4AFF] flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-br from-true-cobalt to-royal-azure flex items-center justify-center">
                       <span
                         className="text-white font-bold transition-all duration-300"
                         style={{

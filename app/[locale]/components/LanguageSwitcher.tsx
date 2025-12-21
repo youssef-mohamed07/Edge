@@ -52,7 +52,7 @@ export function LanguageSwitcher({ currentLocale, variant = "navbar" }: Language
             href={getLocalizedHref(locale)}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
               currentLocale === locale
-                ? "bg-[#1A4AFF] text-white shadow-lg shadow-[#1A4AFF]/30"
+                ? "bg-royal-azure text-white shadow-lg shadow-royal-azure/30"
                 : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
             }`}
           >

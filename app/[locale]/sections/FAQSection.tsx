@@ -9,7 +9,7 @@ import { TypewriterTitle } from "../components/TypewriterTitle";
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
-      className={`w-5 h-5 text-[#1A4AFF] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+      className={`w-5 h-5 text-royal-azure transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -60,13 +60,13 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey">
       <div className="max-w-4xl mx-auto px-6 lg:px-12">
         <div className={`mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${isRTL ? "text-right" : "text-center"}`}>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
-          <p className={`text-[#122D8B]/60 text-lg transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"} ${isRTL ? "font-[var(--font-cairo)]" : "max-w-xl mx-auto"}`}>
+          <p className={`text-true-cobalt/60 text-lg transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"} ${isRTL ? "font-[var(--font-cairo)]" : "max-w-xl mx-auto"}`}>
             {dict.faq.subtitle}
           </p>
         </div>
@@ -84,13 +84,13 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
                   isRTL ? "flex-row-reverse justify-end text-right" : "justify-between text-left"
                 }`}
               >
-                <span className={`font-semibold text-[#122D8B] ${isRTL ? "pr-4 font-[var(--font-cairo)]" : "pr-4"}`}>
+                <span className={`font-semibold text-true-cobalt ${isRTL ? "pr-4 font-[var(--font-cairo)]" : "pr-4"}`}>
                   {faq.question}
                 </span>
                 <ChevronIcon isOpen={openId === faq.id} />
               </button>
               <div className={`overflow-hidden transition-all duration-300 ${openId === faq.id ? "max-h-96" : "max-h-0"}`}>
-                <p className={`px-6 pb-5 text-[#122D8B]/70 leading-relaxed ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>
+                <p className={`px-6 pb-5 text-true-cobalt/70 leading-relaxed ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>
                   {faq.answer}
                 </p>
               </div>
@@ -99,12 +99,12 @@ export function FAQSection({ locale, dict }: FAQSectionProps) {
         </div>
 
         <div className={`mt-12 text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "1000ms" }}>
-          <p className={`text-[#122D8B]/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <p className={`text-true-cobalt/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "لا زال لديك أسئلة؟" : "Still have questions?"}
           </p>
           <Link
             href={`/${locale}/contact`}
-            className={`inline-flex items-center gap-2 text-[#1A4AFF] font-semibold hover:gap-3 transition-all duration-300 ${
+            className={`inline-flex items-center gap-2 text-royal-azure font-semibold hover:gap-3 transition-all duration-300 ${
               isRTL ? "font-[var(--font-cairo)]" : ""
             }`}
           >
