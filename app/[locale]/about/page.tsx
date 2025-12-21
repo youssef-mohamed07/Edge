@@ -11,7 +11,6 @@ import { Timeline } from "../components/Timeline";
 import { LocationsMapSection } from "../sections/LocationsMapSection";
 import { TeamCarousel } from "../components/TeamCarousel";
 import { FAQSection } from "../sections/FAQSection";
-import { QuoteSection } from "../sections/QuoteSection";
 import { AIGuideSection } from "../sections/AIGuideSection";
 import { PartnersSection } from "../sections/PartnersSection";
 import { ScrollReveal } from "../components/ScrollReveal";

@@ -92,22 +92,24 @@ export function Footer({ locale, dict }: FooterProps) {
                   {dict.footer.newsletter.subtitle}
                 </p>
               </div>
-              <form className={`flex gap-3 w-full md:w-auto ${isRTL ? "md:order-2" : ""}`}>
-                <input
-                  type="email"
-                  placeholder={dict.footer.newsletter.placeholder}
-                  className={`flex-1 md:w-72 px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-lg focus:outline-none focus:border-royal-azure transition-colors text-sm ${
-                    isRTL ? "text-right font-[var(--font-cairo)]" : ""
-                  }`}
-                />
-                <button
-                  type="submit"
-                  className={`px-6 py-3 bg-true-cobalt text-white font-semibold rounded-lg hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 ${
-                    isRTL ? "font-[var(--font-cairo)]" : ""
-                  }`}
-                >
-                  {dict.footer.newsletter.button}
-                </button>
+              <form className={`w-full md:w-auto ${isRTL ? "md:order-2" : ""}`}>
+                <div className="flex flex-col gap-3">
+                  <input
+                    type="email"
+                    placeholder={dict.footer.newsletter.placeholder}
+                    className={`w-full px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-lg focus:outline-none focus:border-royal-azure transition-colors text-sm ${
+                      isRTL ? "text-right font-[var(--font-cairo)]" : ""
+                    }`}
+                  />
+                  <button
+                    type="submit"
+                    className={`w-full px-6 py-3 bg-true-cobalt text-white font-semibold rounded-lg hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 ${
+                      isRTL ? "font-[var(--font-cairo)]" : ""
+                    }`}
+                  >
+                    {dict.footer.newsletter.button}
+                  </button>
+                </div>
               </form>
             </div>
           </div>
