@@ -523,31 +523,34 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                       : (consultationType === "whatsapp" ? "We'll contact you on WhatsApp" : "We'll call you soon")
                     }
                   </p>
-                  <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-                    <select
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                      className="px-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-royal-azure min-w-[140px]"
-                      dir="ltr"
-                    >
-                      {countryCodes.map((c) => (
-                        <option key={c.code} value={c.code} className="bg-true-cobalt text-white">
-                          {c.flag} {c.code}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                      placeholder="1234567890"
-                      className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
-                      dir="ltr"
-                    />
+                  <div className="space-y-4">
+                    {/* Phone Input Fields - Stack vertically on mobile, side by side on larger screens */}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <select
+                        value={countryCode}
+                        onChange={(e) => setCountryCode(e.target.value)}
+                        className="w-full sm:w-32 px-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-royal-azure"
+                        dir="ltr"
+                      >
+                        {countryCodes.map((c) => (
+                          <option key={c.code} value={c.code} className="bg-true-cobalt text-white">
+                            {c.flag} {c.code}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                        placeholder="1234567890"
+                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
+                        dir="ltr"
+                      />
+                    </div>
                     <button
                       onClick={handleSubmit}
                       disabled={!isContactValid() || isSubmitting}
-                      className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                      className={`w-full px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
                     >
                       {isSubmitting ? (
                         <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
@@ -573,34 +576,37 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                   <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "سنراسلك قريباً" : "We'll email you soon"}
                   </p>
-                  <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="example@company.com"
-                      className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
-                      dir="ltr"
-                    />
-                    <button
-                      onClick={handleSubmit}
-                      disabled={!isContactValid() || isSubmitting}
-                      className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
-                    >
-                      {isSubmitting ? (
-                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                      ) : (
-                        <>
-                          <span>{isRTL ? "إرسال" : "Submit"}</span>
-                          <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <div className="space-y-4">
+                    {/* Email Input and Submit Button - Stack vertically with consistent spacing */}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="example@company.com"
+                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
+                        dir="ltr"
+                      />
+                      <button
+                        onClick={handleSubmit}
+                        disabled={!isContactValid() || isSubmitting}
+                        className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2 sm:w-auto w-full ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                      >
+                        {isSubmitting ? (
+                          <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                        </>
-                      )}
-                    </button>
+                        ) : (
+                          <>
+                            <span>{isRTL ? "إرسال" : "Submit"}</span>
+                            <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
