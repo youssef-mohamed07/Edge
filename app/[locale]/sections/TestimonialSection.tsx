@@ -219,8 +219,8 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === activeIndex ? "bg-royal-azure w-8" : "bg-royal-azure/30 hover:bg-royal-azure/50"
+              className={`h-3 rounded-full transition-all duration-300 flex-shrink-0 ${
+                index === activeIndex ? "bg-royal-azure w-8 min-w-[32px] max-w-[32px]" : "bg-royal-azure/30 hover:bg-royal-azure/50 w-3 min-w-[12px] max-w-[12px]"
               }`}
               aria-label={`Go to review ${index + 1}`}
             />

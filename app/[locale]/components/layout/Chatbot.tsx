@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { getDirection, type Locale } from "../../../i18n/config";
-import { TypewriterTitle } from "../TypewriterTitle";
 
 interface Message {
   id: string;
@@ -45,7 +44,7 @@ function formatMessage(content: string, isRTL: boolean, locale: string): React.R
         if (line.startsWith("• ") || line.startsWith("- ")) {
           return (
             <div key={index} className={`flex gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
-              <span className="text-royal-azure">•</span>
+              <span className="text-[#1A4AFF]">•</span>
               <span>{line.substring(2)}</span>
             </div>
           );
@@ -76,7 +75,7 @@ function formatMessage(content: string, isRTL: boolean, locale: string): React.R
           {hasContactLink && (
             <Link
               href={`/${locale}/contact`}
-              className={`inline-flex items-center gap-2 px-4 py-2 bg-true-cobalt text-white text-xs font-medium rounded-full hover:bg-royal-azure transition-colors ${isRTL ? "flex-row-reverse" : ""}`}
+              className={`inline-flex items-center gap-2 px-4 py-2 bg-[#122D8B] text-white text-xs font-medium rounded-full hover:bg-[#1A4AFF] transition-colors ${isRTL ? "flex-row-reverse" : ""}`}
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -259,7 +258,7 @@ export function Chatbot({ locale }: ChatbotProps) {
       label: isRTL ? "البريد" : "Email",
       subtitle: "info@edgeforgarments.com",
       href: "mailto:info@edgeforgarments.com",
-      color: "var(--color-true-cobalt)",
+      color: "#122D8B",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -278,12 +277,9 @@ export function Chatbot({ locale }: ChatbotProps) {
             : "opacity-0 translate-y-2 pointer-events-none"
         }`}
       >
-        <div className="bg-white text-true-cobalt px-4 py-2.5 rounded-2xl shadow-xl text-sm font-medium whitespace-nowrap border border-slate-100">
+        <div className="bg-white text-[#122D8B] px-4 py-2.5 rounded-2xl shadow-xl text-sm font-medium whitespace-nowrap border border-slate-100">
           <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>
-            <TypewriterTitle 
-              text={isRTL ? "كيف يمكننا مساعدتك؟ 💬" : "How can we help? 💬"}
-              isVisible={showTooltip && !isOpen}
-            />
+            {isRTL ? "كيف يمكننا مساعدتك؟ 💬" : "How can we help? 💬"}
           </span>
         </div>
       </div>
@@ -297,17 +293,17 @@ export function Chatbot({ locale }: ChatbotProps) {
         }`}
       >
         <div
-          className="bg-white rounded-2xl shadow-2xl w-[340px] overflow-hidden border border-slate-100 flex flex-col"
-          style={{ height: view === "chat" ? "500px" : "auto" }}
+          className="bg-white rounded-2xl shadow-2xl w-[340px] max-w-[calc(100vw-48px)] overflow-hidden border border-slate-100 flex flex-col"
+          style={{ height: view === "chat" ? "500px" : "auto", maxHeight: "calc(100vh - 120px)" }}
         >
           {/* Header */}
-          <div className="bg-true-cobalt p-4 flex-shrink-0">
-            <div className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : ""}`}>
-              <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+          <div className="bg-[#122D8B] p-3 flex-shrink-0">
+            <div className={`flex items-center justify-between gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
+              <div className={`flex items-center gap-2 min-w-0 flex-1 ${isRTL ? "flex-row-reverse" : ""}`}>
                 {view === "chat" && (
                   <button
                     onClick={resetChat}
-                    className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                    className="w-8 h-8 min-w-[32px] bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors flex-shrink-0"
                   >
                     <svg
                       className={`w-4 h-4 text-white ${isRTL ? "rotate-180" : ""}`}
@@ -320,7 +316,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                     </svg>
                   </button>
                 )}
-                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                <div className="w-9 h-9 min-w-[36px] bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
@@ -329,29 +325,29 @@ export function Chatbot({ locale }: ChatbotProps) {
                     />
                   </svg>
                 </div>
-                <div className={isRTL ? "text-right" : ""}>
-                  <h3 className={`text-white font-semibold text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <div className={`min-w-0 ${isRTL ? "text-right" : ""}`}>
+                  <h3 className={`text-white font-semibold text-sm whitespace-nowrap ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {view === "chat"
                       ? isRTL
-                        ? "مساعد Edge الذكي"
-                        : "Edge AI Assistant"
+                        ? "مساعد Edge"
+                        : "Edge AI"
                       : isRTL
                       ? "تواصل معنا"
                       : "Get in Touch"}
                   </h3>
-                  <div className={`flex items-center gap-1.5 ${isRTL ? "flex-row-reverse" : ""}`}>
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                  <div className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0"></span>
                     <span className={`text-white/70 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? "متصل الآن" : "Online"}
+                      {isRTL ? "متصل" : "Online"}
                     </span>
                   </div>
                 </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-8 h-8 min-w-[32px] max-w-[32px] min-h-[32px] max-h-[32px] bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors flex-shrink-0"
               >
-                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="w-4 h-4 flex-shrink-0 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -416,7 +412,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                     <div
                       className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm ${
                         message.role === "user"
-                          ? "bg-true-cobalt text-white rounded-br-md"
+                          ? "bg-[#122D8B] text-white rounded-br-md"
                           : "bg-slate-100 text-slate-800 rounded-bl-md"
                       } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                     >
@@ -447,7 +443,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
-                    className={`flex-1 px-4 py-2.5 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-true-cobalt/20 transition-all ${
+                    className={`flex-1 px-4 py-2.5 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#122D8B]/20 transition-all ${
                       isRTL ? "text-right font-[var(--font-cairo)]" : ""
                     }`}
                     disabled={isLoading}
@@ -455,7 +451,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                   <button
                     onClick={sendMessage}
                     disabled={!inputValue.trim() || isLoading}
-                    className={`w-10 h-10 bg-true-cobalt rounded-xl flex items-center justify-center text-white transition-all hover:bg-royal-azure disabled:opacity-50 disabled:cursor-not-allowed ${
+                    className={`w-10 h-10 bg-[#122D8B] rounded-xl flex items-center justify-center text-white transition-all hover:bg-[#1A4AFF] disabled:opacity-50 disabled:cursor-not-allowed ${
                       isRTL ? "rotate-180" : ""
                     }`}
                   >
@@ -476,20 +472,20 @@ export function Chatbot({ locale }: ChatbotProps) {
           setIsOpen(!isOpen);
           setShowTooltip(false);
         }}
-        className={`group w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg ${
+        className={`group w-14 h-14 !min-w-14 !max-w-14 !min-h-14 !max-h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg flex-shrink-0 ${
           isOpen
             ? "bg-slate-800 shadow-slate-800/25"
-            : "bg-true-cobalt hover:bg-royal-azure shadow-true-cobalt/40 hover:shadow-royal-azure/50 hover:scale-105"
+            : "bg-[#122D8B] hover:bg-[#1A4AFF] shadow-[#122D8B]/40 hover:shadow-[#1A4AFF]/50 hover:scale-105"
         }`}
         aria-label={isOpen ? "Close" : "Chat with us"}
       >
-        <div className={`transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`}>
+        <div className={`flex items-center justify-center transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`}>
           {isOpen ? (
-            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="w-6 h-6 flex-shrink-0 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg className="w-6 h-6 flex-shrink-0 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 strokeLinecap="round"
