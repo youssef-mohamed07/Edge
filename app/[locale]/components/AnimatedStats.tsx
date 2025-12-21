@@ -86,19 +86,19 @@ export function AnimatedStats({ stats, isRTL = false, className = '' }: Animated
         >
           <div className="relative">
             {/* Background Glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A4AFF]/20 to-[#60A5FA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-r from-royal-azure/20 to-[#60A5FA]/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
             {/* Content */}
-            <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 group-hover:bg-white/90 group-hover:border-[#1A4AFF]/30 transition-all duration-300">
-              <div className={`text-3xl lg:text-4xl font-bold text-[#122D8B] mb-2 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+            <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 group-hover:bg-white/90 group-hover:border-royal-azure/30 transition-all duration-300">
+              <div className={`text-3xl lg:text-4xl font-bold text-true-cobalt mb-2 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                 {animatedNumbers[index] || stat.number}
               </div>
-              <div className={`text-sm text-[#122D8B]/70 font-medium ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+              <div className={`text-sm text-true-cobalt/70 font-medium ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                 {stat.label}
               </div>
               
               {/* Animated underline */}
-              <div className="mt-3 h-1 bg-gradient-to-r from-[#1A4AFF] to-[#60A5FA] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+              <div className="mt-3 h-1 bg-gradient-to-r from-royal-azure to-[#60A5FA] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
             </div>
           </div>
         </div>

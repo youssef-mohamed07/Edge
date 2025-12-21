@@ -122,9 +122,9 @@ function RotatingWord({
   }, []);
 
   return (
-    <span className="bg-gradient-to-r from-[#1A4AFF] via-[#4F7FFF] to-[#1A4AFF] bg-clip-text text-transparent">
+    <span className="bg-gradient-to-r from-royal-azure via-[#4F7FFF] to-royal-azure bg-clip-text text-transparent">
       {displayedText}
-      <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity text-[#1A4AFF]`}>|</span>
+      <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity text-royal-azure`}>|</span>
     </span>
   );
 }
@@ -186,13 +186,13 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             backgroundRepeat: "no-repeat",
           }}
         />
-        <div className="absolute inset-0 bg-[#122D8B]/55" />
+        <div className="absolute inset-0 bg-true-cobalt/55" />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-12 pt-24 pb-20">
         {/* Accent Line */}
         <div
-          className={`w-16 h-1 bg-[#1A4AFF] mb-8 mx-auto transition-all duration-700 ${
+          className={`w-16 h-1 bg-royal-azure mb-8 mx-auto transition-all duration-700 ${
             isVisible ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
           }`}
         />
@@ -209,11 +209,11 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             letterSpacing: isRTL ? "0" : "0.02em",
           }}
         >
-          <TypewriterText text={titlePart1} isVisible={isVisible} delay={500} />
+          {titlePart1}
           <br />
-          <TypewriterText text={titlePart2} isVisible={isVisible} delay={1500} />
-          <br />
-          <RotatingWord words={rotatingWords} isVisible={isVisible} delay={2500} />
+          {titlePart2}
+          {!isRTL && <br />}
+          <RotatingWord words={rotatingWords} isVisible={isVisible} delay={500} />
         </h1>
 
         <button
@@ -231,7 +231,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = "white";
-            e.currentTarget.style.color = "#122D8B";
+            e.currentTarget.style.color = "var(--color-true-cobalt)";
             e.currentTarget.style.transform = "scale(1.05)";
             e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3)";
           }}

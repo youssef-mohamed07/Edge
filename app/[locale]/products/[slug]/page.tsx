@@ -167,7 +167,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const galleryImages = product.gallery.length > 0 ? product.gallery : [product.image];
 
   return (
-    <main className="min-h-screen bg-[#D8DDE9] overflow-x-hidden" dir={dir}>
+    <main className="min-h-screen bg-alabaster-grey overflow-x-hidden" dir={dir}>
       <Navbar locale={locale} dict={dict} />
 
       <PageHero
@@ -182,17 +182,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="py-12 lg:py-20 bg-[#D8DDE9]">
+      <section className="py-12 lg:py-20 bg-alabaster-grey">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className={`grid lg:grid-cols-2 gap-12 ${isRTL ? "lg:flex-row-reverse" : ""}`}>
             <div className="space-y-4">
-              <div className="aspect-[4/3] bg-[#D8DDE9] relative overflow-hidden">
+              <div className="aspect-[4/3] bg-alabaster-grey relative overflow-hidden">
                 <Image src={galleryImages[0]} alt={title} fill className="object-cover" priority />
               </div>
               {galleryImages.length > 1 && (
                 <div className="grid grid-cols-3 gap-4">
                   {galleryImages.slice(1).map((img, idx) => (
-                    <div key={idx} className="aspect-square bg-[#D8DDE9] relative overflow-hidden">
+                    <div key={idx} className="aspect-square bg-alabaster-grey relative overflow-hidden">
                       <Image src={img} alt={`${title} ${idx + 2}`} fill className="object-cover hover:scale-105 transition-transform" />
                     </div>
                   ))}
@@ -201,16 +201,16 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </div>
 
             <div className={isRTL ? "text-right" : ""}>
-              <h1 className={`text-3xl lg:text-4xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{title}</h1>
-              <p className={`text-lg text-[#122D8B]/70 mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{description}</p>
-              <p className={`text-[#122D8B]/60 mb-8 leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{longDescription}</p>
+              <h1 className={`text-3xl lg:text-4xl font-bold text-true-cobalt mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{title}</h1>
+              <p className={`text-lg text-true-cobalt/70 mb-6 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{description}</p>
+              <p className={`text-true-cobalt/60 mb-8 leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{longDescription}</p>
 
               <div className="mb-8">
-                <h3 className={`text-lg font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{isRTL ? "المميزات" : "Features"}</h3>
+                <h3 className={`text-lg font-bold text-true-cobalt mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{isRTL ? "المميزات" : "Features"}</h3>
                 <ul className="space-y-3">
                   {features.map((feature, idx) => (
-                    <li key={idx} className={`flex items-center gap-3 text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      <div className="w-2 h-2 bg-[#1A4AFF] flex-shrink-0" />
+                    <li key={idx} className={`flex items-center gap-3 text-true-cobalt/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      <div className="w-2 h-2 bg-royal-azure flex-shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -218,10 +218,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </div>
 
               <div className={`flex gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
-                <Link href={`/${locale}/contact`} className={`px-8 py-4 bg-[#1A4AFF] text-white font-semibold text-sm uppercase tracking-wide hover:bg-[#122D8B] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <Link href={`/${locale}/contact`} className={`px-8 py-4 bg-royal-azure text-white font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL ? "اطلب عرض سعر" : "Request Quote"}
                 </Link>
-                <Link href={`/${locale}/contact`} className={`px-8 py-4 border-2 border-[#122D8B] text-[#122D8B] font-semibold text-sm uppercase tracking-wide hover:bg-[#122D8B] hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <Link href={`/${locale}/contact`} className={`px-8 py-4 border-2 border-true-cobalt text-true-cobalt font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL ? "اطلب عينة" : "Request Sample"}
                 </Link>
               </div>
@@ -231,14 +231,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </section>
 
       {Object.keys(specifications).length > 0 && (
-        <section className="py-16 bg-[#D8DDE9]">
+        <section className="py-16 bg-alabaster-grey">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h2 className={`text-2xl font-bold text-[#122D8B] mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "المواصفات" : "Specifications"}</h2>
+            <h2 className={`text-2xl font-bold text-true-cobalt mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "المواصفات" : "Specifications"}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {Object.entries(specifications).map(([key, value]) => (
-                <div key={key} className={`bg-white p-6 border border-[#D8DDE9] ${isRTL ? "text-right" : ""}`}>
-                  <div className={`text-sm text-[#122D8B]/50 uppercase tracking-wide mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{key}</div>
-                  <div className={`text-lg font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{value}</div>
+                <div key={key} className={`bg-white p-6 border border-alabaster-grey ${isRTL ? "text-right" : ""}`}>
+                  <div className={`text-sm text-true-cobalt/50 uppercase tracking-wide mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{key}</div>
+                  <div className={`text-lg font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{value}</div>
                 </div>
               ))}
             </div>
@@ -247,21 +247,21 @@ export default async function ProductDetailPage({ params }: PageProps) {
       )}
 
       {relatedProducts.length > 0 && (
-        <section className="py-16 bg-[#D8DDE9]">
+        <section className="py-16 bg-alabaster-grey">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <h2 className={`text-2xl font-bold text-[#122D8B] mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "منتجات ذات صلة" : "Related Products"}</h2>
+            <h2 className={`text-2xl font-bold text-true-cobalt mb-8 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{isRTL ? "منتجات ذات صلة" : "Related Products"}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {relatedProducts.map((relProduct) => {
                 const relTitle = isRTL ? relProduct.title.ar : relProduct.title.en;
                 const relDesc = isRTL ? relProduct.description.ar : relProduct.description.en;
                 return (
                   <Link key={relProduct.slug} href={`/${locale}/products/${relProduct.slug}`} className="group">
-                    <div className="aspect-[4/3] bg-[#D8DDE9] relative overflow-hidden mb-4">
+                    <div className="aspect-[4/3] bg-alabaster-grey relative overflow-hidden mb-4">
                       <Image src={relProduct.image} alt={relTitle} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <div className={`absolute bottom-0 w-0 h-1 bg-[#1A4AFF] group-hover:w-full transition-all duration-300 ${isRTL ? "right-0" : "left-0"}`} />
+                      <div className={`absolute bottom-0 w-0 h-1 bg-royal-azure group-hover:w-full transition-all duration-300 ${isRTL ? "right-0" : "left-0"}`} />
                     </div>
-                    <h3 className={`text-lg font-bold text-[#122D8B] mb-2 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{relTitle}</h3>
-                    <p className={`text-sm text-[#122D8B]/60 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{relDesc}</p>
+                    <h3 className={`text-lg font-bold text-true-cobalt mb-2 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{relTitle}</h3>
+                    <p className={`text-sm text-true-cobalt/60 ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}>{relDesc}</p>
                   </Link>
                 );
               })}
@@ -270,11 +270,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </section>
       )}
 
-      <section className="py-16 bg-[#122D8B]">
+      <section className="py-16 bg-true-cobalt">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
           <h2 className={`text-2xl lg:text-3xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{isRTL ? "هل أنت مهتم بهذا المنتج؟" : "Interested in this product?"}</h2>
           <p className={`text-white/70 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{isRTL ? "تواصل معنا اليوم للحصول على عرض سعر مخصص أو لمناقشة متطلباتك" : "Contact us today for a custom quote or to discuss your requirements"}</p>
-          <Link href={`/${locale}/contact`} className={`inline-flex items-center px-8 py-4 bg-[#1A4AFF] text-white font-semibold text-sm uppercase tracking-wide hover:bg-white hover:text-[#122D8B] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <Link href={`/${locale}/contact`} className={`inline-flex items-center px-8 py-4 bg-royal-azure text-white font-semibold text-sm uppercase tracking-wide hover:bg-white hover:text-true-cobalt transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "تواصل معنا" : "Contact Us"}
           </Link>
         </div>

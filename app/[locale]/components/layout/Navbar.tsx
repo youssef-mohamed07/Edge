@@ -75,8 +75,8 @@ export function Navbar({ locale, dict }: NavbarProps) {
                   href={link.href}
                   className={`px-5 py-2 font-medium tracking-wide transition-all rounded-full ${
                     isActive(link.href)
-                      ? "bg-[#1A4AFF] text-white"
-                      : "text-[#122D8B] hover:bg-[#122D8B]/5"
+                      ? "bg-royal-azure text-white"
+                      : "text-true-cobalt hover:bg-true-cobalt/5"
                   } ${isRTL ? "text-sm font-[var(--font-cairo)]" : "text-xs"}`}
                 >
                   {link.label}
@@ -111,7 +111,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
           >
             <span className={`transition-transform duration-300 ${isOpen ? "rotate-90" : "rotate-0"}`}>
               {isOpen ? (
-                <CloseIcon className="w-5 h-5 text-[#122D8B]" />
+                <CloseIcon className="w-5 h-5 text-true-cobalt" />
               ) : (
                 <MenuIcon className="w-5 h-5 text-white" />
               )}
@@ -128,7 +128,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-[#122D8B]/95 backdrop-blur-md"
+          className="absolute inset-0 bg-true-cobalt/95 backdrop-blur-md"
           onClick={() => setIsOpen(false)}
         />
 
@@ -157,7 +157,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
                 onClick={() => setIsOpen(false)}
                 className={`block px-5 py-4 text-lg font-medium rounded-xl transition-all duration-300 ${
                   isActive(link.href)
-                    ? "bg-[#1A4AFF] text-white"
+                    ? "bg-royal-azure text-white"
                     : "text-white/80 hover:bg-white/10 hover:text-white"
                 } ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}
                 style={{
@@ -174,7 +174,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
               onClick={() => setIsOpen(false)}
               className={`block px-5 py-4 text-lg font-medium rounded-xl transition-all duration-300 ${
                 pathname === `/${locale}/contact`
-                  ? "bg-[#1A4AFF] text-white"
+                  ? "bg-royal-azure text-white"
                   : "text-white/80 hover:bg-white/10 hover:text-white"
               } ${isRTL ? "text-right font-[var(--font-cairo)]" : ""}`}
               style={{

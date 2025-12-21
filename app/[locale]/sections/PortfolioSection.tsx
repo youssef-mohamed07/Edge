@@ -48,20 +48,20 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Process Steps - Left Side */}
           <ScrollReveal direction={isRTL ? "right" : "left"}>
           <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
-            <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+            <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "كيف نعمل" : "How We Work"}
             </span>
             <div className="mb-14">
               <TypewriterTitle
                 text={dict.portfolio.label}
                 isVisible={true}
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${
                   isRTL ? "font-[var(--font-cairo)]" : ""
                 }`}
               />
@@ -77,14 +77,14 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
                       : "opacity-0 translate-y-6"
                   }`}
                 >
-                  <div className="flex-shrink-0 w-10 h-10 bg-[#122D8B] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                  <div className="flex-shrink-0 w-10 h-10 bg-true-cobalt text-white rounded-full flex items-center justify-center font-bold text-sm">
                     {step.id}
                   </div>
                   <div className="flex-1 text-start">
-                    <h3 className={`text-lg font-bold text-[#122D8B] mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <h3 className={`text-lg font-bold text-true-cobalt mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {step.title}
                     </h3>
-                    <p className={`text-[#122D8B]/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <p className={`text-true-cobalt/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {step.description}
                     </p>
                   </div>

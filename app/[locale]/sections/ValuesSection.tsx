@@ -41,17 +41,17 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
       ];
 
   return (
-    <section id="values" className="py-20 lg:py-32 bg-[#D8DDE9]" dir={dir}>
+    <section id="values" className="py-20 lg:py-32 bg-alabaster-grey" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
         <div className="text-center mb-16">
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {dict.values.label}
           </span>
           <TypewriterTitle
             text={dict.values.title}
             isVisible={true}
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
           />
         </div>
         </ScrollReveal>
@@ -60,23 +60,23 @@ export function ValuesSection({ locale, dict }: ValuesSectionProps) {
           {values.map((value, index) => (
             <ScrollReveal key={value.title} delay={index * 150} direction={index % 2 === 0 ? "up" : "fade"}>
             <div
-              className={`bg-white p-8 border border-[#D8DDE9] hover:border-[#1A4AFF]/50 
+              className={`bg-white p-8 border border-alabaster-grey hover:border-royal-azure/50 
                 transition-all duration-500 ease-out group cursor-pointer
-                hover:shadow-xl hover:shadow-[#1A4AFF]/10 hover:-translate-y-2 hover:scale-[1.02]
+                hover:shadow-xl hover:shadow-royal-azure/10 hover:-translate-y-2 hover:scale-[1.02]
                 ${isRTL ? "text-right" : ""}`}
             >
               <div className={`mb-6 ${isRTL ? "flex justify-end" : ""}`}>
                 <div className="relative">
-                  <value.icon className="w-12 h-12 text-[#122D8B] group-hover:text-[#1A4AFF] transition-all duration-300 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-[#1A4AFF]/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 -z-10 blur-xl" />
+                  <value.icon className="w-12 h-12 text-true-cobalt group-hover:text-royal-azure transition-all duration-300 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-royal-azure/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 -z-10 blur-xl" />
                 </div>
               </div>
               <h3
-                className={`text-lg text-[#122D8B] mb-3 font-bold uppercase tracking-wide transition-colors duration-300 group-hover:text-[#1A4AFF] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                className={`text-lg text-true-cobalt mb-3 font-bold uppercase tracking-wide transition-colors duration-300 group-hover:text-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               >
                 {value.title}
               </h3>
-              <p className={`text-[#122D8B]/60 text-sm leading-relaxed transition-colors duration-300 group-hover:text-[#122D8B]/80 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              <p className={`text-true-cobalt/60 text-sm leading-relaxed transition-colors duration-300 group-hover:text-true-cobalt/80 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {value.description}
               </p>
             </div>

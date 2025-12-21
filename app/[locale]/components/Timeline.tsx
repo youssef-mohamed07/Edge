@@ -58,7 +58,7 @@ function TimelineItem({
     >
       {/* Timeline dot */}
       <div
-        className={`absolute w-4 h-4 bg-[#1A4AFF] z-10 transition-transform duration-500 left-1/2 -translate-x-1/2 ${
+        className={`absolute w-4 h-4 bg-royal-azure z-10 transition-transform duration-500 left-1/2 -translate-x-1/2 ${
           isVisible ? "scale-100" : "scale-0"
         }`}
       />
@@ -74,11 +74,11 @@ function TimelineItem({
               : `${isRTL ? "text-right" : "text-left"} pl-4`
           }`}
         >
-          <div className="text-[#1A4AFF] font-bold text-2xl mb-2">{milestone.year}</div>
-          <h3 className={`text-[#122D8B] font-bold text-lg mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <div className="text-royal-azure font-bold text-2xl mb-2">{milestone.year}</div>
+          <h3 className={`text-true-cobalt font-bold text-lg mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {milestone.title}
           </h3>
-          <p className={`text-[#122D8B]/60 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <p className={`text-true-cobalt/60 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {milestone.description}
           </p>
         </div>
@@ -109,7 +109,7 @@ export function Timeline({ milestones, isRTL, title }: TimelineProps) {
   }, []);
 
   return (
-    <section className="py-8 lg:py-10 bg-[#D8DDE9]">
+    <section className="py-8 lg:py-10 bg-alabaster-grey">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           ref={titleRef}
@@ -120,7 +120,7 @@ export function Timeline({ milestones, isRTL, title }: TimelineProps) {
           <TypewriterTitle
             text={title}
             isVisible={titleVisible}
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
           />
         </div>
 

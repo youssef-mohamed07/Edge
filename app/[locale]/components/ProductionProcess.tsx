@@ -187,13 +187,13 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-3 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+            <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-3 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
               {isRTL ? 'العملية الإنتاجية' : 'PRODUCTION PROCESS'}
             </span>
-            <h2 className={`text-3xl md:text-5xl font-bold text-[#122D8B] mb-6 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+            <h2 className={`text-3xl md:text-5xl font-bold text-true-cobalt mb-6 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
               {isRTL ? 'من التصميم إلى التسليم' : 'From Design to Delivery'}
             </h2>
-            <p className={`text-[#122D8B]/70 text-lg max-w-3xl mx-auto ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+            <p className={`text-true-cobalt/70 text-lg max-w-3xl mx-auto ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
               {isRTL 
                 ? 'عملية إنتاج متطورة تضمن أعلى معايير الجودة في كل خطوة من خطوات التصنيع.'
                 : 'An advanced production process ensuring the highest quality standards at every step of manufacturing.'
@@ -205,7 +205,7 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
         {/* Process Timeline */}
         <div className="relative">
           {/* Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-[#1A4AFF] to-[#60A5FA] rounded-full" />
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-royal-azure to-[#60A5FA] rounded-full" />
 
           <div className="space-y-16">
             {processSteps.map((step, index) => (
@@ -218,31 +218,31 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
                         group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl 
                         transition-all duration-500 cursor-pointer border border-gray-100
                         hover:-translate-y-2 hover:scale-[1.02]
-                        ${activeStep === step.id ? 'ring-2 ring-[#1A4AFF] shadow-2xl shadow-[#1A4AFF]/20' : ''}
+                        ${activeStep === step.id ? 'ring-2 ring-royal-azure shadow-2xl shadow-royal-azure/20' : ''}
                       `}
                       onClick={() => setActiveStep(activeStep === step.id ? null : step.id)}
                     >
                       {/* Background Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#1A4AFF]/5 to-[#60A5FA]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-royal-azure/5 to-[#60A5FA]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                       
                       <div className="relative z-10">
                         {/* Header */}
                         <div className={`flex items-center gap-4 mb-4 ${index % 2 === 0 ? (isRTL ? 'flex-row' : 'flex-row-reverse') : (isRTL ? 'flex-row-reverse' : 'flex-row')}`}>
-                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#122D8B] to-[#1A4AFF] flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-true-cobalt to-royal-azure flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                             {step.icon}
                           </div>
                           <div className="flex-1">
-                            <h3 className={`text-xl font-bold text-[#122D8B] group-hover:text-[#1A4AFF] transition-colors duration-300 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+                            <h3 className={`text-xl font-bold text-true-cobalt group-hover:text-royal-azure transition-colors duration-300 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                               {isRTL ? step.titleAr : step.title}
                             </h3>
-                            <p className={`text-sm text-[#1A4AFF] font-medium ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+                            <p className={`text-sm text-royal-azure font-medium ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                               {isRTL ? step.durationAr : step.duration}
                             </p>
                           </div>
                         </div>
 
                         {/* Description */}
-                        <p className={`text-[#122D8B]/70 mb-4 leading-relaxed ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+                        <p className={`text-true-cobalt/70 mb-4 leading-relaxed ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                           {isRTL ? step.descriptionAr : step.description}
                         </p>
 
@@ -251,14 +251,14 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
                           transition-all duration-500 overflow-hidden
                           ${activeStep === step.id ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}
                         `}>
-                          <div className="pt-4 border-t border-[#122D8B]/10">
-                            <h4 className={`text-sm font-semibold text-[#122D8B] mb-3 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
+                          <div className="pt-4 border-t border-true-cobalt/10">
+                            <h4 className={`text-sm font-semibold text-true-cobalt mb-3 ${isRTL ? 'font-[var(--font-cairo)]' : ''}`}>
                               {isRTL ? 'التفاصيل:' : 'Details:'}
                             </h4>
                             <ul className="space-y-2">
                               {(isRTL ? step.detailsAr : step.details).map((detail, detailIndex) => (
-                                <li key={detailIndex} className={`flex items-center gap-2 text-sm text-[#122D8B]/70 ${isRTL ? 'flex-row-reverse font-[var(--font-cairo)]' : ''}`}>
-                                  <div className="w-1.5 h-1.5 rounded-full bg-[#1A4AFF]" />
+                                <li key={detailIndex} className={`flex items-center gap-2 text-sm text-true-cobalt/70 ${isRTL ? 'flex-row-reverse font-[var(--font-cairo)]' : ''}`}>
+                                  <div className="w-1.5 h-1.5 rounded-full bg-royal-azure" />
                                   {detail}
                                 </li>
                               ))}
@@ -269,11 +269,11 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
                         {/* Expand/Collapse Indicator */}
                         <div className={`flex items-center justify-center mt-4`}>
                           <div className={`
-                            w-6 h-6 rounded-full bg-[#1A4AFF]/10 flex items-center justify-center
-                            group-hover:bg-[#1A4AFF]/20 transition-all duration-300
+                            w-6 h-6 rounded-full bg-royal-azure/10 flex items-center justify-center
+                            group-hover:bg-royal-azure/20 transition-all duration-300
                             ${activeStep === step.id ? 'rotate-180' : ''}
                           `}>
-                            <svg className="w-3 h-3 text-[#1A4AFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-3 h-3 text-royal-azure" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                           </div>
@@ -284,8 +284,8 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
 
                   {/* Timeline Node */}
                   <div className="relative z-10">
-                    <div className="w-8 h-8 rounded-full bg-white border-4 border-[#1A4AFF] shadow-lg">
-                      <div className="w-full h-full rounded-full bg-[#1A4AFF] animate-pulse" />
+                    <div className="w-8 h-8 rounded-full bg-white border-4 border-royal-azure shadow-lg">
+                      <div className="w-full h-full rounded-full bg-royal-azure animate-pulse" />
                     </div>
                   </div>
 
@@ -300,7 +300,7 @@ export function ProductionProcess({ isRTL = false }: ProductionProcessProps) {
         {/* Call to Action */}
         <ScrollReveal delay={800}>
           <div className="text-center mt-16">
-            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#122D8B] to-[#1A4AFF] rounded-2xl px-8 py-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-true-cobalt to-royal-azure rounded-2xl px-8 py-4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />

@@ -150,16 +150,16 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9] overflow-hidden" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             {isRTL ? "آراء العملاء" : "Testimonials"}
           </span>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
-          <div className={`flex items-center justify-center gap-2 text-[#122D8B]/60 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+          <div className={`flex items-center justify-center gap-2 text-true-cobalt/60 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
             <GoogleIcon />
             <span className={`text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
               {isRTL ? "تقييمات حقيقية من Google" : "Real reviews from Google"}
@@ -193,19 +193,19 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
 
                 {/* Quote */}
                 <p
-                  className={`text-[#122D8B]/70 text-center leading-relaxed mb-5 min-h-[60px] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                  className={`text-true-cobalt/70 text-center leading-relaxed mb-5 min-h-[60px] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                 >
                   &ldquo;{isRTL ? review.quote : review.quoteEn}&rdquo;
                 </p>
 
                 {/* Name */}
                 <div className="text-center">
-                  <h4 className={`font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <h4 className={`font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? review.name : review.nameEn}
                   </h4>
                   <div className="flex items-center justify-center gap-1 mt-1">
                     <GoogleIcon />
-                    <span className="text-[#122D8B]/40 text-xs">Google Review</span>
+                    <span className="text-true-cobalt/40 text-xs">Google Review</span>
                   </div>
                 </div>
               </div>
@@ -220,7 +220,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
               key={index}
               onClick={() => setActiveIndex(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === activeIndex ? "bg-[#1A4AFF] w-8" : "bg-[#1A4AFF]/30 hover:bg-[#1A4AFF]/50"
+                index === activeIndex ? "bg-royal-azure w-8" : "bg-royal-azure/30 hover:bg-royal-azure/50"
               }`}
               aria-label={`Go to review ${index + 1}`}
             />
@@ -230,14 +230,14 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
         {/* Add Review CTA */}
         <div className={`bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`} style={{ transitionDelay: "600ms" }}>
           <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
-            <div className="w-14 h-14 bg-[#1A4AFF]/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 bg-royal-azure/10 rounded-full flex items-center justify-center flex-shrink-0">
               <GoogleIcon />
             </div>
             <div className={isRTL ? "text-right" : ""}>
-              <h3 className={`text-lg font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              <h3 className={`text-lg font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? "شاركنا رأيك" : "Share Your Experience"}
               </h3>
-              <p className={`text-[#122D8B]/60 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              <p className={`text-true-cobalt/60 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? "نقدر رأيك! اكتب تقييمك على Google" : "We value your feedback! Write a review on Google"}
               </p>
             </div>
@@ -246,7 +246,7 @@ export function TestimonialSection({ locale, dict }: TestimonialSectionProps) {
             href={googleReviewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-6 py-3 bg-[#122D8B] text-white font-semibold rounded-full hover:bg-[#1A4AFF] transition-colors whitespace-nowrap ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
+            className={`inline-flex items-center gap-2 px-6 py-3 bg-true-cobalt text-white font-semibold rounded-full hover:bg-royal-azure transition-colors whitespace-nowrap ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

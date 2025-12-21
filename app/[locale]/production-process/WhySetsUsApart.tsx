@@ -127,7 +127,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
   }, []);
 
   return (
-    <section className="py-8 lg:py-10 bg-[#D8DDE9]">
+    <section className="py-8 lg:py-10 bg-alabaster-grey">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div
           ref={titleRef}
@@ -138,7 +138,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
           <TypewriterTitle
             text={isRTL ? "ما يميزنا في إدارة إنتاجك" : "What sets us apart in managing your production"}
             isVisible={titleVisible}
-            className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${
+            className={`text-3xl md:text-4xl font-bold text-true-cobalt ${
               isRTL ? "font-[var(--font-cairo)]" : ""
             }`}
           />
@@ -165,7 +165,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
               />
               
               {/* Overlay */}
-              <div className="absolute inset-0 bg-[#122D8B]/80 transition-all duration-500 group-hover:bg-[#122D8B]/90" />
+              <div className="absolute inset-0 bg-true-cobalt/80 transition-all duration-500 group-hover:bg-true-cobalt/90" />
               
               {/* Content */}
               <div className={`absolute inset-0 p-8 flex flex-col justify-end ${isRTL ? "text-right" : ""}`}>
@@ -186,7 +186,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
                 
                 {/* Animated line */}
                 <div
-                  className={`h-0.5 bg-[#1A4AFF] mt-4 transition-all duration-500 origin-left group-hover:w-full ${
+                  className={`h-0.5 bg-royal-azure mt-4 transition-all duration-500 origin-left group-hover:w-full ${
                     visibleCards.has(index) ? "w-12" : "w-0"
                   } ${isRTL ? "origin-right ml-auto" : ""}`}
                   style={{ transitionDelay: `${index * 100 + 300}ms` }}
@@ -195,7 +195,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
 
               {/* Corner accent */}
               <div
-                className={`absolute top-4 w-8 h-8 border-t-2 border-[#1A4AFF] transition-all duration-500 ${
+                className={`absolute top-4 w-8 h-8 border-t-2 border-royal-azure transition-all duration-500 ${
                   isRTL ? "right-4 border-r-2" : "left-4 border-l-2"
                 } ${visibleCards.has(index) ? "opacity-100" : "opacity-0"}`}
                 style={{ transitionDelay: `${index * 100 + 400}ms` }}

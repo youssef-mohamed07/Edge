@@ -94,7 +94,7 @@ function TypewriterEffect({ text, isVisible, speed = 50 }: TypewriterEffectProps
     <span>
       {displayText}
       {currentIndex < text.length && (
-        <span className="animate-pulse text-[#1A4AFF]">|</span>
+        <span className="animate-pulse text-royal-azure">|</span>
       )}
     </span>
   );

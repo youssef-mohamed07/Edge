@@ -37,11 +37,11 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-[#D8DDE9]">
+    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey">
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className={`text-center mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
             <TypewriterTitle text={title} isVisible={isVisible} />
           </h2>
         </div>
@@ -61,14 +61,14 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
               />
               
               {/* Overlay */}
-              <div className="absolute inset-0 bg-[#122D8B]/30" />
+              <div className="absolute inset-0 bg-true-cobalt/30" />
               
               {/* Play Button */}
               <button
                 onClick={() => setIsPlaying(true)}
                 className="absolute inset-0 flex items-center justify-center group"
               >
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-[#122D8B] rounded-full flex items-center justify-center shadow-2xl group-hover:bg-[#1A4AFF] group-hover:scale-110 transition-all duration-300">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-true-cobalt rounded-full flex items-center justify-center shadow-2xl group-hover:bg-royal-azure group-hover:scale-110 transition-all duration-300">
                   <svg 
                     className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" 
                     fill="currentColor" 

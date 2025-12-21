@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* EDGE Brand Colors Theme */
+@theme {
+  --color-true-cobalt: #122D8B;
+  --color-royal-azure: #1A4AFF;
+  --color-powder-blue: #B6C6E1;
+  --color-alabaster-grey: #D8DDE9;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

@@ -97,9 +97,9 @@ export function AnimatedServiceStep({
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <Icon className="w-16 h-16 text-[#122D8B]" />
+          <Icon className="w-16 h-16 text-true-cobalt" />
           <h2
-            className={`text-2xl md:text-3xl text-[#122D8B] font-bold ${
+            className={`text-2xl md:text-3xl text-true-cobalt font-bold ${
               isRTL ? "font-[var(--font-cairo)]" : ""
             }`}
           >
@@ -108,7 +108,7 @@ export function AnimatedServiceStep({
         </div>
 
         <p
-          className={`text-[#122D8B]/70 text-lg mb-6 transition-all duration-500 ${
+          className={`text-true-cobalt/70 text-lg mb-6 transition-all duration-500 ${
             isRTL ? "text-right font-[var(--font-cairo)]" : ""
           } ${isVisible ? "opacity-100 translate-x-0" : isRTL ? "opacity-0 translate-x-8" : "opacity-0 -translate-x-8"}`}
           style={{ transitionDelay: "400ms" }}
@@ -125,9 +125,9 @@ export function AnimatedServiceStep({
               }`}
               style={{ transitionDelay: `${500 + detailIndex * 100}ms` }}
             >
-              <div className="w-2 h-2 bg-[#1A4AFF] flex-shrink-0" />
+              <div className="w-2 h-2 bg-royal-azure flex-shrink-0" />
               <span
-                className={`text-[#122D8B]/70 ${
+                className={`text-true-cobalt/70 ${
                   isRTL ? "font-[var(--font-cairo)]" : ""
                 }`}
               >
@@ -140,7 +140,7 @@ export function AnimatedServiceStep({
 
       {/* Image */}
       <div
-        className={`aspect-video bg-[#D8DDE9] relative overflow-hidden transition-all duration-700 ${
+        className={`aspect-video bg-alabaster-grey relative overflow-hidden transition-all duration-700 ${
           isEven ? "lg:order-2" : "lg:order-1"
         } ${
           isVisible
@@ -151,13 +151,13 @@ export function AnimatedServiceStep({
       >
         <Image src={image} alt={title} fill className="object-cover" />
         <div
-          className={`absolute top-4 w-8 h-8 border-t-2 border-[#1A4AFF] transition-all duration-500 ${
+          className={`absolute top-4 w-8 h-8 border-t-2 border-royal-azure transition-all duration-500 ${
             isRTL ? "right-4 border-r-2" : "left-4 border-l-2"
           } ${isVisible ? "opacity-100" : "opacity-0"}`}
           style={{ transitionDelay: "600ms" }}
         />
         <div
-          className={`absolute bottom-4 w-8 h-8 border-b-2 border-[#1A4AFF] transition-all duration-500 ${
+          className={`absolute bottom-4 w-8 h-8 border-b-2 border-royal-azure transition-all duration-500 ${
             isRTL ? "left-4 border-l-2" : "right-4 border-r-2"
           } ${isVisible ? "opacity-100" : "opacity-0"}`}
           style={{ transitionDelay: "700ms" }}

@@ -50,7 +50,7 @@ function AnimatedCounter({ end, suffix, isVisible, duration = 2000 }: { end: num
 
   return (
     <>
-      {count}<span className="text-[#1A4AFF]">{suffix}</span>
+      {count}<span className="text-royal-azure">{suffix}</span>
     </>
   );
 }
@@ -179,13 +179,13 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       />
 
       {/* Contact Info Cards */}
-      <section className="py-16 lg:py-20 bg-[#D8DDE9]">
+      <section className="py-16 lg:py-20 bg-alabaster-grey">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, index) => (
               <div
                 key={info.title}
-                className={`group relative bg-white p-8 border border-[#D8DDE9] rounded-xl shadow-sm hover:shadow-xl hover:border-[#1A4AFF]/30 transition-all duration-500 overflow-hidden ${
+                className={`group relative bg-white p-8 border border-alabaster-grey rounded-xl shadow-sm hover:shadow-xl hover:border-royal-azure/30 transition-all duration-500 overflow-hidden ${
                   isRTL ? "text-right" : "text-center"
                 } ${cardsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
@@ -197,14 +197,14 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                   <info.icon className="w-6 h-6" />
                 </div>
                 
-                <h3 className={`text-[#122D8B] font-bold uppercase tracking-wide mb-4 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <h3 className={`text-true-cobalt font-bold uppercase tracking-wide mb-4 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {info.title}
                 </h3>
                 
                 {info.details.map((detail, i) => (
-                  <p key={`${info.title}-${i}`} className={`text-[#122D8B]/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <p key={`${info.title}-${i}`} className={`text-true-cobalt/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {info.links ? (
-                      <a href={info.links[i]} className="hover:text-[#1A4AFF] transition-colors duration-300 inline-flex items-center gap-1">
+                      <a href={info.links[i]} className="hover:text-royal-azure transition-colors duration-300 inline-flex items-center gap-1">
                         {detail}
                         <svg className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -222,7 +222,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       </section>
 
       {/* Stats Section */}
-      <section ref={statsRef} className="py-16 bg-[#122D8B] relative overflow-hidden">
+      <section ref={statsRef} className="py-16 bg-true-cobalt relative overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
@@ -249,23 +249,23 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-8 lg:py-10 bg-[#D8DDE9]">
+      <section className="py-8 lg:py-10 bg-alabaster-grey">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div ref={formRef} className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch ${isRTL ? "direction-rtl" : ""}`}>
             {/* Form */}
             <div className={`flex flex-col ${isRTL ? "lg:order-2 text-right" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`} style={{ transition: "all 0.8s ease-out" }}>
               <div className="mb-8">
-                <span className={`text-[#1A4AFF] text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL ? "راسلنا" : "Get in Touch"}
                 </span>
                 <div className="mb-4">
                   <TypewriterTitle
                     text={isRTL ? "أرسل لنا رسالة" : "Send Us a Message"}
                     isVisible={formVisible}
-                    className={`text-3xl md:text-4xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                    className={`text-3xl md:text-4xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                   />
                 </div>
-                <p className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <p className={`text-true-cobalt/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                   {isRTL
                     ? "املأ النموذج أدناه وسيتواصل معك فريقنا خلال 24 ساعة."
                     : "Fill out the form below and our team will get back to you within 24 hours."}
@@ -301,7 +301,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="group">
-                    <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {dict.contact.form.name} <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -310,14 +310,14 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 ${
                         isRTL ? "text-right font-[var(--font-cairo)]" : ""
                       }`}
                       placeholder={isRTL ? "أدخل اسمك" : "Enter your name"}
                     />
                   </div>
                   <div className="group">
-                    <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {isRTL ? "اسم الشركة" : "Company Name"}
                     </label>
                     <input
@@ -325,7 +325,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 ${
                         isRTL ? "text-right font-[var(--font-cairo)]" : ""
                       }`}
                       placeholder={isRTL ? "اسم شركتك (اختياري)" : "Your company (optional)"}
@@ -335,7 +335,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
 
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {dict.contact.form.email} <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -344,14 +344,14 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 ${
                         isRTL ? "text-right" : ""
                       }`}
                       placeholder={isRTL ? "example@company.com" : "example@company.com"}
                     />
                   </div>
                   <div>
-                    <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {isRTL ? "رقم الهاتف" : "Phone Number"}
                     </label>
                     <input
@@ -359,7 +359,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 ${
                         isRTL ? "text-right" : ""
                       }`}
                       placeholder={isRTL ? "+20 xxx xxx xxxx" : "+20 xxx xxx xxxx"}
@@ -368,7 +368,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                 </div>
 
                 <div>
-                  <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {dict.contact.form.subject} <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -376,7 +376,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 bg-white cursor-pointer ${
+                    className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 cursor-pointer ${
                       isRTL ? "text-right font-[var(--font-cairo)]" : ""
                     }`}
                   >
@@ -390,7 +390,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                 </div>
 
                 <div>
-                  <label className={`block text-[#122D8B] text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <label className={`block text-true-cobalt text-sm font-medium mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {dict.contact.form.message} <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -399,7 +399,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                     onChange={handleInputChange}
                     required
                     rows={5}
-                    className={`w-full px-4 py-3.5 border-2 border-[#D8DDE9] rounded-lg focus:border-[#1A4AFF] focus:ring-4 focus:ring-[#1A4AFF]/10 focus:outline-none transition-all duration-300 resize-none ${
+                    className={`w-full px-4 py-3.5 bg-white border-2 border-gray-200 rounded-lg focus:border-royal-azure focus:ring-4 focus:ring-royal-azure/10 focus:outline-none transition-all duration-300 shadow-sm hover:border-gray-300 resize-none ${
                       isRTL ? "text-right font-[var(--font-cairo)]" : ""
                     }`}
                     placeholder={isRTL ? "اكتب رسالتك هنا..." : "Write your message here..."}
@@ -409,7 +409,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`group relative w-full sm:w-auto px-10 py-4 bg-[#1A4AFF] text-white font-semibold tracking-wide rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#1A4AFF]/30 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`group relative w-full sm:w-auto px-10 py-4 bg-true-cobalt text-white font-semibold tracking-wide rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-true-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed ${
                     isRTL ? "font-[var(--font-cairo)]" : ""
                   }`}
                 >
@@ -425,20 +425,20 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                     ) : (
                       <>
                         {dict.contact.form.send}
-                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className={`w-5 h-5 transition-transform duration-300 ${isRTL ? "group-hover:-translate-x-1 rotate-180" : "group-hover:translate-x-1"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                       </>
                     )}
                   </span>
-                  <div className="absolute inset-0 bg-[#122D8B] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                  <div className="absolute inset-0 bg-royal-azure transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </button>
               </form>
             </div>
 
             {/* Map & Info Side */}
             <div className={`flex flex-col ${isRTL ? "lg:order-1" : ""} ${formVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`} style={{ transition: "all 0.8s ease-out", transitionDelay: "200ms" }}>
-              <div className="flex-1 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] bg-[#D8DDE9] relative overflow-hidden rounded-2xl shadow-lg mb-8">
+              <div className="flex-1 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] bg-alabaster-grey relative overflow-hidden rounded-2xl shadow-lg mb-8">
                 <iframe
                   src="https://maps.google.com/maps?q=%D9%85%D8%B5%D9%86%D8%B9%20%D8%A5%D9%8A%D8%AF%D8%AC%20%D9%84%D9%84%D9%85%D9%84%D8%A7%D8%A8%D8%B3%20%D8%A7%D9%84%D8%AC%D8%A7%D9%87%D8%B2%D8%A9&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   width="100%"
@@ -451,44 +451,44 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                 />
               </div>
 
-              <div className={`p-8 bg-gradient-to-br from-gray-50 to-white border border-[#D8DDE9] rounded-2xl ${isRTL ? "text-right" : ""}`}>
+              <div className={`p-8 bg-gradient-to-br from-gray-50 to-white border border-alabaster-grey rounded-2xl ${isRTL ? "text-right" : ""}`}>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#122D8B] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-true-cobalt flex items-center justify-center">
                     <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className={`text-xl text-[#122D8B] font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  <h3 className={`text-xl text-true-cobalt font-bold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "ساعات العمل" : "Office Hours"}
                   </h3>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className={`flex justify-between items-center p-4 bg-white rounded-xl border border-[#D8DDE9]/50 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <div className={`flex justify-between items-center p-4 bg-white rounded-xl border border-alabaster-grey/50 ${isRTL ? "flex-row-reverse" : ""}`}>
                     <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
                       <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      <span className={`text-true-cobalt/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                         {isRTL ? "الأحد - الخميس" : "Sunday - Thursday"}
                       </span>
                     </div>
-                    <span className="text-[#122D8B] font-semibold">{isRTL ? "8:00 ص - 5:00 م" : "8:00 AM - 5:00 PM"}</span>
+                    <span className="text-true-cobalt font-semibold">{isRTL ? "8:00 ص - 5:00 م" : "8:00 AM - 5:00 PM"}</span>
                   </div>
-                  <div className={`flex justify-between items-center p-4 bg-white rounded-xl border border-[#D8DDE9]/50 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <div className={`flex justify-between items-center p-4 bg-white rounded-xl border border-alabaster-grey/50 ${isRTL ? "flex-row-reverse" : ""}`}>
                     <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
                       <div className="w-2 h-2 rounded-full bg-red-500" />
-                      <span className={`text-[#122D8B]/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      <span className={`text-true-cobalt/70 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                         {isRTL ? "الجمعة - السبت" : "Friday - Saturday"}
                       </span>
                     </div>
-                    <span className={`text-[#122D8B] font-semibold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <span className={`text-true-cobalt font-semibold ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {isRTL ? "مغلق" : "Closed"}
                     </span>
                   </div>
                 </div>
 
                 {/* Quick Contact */}
-                <div className="mt-6 pt-6 border-t border-[#D8DDE9]">
-                  <p className={`text-sm text-[#122D8B]/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <div className="mt-6 pt-6 border-t border-alabaster-grey">
+                  <p className={`text-sm text-true-cobalt/60 mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "تواصل سريع:" : "Quick contact:"}
                   </p>
                   <div className="flex gap-3">
@@ -503,7 +503,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                     </a>
                     <a
                       href="tel:+201222493500"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#122D8B] text-white rounded-xl font-medium hover:bg-[#1A4AFF] transition-colors duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-true-cobalt text-white rounded-xl font-medium hover:bg-royal-azure transition-colors duration-300"
                     >
                       <PhoneIcon className="w-5 h-5" />
                       <span className="text-sm">{isRTL ? "اتصل الآن" : "Call Now"}</span>

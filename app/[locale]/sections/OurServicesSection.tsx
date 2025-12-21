@@ -34,9 +34,9 @@ function TypewriterTitle({ text, isVisible, isRTL }: { text: string; isVisible: 
   }, [isVisible, text]);
 
   return (
-    <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-[#122D8B] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+    <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
       {displayedText}
-      {isTyping && <span className="animate-pulse text-[#1A4AFF]">|</span>}
+      {isTyping && <span className="animate-pulse text-royal-azure">|</span>}
     </h2>
   );
 }
@@ -168,7 +168,7 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
   };
 
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 px-6 lg:px-12 bg-[#D8DDE9] overflow-hidden" dir={dir}>
+    <section ref={sectionRef} className="py-8 lg:py-10 px-6 lg:px-12 bg-alabaster-grey overflow-hidden" dir={dir}>
       <div className="max-w-7xl mx-auto">
         <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <TypewriterTitle text={title} isVisible={isVisible} isRTL={isRTL} />
@@ -215,7 +215,7 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
               key={index}
               onClick={() => setActiveIndex(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === activeIndex ? "bg-[#1A4AFF] w-8" : "bg-[#1A4AFF]/30 hover:bg-[#1A4AFF]/50"
+                index === activeIndex ? "bg-royal-azure w-8" : "bg-royal-azure/30 hover:bg-royal-azure/50"
               }`}
               aria-label={`Go to service ${index + 1}`}
             />

@@ -26,7 +26,7 @@ export function TypewriterTitle({ text, isVisible, className = "" }: TypewriterT
         clearInterval(typeInterval);
         setIsTyping(false);
       }
-    }, 60);
+    }, 80);
 
     return () => clearInterval(typeInterval);
   }, [isVisible, text]);
@@ -34,7 +34,7 @@ export function TypewriterTitle({ text, isVisible, className = "" }: TypewriterT
   return (
     <span className={className}>
       {displayedText}
-      {isTyping && <span className="animate-pulse text-[#1A4AFF]">|</span>}
+      {isTyping && <span className="animate-pulse text-royal-azure">|</span>}
     </span>
   );
 }
