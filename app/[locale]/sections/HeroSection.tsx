@@ -138,14 +138,14 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
 
   const subtitleWords = dict.hero.subtitle.split(" ");
 
-  // Words to rotate through
+  // Words to rotate through (Arabic includes "بـ" prefix)
   const rotatingWords = isRTL
-    ? ["الجودة", "الموثوقية", "الثقة"]
+    ? ["بالجودة", "بالموثوقية", "بالثقة"]
     : ["Quality", "Reliability", "Trust"];
 
   // Static title parts
   const titlePart1 = isRTL ? "صناعة الملابس" : "CRAFTING";
-  const titlePart2 = isRTL ? "بـ" : "GARMENTS WITH";
+  const titlePart2 = isRTL ? "" : "GARMENTS WITH";
 
   // Trigger animation on mount
   useEffect(() => {
@@ -211,8 +211,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
         >
           {titlePart1}
           <br />
-          {titlePart2}
-          {!isRTL && <br />}
+          {titlePart2 && <>{titlePart2}<br /></>}
           <RotatingWord words={rotatingWords} isVisible={isVisible} delay={500} />
         </h1>
 
