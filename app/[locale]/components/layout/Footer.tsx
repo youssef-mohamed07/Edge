@@ -97,13 +97,13 @@ export function Footer({ locale, dict }: FooterProps) {
                   <input
                     type="email"
                     placeholder={dict.footer.newsletter.placeholder}
-                    className={`w-full px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-lg focus:outline-none focus:border-royal-azure transition-colors text-sm ${
+                    className={`w-full px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-royal-azure transition-colors text-sm ${
                       isRTL ? "text-right font-[var(--font-cairo)]" : ""
                     }`}
                   />
                   <button
                     type="submit"
-                    className={`w-full px-6 py-3 bg-true-cobalt text-white font-semibold rounded-lg hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 ${
+                    className={`w-full px-6 py-3 bg-true-cobalt text-white font-semibold hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 ${
                       isRTL ? "font-[var(--font-cairo)]" : ""
                     }`}
                   >
@@ -121,11 +121,11 @@ export function Footer({ locale, dict }: FooterProps) {
           {/* Brand Column */}
           <div>
             <Image
-              src="/logo1.png"
+              src="/logo-white.png"
               alt="EDGE for Garments"
-              width={140}
-              height={45}
-              className={`h-12 w-auto mb-5 brightness-0 invert ${isRTL ? "ml-auto" : ""}`}
+              width={300}
+              height={100}
+              className={`h-24 w-auto mb-5 ${isRTL ? "ml-auto" : ""}`}
             />
             <p
               className={`text-white/60 text-sm leading-relaxed mb-5 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}

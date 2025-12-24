@@ -348,7 +348,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
               <p className={`text-white/70 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? "تم استلام طلبك. سيتواصل معك فريقنا قريباً." : "Your request has been received. Our team will contact you soon."}
               </p>
-              <button onClick={handleReset} className={`px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+              <button onClick={handleReset} className={`px-6 py-3 bg-white/10 hover:bg-white/20 text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? "إرسال طلب آخر" : "Submit Another Request"}
               </button>
             </div>
@@ -365,7 +365,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                   <button
                     type="button"
                     onClick={() => setCountryDropdownOpen(!countryDropdownOpen)}
-                    className={`w-full px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-royal-azure flex items-center justify-between transition-colors hover:bg-white/15 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
+                    className={`w-full px-5 py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-royal-azure flex items-center justify-between transition-colors hover:bg-white/15 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
                   >
                     <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
                       {selectedCountry ? (
@@ -384,7 +384,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
 
                   {/* Dropdown Panel */}
                   {countryDropdownOpen && (
-                    <div className="absolute z-[9999] w-full mt-2 bg-[#1e3a5f] border border-white/20 rounded-xl shadow-2xl overflow-hidden">
+                    <div className="absolute z-[9999] w-full mt-2 bg-[#1e3a5f] border border-white/20 shadow-2xl overflow-hidden">
                       {/* Search Input */}
                       <div className="p-3 border-b border-white/10">
                         <div className="relative">
@@ -396,7 +396,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                             value={countrySearch}
                             onChange={(e) => setCountrySearch(e.target.value)}
                             placeholder={isRTL ? "ابحث عن بلد..." : "Search country..."}
-                            className={`w-full py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-royal-azure ${isRTL ? "pr-10 pl-4 font-[var(--font-cairo)]" : "pl-10 pr-4"}`}
+                            className={`w-full py-2 bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-royal-azure ${isRTL ? "pr-10 pl-4 font-[var(--font-cairo)]" : "pl-10 pr-4"}`}
                             autoFocus
                           />
                         </div>
@@ -450,14 +450,14 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                     <button
                       key={option.value}
                       onClick={() => handleSelect(option.value)}
-                      className={`group p-5 rounded-2xl border-2 transition-colors ${
+                      className={`group p-5 border-2 transition-colors ${
                         answers[currentQuestion.id] === option.value
                           ? "bg-royal-azure border-royal-azure text-white"
                           : "bg-white/10 border-white/20 text-white hover:bg-white/5 hover:border-white/40"
                       }`}
                     >
                       <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center flex-shrink-0 ${
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                           answers[currentQuestion.id] === option.value ? "bg-white border-white" : "border-white/40"
                         }`}>
                           {answers[currentQuestion.id] === option.value && (
@@ -483,12 +483,12 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                       value={otherInputs[currentQuestion.id] || ""}
                       onChange={(e) => setOtherInputs((prev) => ({ ...prev, [currentQuestion.id]: e.target.value }))}
                       placeholder={isRTL ? "اكتب إجابتك هنا..." : "Type your answer here..."}
-                      className={`flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                      className={`flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                     />
                     <button
                       onClick={handleOtherSubmit}
                       disabled={!otherInputs[currentQuestion.id]?.trim()}
-                      className="px-6 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white rounded-xl"
+                      className="px-6 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white"
                     >
                       <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -529,7 +529,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                       <select
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
-                        className="w-full sm:w-32 px-4 py-4 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-royal-azure"
+                        className="w-full sm:w-32 px-4 py-4 bg-white/10 border border-white/20 text-white focus:outline-none focus:border-royal-azure"
                         dir="ltr"
                       >
                         {countryCodes.map((c) => (
@@ -543,14 +543,14 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
                         placeholder="1234567890"
-                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
+                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
                         dir="ltr"
                       />
                     </div>
                     <button
                       onClick={handleSubmit}
                       disabled={!isContactValid() || isSubmitting}
-                      className={`w-full px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                      className={`w-full px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold flex items-center justify-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
                     >
                       {isSubmitting ? (
                         <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
@@ -584,13 +584,13 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="example@company.com"
-                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
+                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
                         dir="ltr"
                       />
                       <button
                         onClick={handleSubmit}
                         disabled={!isContactValid() || isSubmitting}
-                        className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold rounded-xl flex items-center justify-center gap-2 sm:w-auto w-full ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                        className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold flex items-center justify-center gap-2 sm:w-auto w-full ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
                       >
                         {isSubmitting ? (
                           <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">

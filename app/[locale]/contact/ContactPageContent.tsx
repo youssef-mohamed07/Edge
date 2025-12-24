@@ -409,7 +409,7 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`group relative w-full sm:w-auto px-10 py-4 bg-true-cobalt text-white font-semibold tracking-wide rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-true-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`group relative w-full sm:w-auto px-10 py-4 bg-true-cobalt text-white font-semibold tracking-wide overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-true-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed ${
                     isRTL ? "font-[var(--font-cairo)]" : ""
                   }`}
                 >
@@ -496,14 +496,14 @@ export function ContactPageContent({ locale, dict }: ContactPageContentProps) {
                       href="https://wa.me/201222493500"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white rounded-xl font-medium hover:bg-[#20bd5a] transition-colors duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white font-medium hover:bg-[#20bd5a] transition-colors duration-300"
                     >
                       <WhatsAppIcon className="w-5 h-5" />
                       <span className="text-sm">WhatsApp</span>
                     </a>
                     <a
                       href="tel:+201222493500"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-true-cobalt text-white rounded-xl font-medium hover:bg-royal-azure transition-colors duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-true-cobalt text-white font-medium hover:bg-royal-azure transition-colors duration-300"
                     >
                       <PhoneIcon className="w-5 h-5" />
                       <span className="text-sm">{isRTL ? "اتصل الآن" : "Call Now"}</span>

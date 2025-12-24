@@ -236,7 +236,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {/* Back Button */}
                 <Link 
                   href={`/${locale}/blog`} 
-                  className={`inline-flex items-center gap-3 bg-gradient-to-r from-royal-azure to-true-cobalt text-white font-semibold px-6 py-3 rounded-full hover:shadow-lg hover:shadow-royal-azure/30 transition-all duration-300 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
+                  className={`inline-flex items-center gap-3 bg-gradient-to-r from-royal-azure to-true-cobalt text-white font-semibold px-6 py-3 hover:shadow-lg hover:shadow-royal-azure/30 transition-all duration-300 ${isRTL ? "flex-row-reverse font-[var(--font-cairo)]" : ""}`}
                 >
                   <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

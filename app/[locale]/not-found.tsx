@@ -14,13 +14,13 @@ export default function NotFound() {
             <div className="flex gap-4 justify-center">
               <Link
                 href="/en"
-                className="px-6 py-3 bg-royal-azure text-white font-semibold rounded-full hover:bg-true-cobalt transition-colors"
+                className="px-6 py-3 bg-royal-azure text-white font-semibold hover:bg-true-cobalt transition-colors"
               >
                 English Home
               </Link>
               <Link
                 href="/ar"
-                className="px-6 py-3 border-2 border-true-cobalt text-true-cobalt font-semibold rounded-full hover:bg-true-cobalt hover:text-white transition-colors font-[var(--font-cairo)]"
+                className="px-6 py-3 border-2 border-true-cobalt text-true-cobalt font-semibold hover:bg-true-cobalt hover:text-white transition-colors font-[var(--font-cairo)]"
               >
                 الصفحة الرئيسية
               </Link>

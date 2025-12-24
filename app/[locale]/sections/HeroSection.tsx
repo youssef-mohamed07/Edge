@@ -222,7 +222,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
               aiSection.scrollIntoView({ behavior: "smooth" });
             }
           }}
-          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white rounded-full transition-all duration-700 ${
+          className={`inline-flex items-center justify-center gap-2 px-10 py-4 text-sm font-semibold tracking-wide border-2 border-white text-white transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           } ${isRTL ? "font-(--font-cairo)" : ""}`}
           style={{

@@ -103,6 +103,11 @@ export function Chatbot({ locale }: ChatbotProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
+  // Typewriter state
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const fullText = isRTL ? "كيف يمكننا مساعدتك؟" : "How can we help?";
+
   // Show tooltip after delay
   useEffect(() => {
     if (!isOpen) {
@@ -110,8 +115,29 @@ export function Chatbot({ locale }: ChatbotProps) {
       return () => clearTimeout(timer);
     } else {
       setShowTooltip(false);
+      setDisplayedText("");
+      setIsTypingComplete(false);
     }
   }, [isOpen]);
+
+  // Typewriter effect
+  useEffect(() => {
+    if (showTooltip && !isOpen) {
+      setDisplayedText("");
+      setIsTypingComplete(false);
+      let currentIndex = 0;
+      const interval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setDisplayedText(fullText.slice(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(interval);
+          setIsTypingComplete(true);
+        }
+      }, 50);
+      return () => clearInterval(interval);
+    }
+  }, [showTooltip, isOpen, fullText]);
 
   // Scroll to bottom of messages
   useEffect(() => {
@@ -277,9 +303,10 @@ export function Chatbot({ locale }: ChatbotProps) {
             : "opacity-0 translate-y-2 pointer-events-none"
         }`}
       >
-        <div className="bg-white text-[#122D8B] px-4 py-2.5 rounded-2xl shadow-xl text-sm font-medium whitespace-nowrap border border-slate-100">
+        <div className="bg-white text-[#122D8B] px-4 py-2.5 rounded-2xl shadow-xl text-sm font-medium whitespace-nowrap border border-slate-100 min-w-[180px]">
           <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>
-            {isRTL ? "كيف يمكننا مساعدتك؟ 💬" : "How can we help? 💬"}
+            {displayedText}
+            {!isTypingComplete && <span className="animate-pulse">|</span>}
           </span>
         </div>
       </div>
@@ -443,7 +470,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder={isRTL ? "اكتب رسالتك..." : "Type your message..."}
-                    className={`flex-1 px-4 py-2.5 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#122D8B]/20 transition-all ${
+                    className={`flex-1 px-4 py-2.5 bg-slate-100 text-sm outline-none focus:ring-2 focus:ring-[#122D8B]/20 transition-all ${
                       isRTL ? "text-right font-[var(--font-cairo)]" : ""
                     }`}
                     disabled={isLoading}
@@ -451,7 +478,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                   <button
                     onClick={sendMessage}
                     disabled={!inputValue.trim() || isLoading}
-                    className={`w-10 h-10 bg-[#122D8B] rounded-xl flex items-center justify-center text-white transition-all hover:bg-[#1A4AFF] disabled:opacity-50 disabled:cursor-not-allowed ${
+                    className={`w-10 h-10 bg-[#122D8B] flex items-center justify-center text-white transition-all hover:bg-[#1A4AFF] disabled:opacity-50 disabled:cursor-not-allowed ${
                       isRTL ? "rotate-180" : ""
                     }`}
                   >

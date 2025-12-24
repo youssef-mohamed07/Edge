@@ -89,7 +89,7 @@ export function ProductsSection({ locale, dict }: ProductsSectionProps) {
         <div className={`text-center mt-10 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: "800ms" }}>
           <Link
             href={`/${locale}/products`}
-            className={`inline-flex items-center gap-2 px-6 py-3 bg-true-cobalt text-white font-semibold text-sm rounded-lg hover:bg-royal-azure transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+            className={`inline-flex items-center gap-2 px-6 py-3 bg-true-cobalt text-white font-semibold text-sm hover:bg-royal-azure transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
           >
             {dict.products.viewAll}
             <span>{isRTL ? "←" : "→"}</span>
