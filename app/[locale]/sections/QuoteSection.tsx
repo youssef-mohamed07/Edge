@@ -112,8 +112,6 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
             </p>
           </div>
 
-          {/* Decorative Line */}
-          <div className="w-16 h-1 bg-gradient-to-r from-royal-azure to-true-cobalt rounded-full mt-2" />
         </div>
       </div>
     </section>

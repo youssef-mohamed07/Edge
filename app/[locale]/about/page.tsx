@@ -70,7 +70,7 @@ export default async function AboutPage({ params }: PageProps) {
         { title: "الموثوقية", description: "تسليم ثابت وشراكات يمكن الاعتماد عليها", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" },
         { title: "الجودة", description: "اهتمام دقيق بالتفاصيل في كل غرزة", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },
         { title: "الاحترافية", description: "معايير رائدة في الصناعة وخبرة عالية", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" },
-        { title: "الابتكار", description: "تبني التقنيات والأساليب الجديدة", image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" },
+        { title: "الابتكار", description: "تبني التقنيات والأساليب الجديدة", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" },
         { title: "الشفافية", description: "تواصل مفتوح وعمليات واضحة", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" },
         { title: "المرونة", description: "حلول قابلة للتكيف مع المتطلبات الفريدة", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" },
       ]
@@ -78,7 +78,7 @@ export default async function AboutPage({ params }: PageProps) {
         { title: "Reliability", description: "Consistent delivery and dependable partnerships", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" },
         { title: "Quality", description: "Meticulous attention to detail in every stitch", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },
         { title: "Professionalism", description: "Industry-leading standards and expertise", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" },
-        { title: "Innovation", description: "Embracing new technologies and methods", image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" },
+        { title: "Innovation", description: "Embracing new technologies and methods", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" },
         { title: "Transparency", description: "Open communication and clear processes", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" },
         { title: "Flexibility", description: "Adaptable solutions for unique requirements", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" },
       ];
@@ -176,14 +176,12 @@ export default async function AboutPage({ params }: PageProps) {
       </section>
 
       {/* Mission & Vision Section - Premium Bento Grid Design */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-alabaster-grey to-white">
+      <section className="py-16 lg:py-24 bg-[#D8DDE9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           {/* Section Header */}
           <ScrollReveal direction="up" delay={0}>
             <div className={`text-center mb-12 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              <span className="inline-block px-4 py-1.5 bg-royal-azure/10 text-royal-azure text-sm font-semibold rounded-full mb-4">
-                {isRTL ? "من نحن" : "WHO WE ARE"}
-              </span>
+             
               <h2 className="text-3xl md:text-5xl font-bold text-true-cobalt">
                 {isRTL ? "مهمتنا ورؤيتنا" : "Our Mission & Vision"}
               </h2>
@@ -269,9 +267,13 @@ export default async function AboutPage({ params }: PageProps) {
               </div>
             </ScrollReveal>
 
+          </div>
+
+          {/* Bottom Cards - Compact Style Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
             {/* Production Line Card */}
-            <ScrollReveal direction="up" delay={300} className="lg:col-span-4">
-              <div className="relative h-full rounded-[2rem] overflow-hidden group">
+            <ScrollReveal direction="up" delay={300}>
+              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
                 <Image
                   src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
                   alt={isRTL ? "خط الإنتاج" : "Production Line"}
@@ -280,26 +282,20 @@ export default async function AboutPage({ params }: PageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
                 <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <div className={`flex items-center gap-2 mb-2 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-                    <div className="w-8 h-8 rounded-lg bg-royal-azure flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                      </svg>
-                    </div>
-                    <span className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? "التصنيع" : "Manufacturing"}
-                    </span>
-                  </div>
                   <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "خط الإنتاج" : "Production Line"}
                   </h4>
+                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "أحدث الآلات والتقنيات في التصنيع" : "State-of-the-art machinery and manufacturing technology"}
+                  </p>
+                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
                 </div>
               </div>
             </ScrollReveal>
 
             {/* Quality Control Card */}
-            <ScrollReveal direction="up" delay={400} className="lg:col-span-4">
-              <div className="relative h-full rounded-[2rem] overflow-hidden group">
+            <ScrollReveal direction="up" delay={400}>
+              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
                 <Image
                   src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80"
                   alt={isRTL ? "مراقبة الجودة" : "Quality Control"}
@@ -308,26 +304,20 @@ export default async function AboutPage({ params }: PageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
                 <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <div className={`flex items-center gap-2 mb-2 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-                    <div className="w-8 h-8 rounded-lg bg-royal-azure flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <span className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? "الجودة" : "Quality"}
-                    </span>
-                  </div>
                   <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "مراقبة الجودة" : "Quality Control"}
                   </h4>
+                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "معايير صارمة لضمان أعلى جودة" : "Rigorous standards ensuring the highest quality"}
+                  </p>
+                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
                 </div>
               </div>
             </ScrollReveal>
 
             {/* Innovation Card */}
-            <ScrollReveal direction="up" delay={500} className="lg:col-span-4">
-              <div className="relative h-full rounded-[2rem] overflow-hidden group">
+            <ScrollReveal direction="up" delay={500}>
+              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
                 <Image
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80"
                   alt={isRTL ? "الابتكار" : "Innovation"}
@@ -336,19 +326,13 @@ export default async function AboutPage({ params }: PageProps) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
                 <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <div className={`flex items-center gap-2 mb-2 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
-                    <div className="w-8 h-8 rounded-lg bg-royal-azure flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <span className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                      {isRTL ? "التطوير" : "Development"}
-                    </span>
-                  </div>
                   <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "الابتكار والتقنية" : "Innovation & Tech"}
                   </h4>
+                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL ? "تبني أحدث التقنيات والأساليب" : "Embracing the latest technologies and methods"}
+                  </p>
+                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
                 </div>
               </div>
             </ScrollReveal>
@@ -387,54 +371,35 @@ export default async function AboutPage({ params }: PageProps) {
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-[200px]">
             {values.map((value, index) => (
               <ScrollReveal key={value.title} direction="up" delay={index * 100}>
-                <div
-                  className={`group relative rounded-3xl overflow-hidden aspect-square transition-all duration-700`}
-                >
-                  {/* Background Image */}
+                <div className="relative h-full rounded-[2rem] overflow-hidden group">
                   <Image
                     src={value.image}
                     alt={value.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-true-cobalt/80 transition-all duration-500 group-hover:bg-true-cobalt/90" />
-                  
-                  {/* Content */}
-                  <div className={`absolute inset-0 p-8 flex flex-col justify-end ${isRTL ? "text-right" : ""}`}>
-                    <h3
-                      className={`text-white text-xl font-bold mb-2 transition-transform duration-500 group-hover:-translate-y-2 ${
-                        isRTL ? "font-[var(--font-cairo)]" : ""
-                      }`}
-                    >
+                  <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
+                  <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
+                    <div className={`flex items-center gap-2 mb-2 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+                      <div className="w-8 h-8 rounded-lg bg-royal-azure flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className={`text-white/70 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {isRTL ? "قيمة" : "Value"}
+                      </span>
+                    </div>
+                    <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {value.title}
-                    </h3>
-                    <p
-                      className={`text-white/80 text-sm transition-all duration-500 group-hover:text-white ${
-                        isRTL ? "font-[var(--font-cairo)]" : ""
-                      }`}
-                    >
+                    </h4>
+                    <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {value.description}
                     </p>
-                    
-                    {/* Animated line */}
-                    <div
-                      className={`h-0.5 bg-royal-azure mt-4 transition-all duration-500 w-12 group-hover:w-full ${
-                        isRTL ? "origin-right ml-auto" : "origin-left"
-                      }`}
-                    />
                   </div>
-
-                  {/* Corner accent */}
-                  <div
-                    className={`absolute top-4 w-8 h-8 border-t-2 border-royal-azure ${
-                      isRTL ? "right-4 border-r-2" : "left-4 border-l-2"
-                    }`}
-                  />
                 </div>
               </ScrollReveal>
             ))}

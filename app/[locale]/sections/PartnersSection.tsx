@@ -66,7 +66,7 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
     <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey overflow-hidden" dir="ltr">
       {/* Header */}
       <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+        <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-true-cobalt ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
           <TypewriterTitle text={title} isVisible={isVisible} />
         </h2>
       </div>
