@@ -5,14 +5,14 @@ export const metadata: Metadata = {
   description: "Egyptian manufacturer specializing in high-quality denim and woven garments.",
   icons: {
     icon: [
-      { url: "/logo-original.png", sizes: "any" },
+      { url: "/EDGE SVG Logo.svg", type: "image/svg+xml" },
       { url: "/logo-original.png", sizes: "32x32", type: "image/png" },
       { url: "/logo-original.png", sizes: "16x16", type: "image/png" },
     ],
     apple: [
       { url: "/logo-original.png", sizes: "180x180" },
     ],
-    shortcut: "/logo-original.png",
+    shortcut: "/EDGE SVG Logo.svg",
   },
 };
 
