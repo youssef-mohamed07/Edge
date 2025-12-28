@@ -99,12 +99,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
-        {/* Favicon - multiple sizes for better visibility */}
-        <link rel="icon" href="/logo-original.png" type="image/png" sizes="any" />
+        {/* Favicon - SVG with PNG fallbacks */}
+        <link rel="icon" href="/EDGE SVG Logo.svg" type="image/svg+xml" />
         <link rel="icon" href="/logo-original.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/logo-original.png" type="image/png" sizes="16x16" />
         <link rel="apple-touch-icon" href="/logo-original.png" sizes="180x180" />
-        <link rel="shortcut icon" href="/logo-original.png" />
+        <link rel="shortcut icon" href="/EDGE SVG Logo.svg" />
         
         {/* Canonical URL */}
         <link rel="canonical" href={currentUrl} />
