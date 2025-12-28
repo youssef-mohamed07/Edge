@@ -303,12 +303,12 @@ input:focus, textarea:focus, select:focus {
     max-width: 100%;
   }
   
-  /* Force all form inputs to be full width */
-  input[type="email"],
-  input[type="tel"],
-  input[type="text"],
-  select,
-  button {
+  /* Force form inputs to be full width - but NOT in chat widget */
+  .form-container input[type="email"],
+  .form-container input[type="tel"],
+  .form-container input[type="text"],
+  .form-container select,
+  .form-container button {
     width: 100% !important;
     min-width: 0 !important;
     flex: none !important;
@@ -681,5 +681,39 @@ input:focus, textarea:focus, select:focus {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+
+/* Chat Widget Mobile Fullscreen Styles */
+@media (max-width: 480px) {
+  /* Fullscreen chat on small mobile */
+  .chat-fullscreen-mobile {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    z-index: 60 !important;
+  }
+  
+  /* Safe area support for notched devices */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
+/* Dynamic viewport height fallback */
+@supports not (height: 100dvh) {
+  @media (max-width: 480px) {
+    .chat-fullscreen-mobile {
+      height: 100vh !important;
+      height: -webkit-fill-available !important;
+    }
   }
 }
