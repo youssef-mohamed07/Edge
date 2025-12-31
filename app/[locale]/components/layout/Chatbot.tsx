@@ -2,16 +2,78 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getDirection, type Locale } from "../../../i18n/config";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
+  timestamp?: number;
+  seen?: boolean;
 }
 
 interface ChatbotProps {
   locale: Locale;
+}
+
+// Format timestamp to readable time
+function formatTime(timestamp: number | undefined, isRTL: boolean): string {
+  if (!timestamp) return "";
+  const date = new Date(timestamp);
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? (isRTL ? "م" : "PM") : (isRTL ? "ص" : "AM");
+  const hour12 = hours % 12 || 12;
+  return `${hour12}:${minutes} ${ampm}`;
+}
+
+// LocalStorage key for chat history
+const CHAT_HISTORY_KEY = "edge_chat_history";
+const CHAT_HISTORY_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
+
+// Save chat history to localStorage
+function saveChatHistory(messages: Message[], locale: string) {
+  try {
+    const data = {
+      messages: messages.filter(m => m.id !== "welcome"),
+      locale,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.error("Failed to save chat history:", e);
+  }
+}
+
+// Load chat history from localStorage
+function loadChatHistory(locale: string): Message[] | null {
+  try {
+    const stored = localStorage.getItem(CHAT_HISTORY_KEY);
+    if (!stored) return null;
+    
+    const data = JSON.parse(stored);
+    
+    // Check if expired or different locale
+    if (Date.now() - data.timestamp > CHAT_HISTORY_EXPIRY || data.locale !== locale) {
+      localStorage.removeItem(CHAT_HISTORY_KEY);
+      return null;
+    }
+    
+    return data.messages;
+  } catch (e) {
+    console.error("Failed to load chat history:", e);
+    return null;
+  }
+}
+
+// Clear chat history
+function clearChatHistory() {
+  try {
+    localStorage.removeItem(CHAT_HISTORY_KEY);
+  } catch (e) {
+    console.error("Failed to clear chat history:", e);
+  }
 }
 
 // Function to format message content with buttons for links
@@ -23,14 +85,85 @@ function formatMessage(content: string, isRTL: boolean, locale: string): React.R
   const hasContactLink = cleanContent.includes("/contact") || cleanContent.includes("/ar/contact") || cleanContent.includes("/en/contact");
   const hasWhatsApp = cleanContent.includes("wa.me") || cleanContent.includes("+20 122 249 3500") || cleanContent.includes("واتساب") || cleanContent.includes("WhatsApp");
 
+  // Check for navigation links
+  const navigationLinks: { path: string; labelAr: string; labelEn: string; icon: React.ReactNode }[] = [];
+  
+  // Blog/News page
+  if (cleanContent.includes("/blog") || cleanContent.includes("المدونة") || cleanContent.includes("الأخبار") || cleanContent.includes("blog")) {
+    navigationLinks.push({
+      path: `/${locale}/blog`,
+      labelAr: "المدونة",
+      labelEn: "Blog",
+      icon: (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+        </svg>
+      )
+    });
+  }
+  
+  // Products page
+  if (cleanContent.includes("/products") || cleanContent.includes("المنتجات") || cleanContent.includes("products")) {
+    navigationLinks.push({
+      path: `/${locale}/products`,
+      labelAr: "المنتجات",
+      labelEn: "Products",
+      icon: (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+      )
+    });
+  }
+  
+  // About page
+  if (cleanContent.includes("/about") || cleanContent.includes("من نحن") || cleanContent.includes("عن الشركة") || cleanContent.includes("about us")) {
+    navigationLinks.push({
+      path: `/${locale}/about`,
+      labelAr: "من نحن",
+      labelEn: "About Us",
+      icon: (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    });
+  }
+  
+  // Production process page
+  if (cleanContent.includes("/production") || cleanContent.includes("عملية الإنتاج") || cleanContent.includes("التصنيع") || cleanContent.includes("production process")) {
+    navigationLinks.push({
+      path: `/${locale}/production-process`,
+      labelAr: "عملية الإنتاج",
+      labelEn: "Production Process",
+      icon: (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      )
+    });
+  }
+
   // Remove the link text from content for cleaner display
   cleanContent = cleanContent
     .replace(/\/ar\/contact/g, "")
     .replace(/\/en\/contact/g, "")
+    .replace(/\/ar\/blog/g, "")
+    .replace(/\/en\/blog/g, "")
+    .replace(/\/ar\/products/g, "")
+    .replace(/\/en\/products/g, "")
+    .replace(/\/ar\/about/g, "")
+    .replace(/\/en\/about/g, "")
+    .replace(/\/ar\/production-process/g, "")
+    .replace(/\/en\/production-process/g, "")
     .replace(/صفحة التواصل/g, "")
     .replace(/contact page/gi, "")
     .replace(/أو من\s*/g, "")
     .replace(/or visit\s*/gi, "")
+    .replace(/من خلال هذا الرابط/g, "")
+    .replace(/through this link/gi, "")
+    .replace(/هنا\s*\./g, "")
+    .replace(/here\s*\./gi, "")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -55,6 +188,22 @@ function formatMessage(content: string, isRTL: boolean, locale: string): React.R
           </p>
         );
       })}
+
+      {/* Navigation Buttons */}
+      {navigationLinks.length > 0 && (
+        <div className={`flex flex-wrap gap-2 mt-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+          {navigationLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.path}
+              className={`inline-flex items-center gap-2 px-4 py-2 bg-[#122D8B] text-white text-xs font-medium rounded-full hover:bg-[#1A4AFF] transition-colors ${isRTL ? "flex-row-reverse" : ""}`}
+            >
+              {link.icon}
+              {isRTL ? link.labelAr : link.labelEn}
+            </Link>
+          ))}
+        </div>
+      )}
 
       {/* Action Buttons */}
       {(hasContactLink || hasWhatsApp) && (
@@ -89,6 +238,71 @@ function formatMessage(content: string, isRTL: boolean, locale: string): React.R
   );
 }
 
+// Helper function to get page context from pathname
+function getPageContext(pathname: string, locale: string): { page: string; contextAr: string; contextEn: string } {
+  const path = pathname.replace(`/${locale}`, "") || "/";
+  
+  const pageContextMap: Record<string, { page: string; contextAr: string; contextEn: string }> = {
+    "/": {
+      page: "home",
+      contextAr: "المستخدم في الصفحة الرئيسية - يمكنك تقديم نظرة عامة عن الشركة",
+      contextEn: "User is on the homepage - you can provide a company overview"
+    },
+    "/about": {
+      page: "about",
+      contextAr: "المستخدم في صفحة من نحن - يهتم بمعرفة المزيد عن الشركة وتاريخها وفريقها",
+      contextEn: "User is on the About page - interested in company history and team"
+    },
+    "/products": {
+      page: "products",
+      contextAr: "المستخدم في صفحة المنتجات - يبحث عن معلومات عن الجينز والجاكيتات وملابس العمل",
+      contextEn: "User is on Products page - looking for info about jeans, jackets, workwear"
+    },
+    "/contact": {
+      page: "contact",
+      contextAr: "المستخدم في صفحة التواصل - يريد التواصل مع الشركة",
+      contextEn: "User is on Contact page - wants to reach out to the company"
+    },
+    "/blog": {
+      page: "blog",
+      contextAr: "المستخدم في صفحة المدونة - يقرأ مقالات عن صناعة الملابس",
+      contextEn: "User is on Blog page - reading articles about garment industry"
+    },
+    "/production-process": {
+      page: "production",
+      contextAr: "المستخدم في صفحة عملية الإنتاج - يهتم بمعرفة كيفية تصنيع الملابس",
+      contextEn: "User is on Production Process page - interested in manufacturing process"
+    }
+  };
+
+  // Check for exact match first
+  if (pageContextMap[path]) {
+    return pageContextMap[path];
+  }
+
+  // Check for partial matches
+  if (path.startsWith("/products/")) {
+    return {
+      page: "product-detail",
+      contextAr: "المستخدم يشاهد تفاصيل منتج معين - قدم معلومات مفصلة عن المنتج",
+      contextEn: "User is viewing a specific product - provide detailed product information"
+    };
+  }
+  if (path.startsWith("/blog/")) {
+    return {
+      page: "blog-post",
+      contextAr: "المستخدم يقرأ مقال في المدونة",
+      contextEn: "User is reading a blog post"
+    };
+  }
+
+  return {
+    page: "other",
+    contextAr: "المستخدم يتصفح الموقع",
+    contextEn: "User is browsing the website"
+  };
+}
+
 export function Chatbot({ locale }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<"menu" | "chat">("menu");
@@ -98,11 +312,65 @@ export function Chatbot({ locale }: ChatbotProps) {
   const [hoveredOption, setHoveredOption] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasHistory, setHasHistory] = useState(false);
+  const [proactiveShown, setProactiveShown] = useState(false);
+  const [showProactiveMessage, setShowProactiveMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const proactiveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const pathname = usePathname();
   
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
+  
+  // Get current page context
+  const pageContext = getPageContext(pathname, locale);
+
+  // Check for existing chat history on mount
+  useEffect(() => {
+    const history = loadChatHistory(locale);
+    if (history && history.length > 0) {
+      setHasHistory(true);
+    }
+  }, [locale]);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 0 && messages.some(m => m.id !== "welcome")) {
+      saveChatHistory(messages, locale);
+    }
+  }, [messages, locale]);
+
+  // Proactive message - show after 30 seconds of inactivity if chat not opened
+  useEffect(() => {
+    // Don't show if already shown, chat is open, or user has history
+    if (proactiveShown || isOpen || hasHistory) return;
+    
+    proactiveTimerRef.current = setTimeout(() => {
+      if (!isOpen && !proactiveShown) {
+        setShowProactiveMessage(true);
+        setProactiveShown(true);
+        
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          setShowProactiveMessage(false);
+        }, 10000);
+      }
+    }, 30000); // 30 seconds
+    
+    return () => {
+      if (proactiveTimerRef.current) {
+        clearTimeout(proactiveTimerRef.current);
+      }
+    };
+  }, [isOpen, proactiveShown, hasHistory]);
+
+  // Hide proactive message when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      setShowProactiveMessage(false);
+    }
+  }, [isOpen]);
 
   // Detect mobile using matchMedia - only for very small screens
   useEffect(() => {
@@ -184,16 +452,24 @@ export function Chatbot({ locale }: ChatbotProps) {
   // Add welcome message when chat starts
   useEffect(() => {
     if (view === "chat" && messages.length === 0) {
-      const welcomeMessage: Message = {
-        id: "welcome",
-        role: "assistant",
-        content: isRTL
-          ? "مرحباً! 👋 أنا مساعد Edge الذكي. كيف يمكنني مساعدتك اليوم؟"
-          : "Hi there! 👋 I'm Edge's AI assistant. How can I help you today?",
-      };
-      setMessages([welcomeMessage]);
+      // Try to load history first
+      const history = loadChatHistory(locale);
+      if (history && history.length > 0) {
+        setMessages(history);
+        setHasHistory(true);
+      } else {
+        const welcomeMessage: Message = {
+          id: "welcome",
+          role: "assistant",
+          content: isRTL
+            ? "مرحباً! 👋 أنا مساعد Edge الذكي. كيف يمكنني مساعدتك اليوم؟"
+            : "Hi there! 👋 I'm Edge's AI assistant. How can I help you today?",
+          timestamp: Date.now()
+        };
+        setMessages([welcomeMessage]);
+      }
     }
-  }, [view, isRTL, messages.length]);
+  }, [view, isRTL, locale, messages.length]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -202,6 +478,8 @@ export function Chatbot({ locale }: ChatbotProps) {
       id: Date.now().toString(),
       role: "user",
       content: inputValue.trim(),
+      timestamp: Date.now(),
+      seen: false
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -217,6 +495,11 @@ export function Chatbot({ locale }: ChatbotProps) {
             .filter((m) => m.id !== "welcome")
             .map(({ role, content }) => ({ role, content })),
           language: locale,
+          pageContext: {
+            page: pageContext.page,
+            path: pathname,
+            context: isRTL ? pageContext.contextAr : pageContext.contextEn
+          }
         }),
       });
 
@@ -226,10 +509,16 @@ export function Chatbot({ locale }: ChatbotProps) {
         throw new Error(data.error);
       }
 
+      // Mark user message as seen when assistant responds
+      setMessages((prev) => prev.map(m => 
+        m.role === "user" && !m.seen ? { ...m, seen: true } : m
+      ));
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: data.message,
+        timestamp: Date.now()
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -241,6 +530,7 @@ export function Chatbot({ locale }: ChatbotProps) {
         content: isRTL
           ? "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل معنا مباشرة."
           : "Sorry, something went wrong. Please try again or contact us directly.",
+        timestamp: Date.now()
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -259,6 +549,8 @@ export function Chatbot({ locale }: ChatbotProps) {
     setView("menu");
     setMessages([]);
     setInputValue("");
+    clearChatHistory();
+    setHasHistory(false);
   };
 
   const contactOptions = [
@@ -276,6 +568,7 @@ export function Chatbot({ locale }: ChatbotProps) {
         </svg>
       ),
       action: () => setView("chat"),
+      badge: hasHistory ? (isRTL ? "استكمال المحادثة" : "Continue chat") : undefined,
     },
     {
       id: "whatsapp",
@@ -343,6 +636,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                 <button
                   onClick={resetChat}
                   className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center"
+                  title={isRTL ? "رجوع" : "Back"}
                 >
                   <svg className={`w-5 h-5 text-white ${isRTL ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -366,14 +660,39 @@ export function Chatbot({ locale }: ChatbotProps) {
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center"
-            >
-              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}>
+              {view === "chat" && messages.length > 1 && (
+                <button
+                  onClick={() => {
+                    clearChatHistory();
+                    setHasHistory(false);
+                    const welcomeMessage: Message = {
+                      id: "welcome",
+                      role: "assistant",
+                      content: isRTL
+                        ? "مرحباً! 👋 أنا مساعد Edge الذكي. كيف يمكنني مساعدتك اليوم؟"
+                        : "Hi there! 👋 I'm Edge's AI assistant. How can I help you today?",
+                      timestamp: Date.now()
+                    };
+                    setMessages([welcomeMessage]);
+                  }}
+                  className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-white/20 transition-colors"
+                  title={isRTL ? "محادثة جديدة" : "New chat"}
+                >
+                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </button>
+              )}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center"
+              >
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -396,6 +715,11 @@ export function Chatbot({ locale }: ChatbotProps) {
                   <div className={`flex-1 ${isRTL ? "text-right" : "text-left"}`}>
                     <p className={`font-medium text-slate-800 text-base ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{option.label}</p>
                     <p className={`text-slate-400 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{option.subtitle}</p>
+                    {option.badge && (
+                      <span className={`inline-block mt-1 px-2 py-0.5 bg-[#8B5CF6]/10 text-[#8B5CF6] text-xs rounded-full ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                        {option.badge}
+                      </span>
+                    )}
                   </div>
                 </Component>
               );
@@ -408,7 +732,7 @@ export function Chatbot({ locale }: ChatbotProps) {
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex ${message.role === "user" ? (isRTL ? "justify-start" : "justify-end") : (isRTL ? "justify-end" : "justify-start")}`}
+                  className={`flex flex-col ${message.role === "user" ? (isRTL ? "items-start" : "items-end") : (isRTL ? "items-end" : "items-start")}`}
                 >
                   <div
                     className={`max-w-[85%] px-4 py-3 rounded-2xl text-base ${
@@ -416,6 +740,17 @@ export function Chatbot({ locale }: ChatbotProps) {
                     } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                   >
                     {message.role === "assistant" ? formatMessage(message.content, isRTL, locale) : message.content}
+                  </div>
+                  {/* Timestamp and Seen */}
+                  <div className={`flex items-center gap-1 mt-1 px-1 ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <span className="text-[10px] text-slate-400">
+                      {formatTime(message.timestamp, isRTL)}
+                    </span>
+                    {message.role === "user" && (
+                      <span className={`text-[10px] ${message.seen ? "text-blue-500" : "text-slate-400"}`}>
+                        {message.seen ? "✓✓" : "✓"}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -470,10 +805,57 @@ export function Chatbot({ locale }: ChatbotProps) {
   // Desktop version
   return (
     <div className={`fixed bottom-6 ${isRTL ? "left-6" : "right-6"} z-50`}>
+      {/* Proactive Message */}
+      <div
+        className={`absolute bottom-[72px] ${isRTL ? "left-0" : "right-0"} transition-all duration-500 ${
+          showProactiveMessage && !isOpen
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 translate-y-4 scale-95 pointer-events-none"
+        }`}
+      >
+        <div className="bg-white rounded-2xl shadow-2xl p-4 border border-slate-100 w-[280px]">
+          <button
+            onClick={() => setShowProactiveMessage(false)}
+            className={`absolute top-2 ${isRTL ? "left-2" : "right-2"} p-1 text-slate-400 hover:text-slate-600`}
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className="w-10 h-10 bg-[#122D8B] rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div className={isRTL ? "text-right" : ""}>
+              <p className={`text-slate-800 text-sm font-medium mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "مرحباً! 👋" : "Hi there! 👋"}
+              </p>
+              <p className={`text-slate-500 text-xs mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL 
+                  ? "هل تحتاج مساعدة في معرفة المزيد عن منتجاتنا؟" 
+                  : "Need help learning more about our products?"}
+              </p>
+              <button
+                onClick={() => {
+                  setShowProactiveMessage(false);
+                  setIsOpen(true);
+                  setView("chat");
+                }}
+                className={`px-4 py-2 bg-[#122D8B] text-white text-xs font-medium rounded-full hover:bg-[#1A4AFF] transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              >
+                {isRTL ? "ابدأ المحادثة" : "Start Chat"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Tooltip */}
       <div
         className={`absolute bottom-[72px] ${isRTL ? "left-0" : "right-0"} transition-all duration-300 ${
-          showTooltip && !isOpen
+          showTooltip && !isOpen && !showProactiveMessage
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-2 pointer-events-none"
         }`}
@@ -505,6 +887,7 @@ export function Chatbot({ locale }: ChatbotProps) {
                 <button
                   onClick={resetChat}
                   className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20"
+                  title={isRTL ? "رجوع" : "Back"}
                 >
                   <svg className={`w-4 h-4 text-white ${isRTL ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -525,11 +908,36 @@ export function Chatbot({ locale }: ChatbotProps) {
                   <span className={`text-white/70 text-xs ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>{isRTL ? "متصل" : "Online"}</span>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20">
-                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <div className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : ""}`}>
+                {view === "chat" && messages.length > 1 && (
+                  <button
+                    onClick={() => {
+                      clearChatHistory();
+                      setHasHistory(false);
+                      const welcomeMessage: Message = {
+                        id: "welcome",
+                        role: "assistant",
+                        content: isRTL
+                          ? "مرحباً! 👋 أنا مساعد Edge الذكي. كيف يمكنني مساعدتك اليوم؟"
+                          : "Hi there! 👋 I'm Edge's AI assistant. How can I help you today?",
+                        timestamp: Date.now()
+                      };
+                      setMessages([welcomeMessage]);
+                    }}
+                    className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20"
+                    title={isRTL ? "محادثة جديدة" : "New chat"}
+                  >
+                    <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
+                )}
+                <button onClick={() => setIsOpen(false)} className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20">
+                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -566,6 +974,11 @@ export function Chatbot({ locale }: ChatbotProps) {
                       <p className={`text-slate-400 text-xs truncate ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                         {option.subtitle}
                       </p>
+                      {option.badge && (
+                        <span className={`inline-block mt-1 px-2 py-0.5 bg-[#8B5CF6]/10 text-[#8B5CF6] text-xs rounded-full ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                          {option.badge}
+                        </span>
+                      )}
                     </div>
 
                   </Component>
@@ -578,14 +991,14 @@ export function Chatbot({ locale }: ChatbotProps) {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${
+                    className={`flex flex-col ${
                       message.role === "user"
                         ? isRTL
-                          ? "justify-start"
-                          : "justify-end"
+                          ? "items-start"
+                          : "items-end"
                         : isRTL
-                        ? "justify-end"
-                        : "justify-start"
+                        ? "items-end"
+                        : "items-start"
                     }`}
                   >
                     <div
@@ -596,6 +1009,17 @@ export function Chatbot({ locale }: ChatbotProps) {
                       } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                     >
                       {message.role === "assistant" ? formatMessage(message.content, isRTL, locale) : message.content}
+                    </div>
+                    {/* Timestamp and Seen */}
+                    <div className={`flex items-center gap-1 mt-1 px-1 ${isRTL ? "flex-row-reverse" : ""}`}>
+                      <span className="text-[10px] text-slate-400">
+                        {formatTime(message.timestamp, isRTL)}
+                      </span>
+                      {message.role === "user" && (
+                        <span className={`text-[10px] ${message.seen ? "text-blue-500" : "text-slate-400"}`}>
+                          {message.seen ? "✓✓" : "✓"}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
