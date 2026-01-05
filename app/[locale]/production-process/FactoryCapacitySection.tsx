@@ -147,18 +147,17 @@ export function FactoryCapacitySection({ isRTL }: FactoryCapacitySectionProps) {
 
         {/* Tabs Navigation */}
         <div className="flex justify-center mb-14" dir={isRTL ? "rtl" : "ltr"}>
-          <div className="relative inline-flex items-center bg-[#e9eef5] rounded-full py-8 px-10 md:px-14">
-            {/* Connection Line - Behind circles, from center of first to center of last */}
+          <div className="relative inline-flex items-center bg-[#e9eef5] rounded-full py-6 px-4 sm:px-8 md:px-14 overflow-hidden">
+            {/* Connection Line - Behind circles */}
             <div 
-              className="absolute h-[2px] bg-gray-300 -mt-3"
+              className="absolute h-[2px] bg-gray-300 top-1/2 -translate-y-1/2"
               style={{
-                top: '50%',
-                left: 'calc(40px + 32px)',
-                right: 'calc(40px + 32px)',
+                left: '15%',
+                right: '15%',
               }}
             />
             
-            <div className="flex items-center gap-16 md:gap-24 lg:gap-32">
+            <div className="flex items-center gap-4 sm:gap-10 md:gap-20 lg:gap-28">
               {tabsData.map((tab) => (
                 <button
                   key={tab.key}
@@ -166,7 +165,7 @@ export function FactoryCapacitySection({ isRTL }: FactoryCapacitySectionProps) {
                   className="flex flex-col items-center group relative z-10"
                 >
                   <div
-                    className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
+                    className={`w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
                       activeTab === tab.key
                         ? "bg-true-cobalt text-white shadow-xl"
                         : "bg-white text-gray-400 hover:text-gray-500 shadow-sm"
@@ -175,7 +174,7 @@ export function FactoryCapacitySection({ isRTL }: FactoryCapacitySectionProps) {
                     {tab.icon}
                   </div>
                   <span
-                    className={`mt-4 text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-500 whitespace-nowrap ${
+                    className={`mt-2 sm:mt-4 text-[8px] sm:text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all duration-500 text-center max-w-[60px] sm:max-w-none leading-tight ${
                       activeTab === tab.key ? "text-true-cobalt" : "text-gray-400"
                     } ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                   >
