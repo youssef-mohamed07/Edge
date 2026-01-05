@@ -58,6 +58,12 @@ const translations = {
     responses: "Responses",
     submitted: "Submitted",
     close: "Close",
+    updateStatus: "Update Status",
+    delete: "Delete",
+    confirmDelete: "Are you sure you want to delete this submission?",
+    notes: "Notes",
+    save: "Save",
+    cancel: "Cancel",
   },
   ar: {
     submissions: "طلبات العملاء",
@@ -92,6 +98,12 @@ const translations = {
     responses: "الإجابات",
     submitted: "تاريخ الإرسال",
     close: "إغلاق",
+    updateStatus: "تحديث الحالة",
+    delete: "حذف",
+    confirmDelete: "هل أنت متأكد من حذف هذا الطلب؟",
+    notes: "ملاحظات",
+    save: "حفظ",
+    cancel: "إلغاء",
   },
 };
 
@@ -107,6 +119,10 @@ export default function SubmissionsPage() {
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
   const [filter, setFilter] = useState<string>("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [editingStatus, setEditingStatus] = useState<string | null>(null);
+  const [newStatus, setNewStatus] = useState<string>("");
+  const [newNotes, setNewNotes] = useState<string>("");
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -140,6 +156,49 @@ export default function SubmissionsPage() {
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     router.push(`/${locale}/admin/login`);
+  };
+
+  const handleUpdateStatus = async (id: string) => {
+    setUpdating(true);
+    try {
+      const res = await fetch(`/api/ai-agent-form/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus, notes: newNotes }),
+      });
+      if (res.ok) {
+        setSubmissions(prev => prev.map(s => 
+          s.id === id ? { ...s, status: newStatus, notes: newNotes } : s
+        ));
+        setEditingStatus(null);
+        setSelectedSubmission(null);
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm(t.confirmDelete)) return;
+    
+    try {
+      const res = await fetch(`/api/ai-agent-form/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setSubmissions(prev => prev.filter(s => s.id !== id));
+        setSelectedSubmission(null);
+      }
+    } catch (error) {
+      console.error("Error deleting submission:", error);
+    }
+  };
+
+  const openEditModal = (sub: Submission) => {
+    setSelectedSubmission(sub);
+    setNewStatus(sub.status);
+    setNewNotes(sub.notes || "");
+    setEditingStatus(sub.id);
   };
 
   const getStatusColor = (status: string) => {
@@ -428,12 +487,30 @@ export default function SubmissionsPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <button
-                            onClick={() => setSelectedSubmission(sub)}
-                            className="px-4 py-2 bg-[#122D8B] hover:bg-[#0f2470] text-white text-sm font-medium rounded-lg transition-all"
-                          >
-                            {t.viewDetails}
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setSelectedSubmission(sub)}
+                              className="px-3 py-1.5 bg-[#122D8B] hover:bg-[#0f2470] text-white text-xs font-medium rounded-lg transition-all"
+                            >
+                              {t.viewDetails}
+                            </button>
+                            <button
+                              onClick={() => openEditModal(sub)}
+                              className="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-medium rounded-lg transition-all"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={() => handleDelete(sub.id)}
+                              className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs font-medium rounded-lg transition-all"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -446,7 +523,7 @@ export default function SubmissionsPage() {
       </main>
 
       {/* Detail Modal */}
-      {selectedSubmission && (
+      {selectedSubmission && !editingStatus && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50 rounded-t-2xl">
@@ -525,6 +602,65 @@ export default function SubmissionsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 {t.submitted}: {formatDate(selectedSubmission.created_at)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Status Modal */}
+      {editingStatus && selectedSubmission && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
+            <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50 rounded-t-2xl">
+              <h2 className="text-xl font-bold text-slate-900">{t.updateStatus}</h2>
+              <button
+                onClick={() => { setEditingStatus(null); setSelectedSubmission(null); }}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-full transition-all"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t.status}</label>
+                <select
+                  value={newStatus}
+                  onChange={(e) => setNewStatus(e.target.value)}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#122D8B]/20"
+                >
+                  <option value="new">{t.new}</option>
+                  <option value="contacted">{t.contactedStatus}</option>
+                  <option value="completed">{t.completedStatus}</option>
+                  <option value="cancelled">{t.cancelled}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t.notes}</label>
+                <textarea
+                  value={newNotes}
+                  onChange={(e) => setNewNotes(e.target.value)}
+                  rows={3}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#122D8B]/20 resize-none"
+                  placeholder={isRTL ? "أضف ملاحظات..." : "Add notes..."}
+                />
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => { setEditingStatus(null); setSelectedSubmission(null); }}
+                  className="flex-1 px-4 py-3 border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-all font-medium"
+                >
+                  {t.cancel}
+                </button>
+                <button
+                  onClick={() => handleUpdateStatus(selectedSubmission.id)}
+                  disabled={updating}
+                  className="flex-1 px-4 py-3 bg-[#122D8B] text-white rounded-xl hover:bg-[#0f2470] transition-all font-medium disabled:opacity-50"
+                >
+                  {updating ? "..." : t.save}
+                </button>
               </div>
             </div>
           </div>
