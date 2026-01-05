@@ -1,4 +1,192 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
+
+// Function to detect and extract phone numbers from messages
+function extractPhoneNumber(message: string): string | null {
+  // Remove all spaces and common separators
+  const cleanMessage = message.replace(/[\s\-\.\(\)]/g, "");
+  
+  // Match Egyptian numbers (01xxxxxxxxx) - most common case
+  const egyptianRegex = /0[0-9]{10}/;
+  const egyptMatch = cleanMessage.match(egyptianRegex);
+  if (egyptMatch) {
+    return "+2" + egyptMatch[0];
+  }
+  
+  // Match international numbers with country code
+  const intlRegex = /\+?(?:20|966|971|974|965|968|973|962|961|90|1|44|49|33|39|34)[0-9]{8,12}/;
+  const intlMatch = cleanMessage.match(intlRegex);
+  if (intlMatch) {
+    let phone = intlMatch[0];
+    if (!phone.startsWith("+")) {
+      phone = "+" + phone;
+    }
+    return phone;
+  }
+  
+  // Match any sequence of 10+ digits as potential phone number
+  const genericRegex = /[0-9]{10,15}/;
+  const genericMatch = cleanMessage.match(genericRegex);
+  if (genericMatch) {
+    return genericMatch[0];
+  }
+  
+  return null;
+}
+
+// Function to extract email from message
+function extractEmail(message: string): string | null {
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+  const match = message.match(emailRegex);
+  return match ? match[0] : null;
+}
+
+// Function to detect if this is an order-related conversation
+function isOrderConversation(messages: { role: string; content: string }[]): boolean {
+  const orderKeywords = [
+    // Arabic keywords
+    "طلب", "أوردر", "اطلب", "عايز", "محتاج", "تصنيع", "إنتاج", "كمية",
+    "ملابس", "جينز", "جاكيت", "قميص", "تيشيرت", "بولو", "يونيفورم",
+    "واتساب", "whatsapp", "تليفون", "phone", "اتصال", "call",
+    "تواصل", "contact", "رقم", "number",
+    // English keywords  
+    "order", "want", "need", "manufacturing", "production", "quantity",
+    "garment", "jeans", "jacket", "shirt", "t-shirt", "polo", "uniform",
+    "interested", "looking for", "price", "quote", "سعر", "عرض"
+  ];
+  
+  const conversationText = messages.map(m => m.content.toLowerCase()).join(" ");
+  return orderKeywords.some(keyword => conversationText.includes(keyword.toLowerCase()));
+}
+
+// Function to extract order details from conversation
+function extractOrderDetails(messages: { role: string; content: string }[]): {
+  garmentType?: string;
+  quantity?: string;
+  services?: string;
+  timeline?: string;
+  location?: string;
+  contactMethod?: string;
+  name?: string;
+} {
+  const details: {
+    garmentType?: string;
+    quantity?: string;
+    services?: string;
+    timeline?: string;
+    location?: string;
+    contactMethod?: string;
+    name?: string;
+  } = {};
+  
+  const conversationText = messages.map(m => m.content).join(" ");
+  const userMessages = messages.filter(m => m.role === "user").map(m => m.content);
+  const assistantMessages = messages.filter(m => m.role === "assistant").map(m => m.content);
+  
+  // Try to extract name - look for message after assistant asks for name
+  for (let i = 0; i < assistantMessages.length; i++) {
+    const assistantMsg = assistantMessages[i].toLowerCase();
+    if (assistantMsg.includes("name") || assistantMsg.includes("اسم") || assistantMsg.includes("اسمك")) {
+      // The next user message after this might be the name
+      const nextUserMsg = userMessages[i + 1];
+      if (nextUserMsg && nextUserMsg.length < 50 && !nextUserMsg.match(/[0-9]{8,}/)) {
+        details.name = nextUserMsg;
+        break;
+      }
+    }
+  }
+  
+  // Also check if any user message looks like a name (single word or two words, no numbers)
+  if (!details.name) {
+    for (const msg of userMessages) {
+      // Check if it's a simple name (1-3 words, no numbers, not a common keyword)
+      const words = msg.trim().split(/\s+/);
+      if (words.length <= 3 && words.length >= 1 && 
+          !msg.match(/[0-9]/) && 
+          msg.length < 30 &&
+          !["yes", "no", "ok", "phone", "whatsapp", "email", "call", "jeans", "jacket", "shirt", "egypt", "usa", "uk"].includes(msg.toLowerCase())) {
+        // Could be a name
+        details.name = msg;
+      }
+    }
+  }
+  
+  // Detect garment type
+  const garmentTypes = ["jeans", "jacket", "shirt", "t-shirt", "polo", "sportswear", "uniform", "جينز", "جاكيت", "قميص", "تيشيرت", "بولو", "رياضي", "يونيفورم"];
+  for (const type of garmentTypes) {
+    if (conversationText.toLowerCase().includes(type)) {
+      details.garmentType = type;
+      break;
+    }
+  }
+  
+  // Detect quantity
+  const quantityMatch = conversationText.match(/(\d+)\s*(قطعة|piece|pcs|unit)?/i);
+  if (quantityMatch) {
+    details.quantity = quantityMatch[1];
+  }
+  
+  // Detect location
+  const countries = ["egypt", "مصر", "saudi", "السعودية", "uae", "الإمارات", "usa", "uk", "germany", "france"];
+  for (const country of countries) {
+    if (conversationText.toLowerCase().includes(country)) {
+      details.location = country;
+      break;
+    }
+  }
+  
+  // Detect contact method
+  if (conversationText.toLowerCase().includes("whatsapp") || conversationText.includes("واتساب")) {
+    details.contactMethod = "whatsapp";
+  } else if (conversationText.toLowerCase().includes("call") || conversationText.includes("اتصال") || conversationText.toLowerCase().includes("phone")) {
+    details.contactMethod = "call";
+  } else if (conversationText.toLowerCase().includes("email") || conversationText.includes("إيميل")) {
+    details.contactMethod = "email";
+  }
+  
+  return details;
+}
+
+// Save submission to database
+async function saveSubmission(phone: string | null, email: string | null, messages: { role: string; content: string }[]) {
+  try {
+    const orderDetails = extractOrderDetails(messages);
+    
+    // Build answers array from conversation
+    const answers = messages
+      .filter(m => m.role === "user")
+      .map((m, i) => ({
+        question: `User message ${i + 1}`,
+        answer: m.content
+      }));
+    
+    const { error } = await supabase.from("form_submissions").insert({
+      name: orderDetails.name || null,
+      phone: phone,
+      email: email,
+      whatsapp: orderDetails.contactMethod === "whatsapp" ? phone : null,
+      contact_method: orderDetails.contactMethod || (email ? "email" : "whatsapp"),
+      garment_type: orderDetails.garmentType || null,
+      quantity: orderDetails.quantity || null,
+      services: orderDetails.services || null,
+      timeline: orderDetails.timeline || null,
+      location: orderDetails.location || null,
+      answers: answers,
+      status: "new",
+    });
+    
+    if (error) {
+      console.error("Error saving chatbot submission:", error);
+      return false;
+    }
+    
+    console.log("Chatbot submission saved successfully - Phone:", phone, "Email:", email, "Name:", orderDetails.name);
+    return true;
+  } catch (error) {
+    console.error("Error in saveSubmission:", error);
+    return false;
+  }
+}
 
 const SYSTEM_PROMPT = `⚠️⚠️⚠️ CRITICAL RULE #1 - LANGUAGE MATCHING ⚠️⚠️⚠️
 You are a MULTILINGUAL assistant. You MUST detect and respond in the SAME language the user writes in.
@@ -412,7 +600,10 @@ You are "Edge Assistant", the smart assistant for EDGE for Garments.
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages, language } = await request.json();
+    const { messages } = await request.json();
+    
+    console.log("=== Chat API Called ===");
+    console.log("Messages count:", messages?.length);
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -433,6 +624,24 @@ export async function POST(request: NextRequest) {
 
     // Detect language from the last user message and respond in the same language
     const lastUserMessage = messages[messages.length - 1]?.content || "";
+    console.log("Last user message:", lastUserMessage);
+    
+    // Check if the last message contains a phone number or email
+    const phoneNumber = extractPhoneNumber(lastUserMessage);
+    const email = extractEmail(lastUserMessage);
+    console.log("Extracted phone number:", phoneNumber);
+    console.log("Extracted email:", email);
+    
+    // If phone number or email detected, save to database
+    if (phoneNumber || email) {
+      console.log("Saving submission - Phone:", phoneNumber, "Email:", email);
+      try {
+        const saved = await saveSubmission(phoneNumber, email, messages);
+        console.log("Submission save result:", saved);
+      } catch (saveError) {
+        console.error("Error saving submission:", saveError);
+      }
+    }
     
     const languageInstruction = `
 

@@ -49,16 +49,17 @@ export function Navbar({ locale, dict }: NavbarProps) {
 
   return (
     <>
-      <nav className="absolute top-0 left-0 right-0 z-50 px-6 py-4 lg:px-12">
+      {/* Full Header Row */}
+      <header className="absolute top-0 left-0 right-0 z-50 px-6 py-4 lg:px-12">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Left */}
           <Link href={`/${locale}`} className="flex-shrink-0 relative z-[60]">
             <Image
               src="/logo-white.png"
               alt="EDGE for Garments"
               width={500}
               height={188}
-              className="h-40 w-auto"
+              className="h-24 md:h-28 lg:h-36 w-auto"
               priority
             />
           </Link>
@@ -118,7 +119,7 @@ export function Navbar({ locale, dict }: NavbarProps) {
             </span>
           </button>
         </div>
-      </nav>
+      </header>
 
       {/* Mobile Navigation - Full Screen Overlay */}
       <div
