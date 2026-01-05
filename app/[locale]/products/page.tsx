@@ -100,13 +100,11 @@ export default async function ProductsPage({ params }: PageProps) {
 
   const stats = isRTL
     ? [
-        { number: "500", label: "الحد الأدنى للطلب", suffix: " قطعة" },
         { number: "45-60", label: "مدة التسليم", suffix: " يوم" },
         { number: "7-14", label: "تطوير العينات", suffix: " يوم" },
         { number: "1M+", label: "الطاقة السنوية", suffix: " قطعة" },
       ]
     : [
-        { number: "500", label: "Minimum Order", suffix: " pcs" },
         { number: "45-60", label: "Lead Time", suffix: " days" },
         { number: "7-14", label: "Sample Dev", suffix: " days" },
         { number: "1M+", label: "Annual Capacity", suffix: "" },

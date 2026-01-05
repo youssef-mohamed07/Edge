@@ -14,7 +14,7 @@ interface TeamCarouselProps {
   members: TeamMember[];
   isRTL: boolean;
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export function TeamCarousel({
@@ -54,11 +54,13 @@ export function TeamCarousel({
         >
           {/* Text Content - Left side for RTL, Right side for LTR */}
           <div className={`${isRTL ? "text-right lg:order-1" : "lg:order-1"} transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "translate-x-12" : "-translate-x-12"}`}`}>
-            <p
-              className={`text-royal-azure font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-            >
-              {subtitle}
-            </p>
+            {subtitle && (
+              <p
+                className={`text-royal-azure font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+              >
+                {subtitle}
+              </p>
+            )}
             <div className="mb-8">
               <TypewriterTitle
                 text={title}

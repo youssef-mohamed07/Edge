@@ -56,9 +56,9 @@ export function Navbar({ locale, dict }: NavbarProps) {
             <Image
               src="/logo-white.png"
               alt="EDGE for Garments"
-              width={300}
-              height={100}
-              className="h-24 w-auto"
+              width={500}
+              height={188}
+              className="h-40 w-auto"
               priority
             />
           </Link>

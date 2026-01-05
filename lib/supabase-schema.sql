@@ -14,6 +14,43 @@ INSERT INTO admin_users (username, password_hash)
 VALUES ('admin', 'admin123')
 ON CONFLICT (username) DO NOTHING;
 
+-- AI Agent Form Submissions Table
+CREATE TABLE IF NOT EXISTS form_submissions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  phone VARCHAR(50),
+  whatsapp VARCHAR(50),
+  contact_method VARCHAR(50),
+  garment_type TEXT,
+  quantity TEXT,
+  services TEXT,
+  timeline TEXT,
+  location TEXT,
+  consultation TEXT,
+  answers JSONB DEFAULT '[]',
+  status VARCHAR(50) DEFAULT 'new',
+  notes TEXT,
+  source VARCHAR(50) DEFAULT 'website',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS for form_submissions
+ALTER TABLE form_submissions ENABLE ROW LEVEL SECURITY;
+
+-- Create policies for form_submissions
+CREATE POLICY "Allow insert form submissions" ON form_submissions
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow read form submissions" ON form_submissions
+  FOR SELECT USING (true);
+
+CREATE POLICY "Allow update form submissions" ON form_submissions
+  FOR UPDATE USING (true);
+
+CREATE POLICY "Allow delete form submissions" ON form_submissions
+  FOR DELETE USING (true);
+
 -- Blog Posts Table
 CREATE TABLE IF NOT EXISTS blog_posts (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

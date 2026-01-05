@@ -8,6 +8,7 @@ import { Chatbot } from "../components/layout/Chatbot";
 import { PageHero } from "../components/PageHero";
 import { AnimatedServiceStep, type IconName } from "./AnimatedServiceStep";
 import { WhySetsUsApart } from "./WhySetsUsApart";
+import { FactoryCapacitySection } from "./FactoryCapacitySection";
 import { AIGuideSection } from "../sections/AIGuideSection";
 import { FAQSection } from "../sections/FAQSection";
 import { TypewriterTitle } from "../components/TypewriterTitle";
@@ -60,17 +61,45 @@ export default async function ProductionProcessPage({ params }: PageProps) {
   }> = isRTL
     ? [
         {
-          iconName: "FabricInspectionIcon",
-          title: "فحص الأقمشة",
+          iconName: "RnDIcon",
+          title: "البحث والتطوير",
+          image:
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+          description:
+            "فريق متخصص في البحث والتطوير لابتكار حلول جديدة ومواكبة أحدث التقنيات.",
+          details: [
+            "تحليل اتجاهات السوق",
+            "تطوير خامات جديدة",
+            "اختبار التقنيات الحديثة",
+            "تحسين العمليات المستمر",
+          ],
+        },
+        {
+          iconName: "CustomDesignIcon",
+          title: "التصميم المخصص",
+          image:
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+          description:
+            "فريق تصميم محترف لتحويل أفكارك إلى تصاميم فريدة تناسب علامتك التجارية.",
+          details: [
+            "تصميم حسب الطلب",
+            "رسومات تقنية دقيقة",
+            "اختيار الألوان والخامات",
+            "نماذج أولية سريعة",
+          ],
+        },
+        {
+          iconName: "FabricSourcingIcon",
+          title: "توريد وفحص الأقمشة",
           image:
             "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description:
-            "فحوصات جودة صارمة على جميع المواد الواردة لضمان أعلى المعايير.",
+            "توريد أجود الأقمشة من مصادر موثوقة مع فحص جودة صارم.",
           details: [
+            "شبكة موردين عالمية",
             "نظام فحص 4 نقاط",
             "التحقق من اتساق الألوان",
-            "اختبار الانكماش",
-            "تحليل الوزن والتركيب",
+            "اختبار الانكماش والجودة",
           ],
         },
         {
@@ -101,6 +130,19 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           ],
         },
         {
+          iconName: "DecorationIcon",
+          title: "التطريز والطباعة والزخرفة",
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          description: "خدمات تطريز وطباعة وزخرفة مخصصة للعلامات التجارية.",
+          details: [
+            "آلات تطريز متعددة الرؤوس",
+            "طباعة الشاشة الحريرية",
+            "طباعة النقل الحراري",
+            "النقش بالليزر والزخرفة",
+          ],
+        },
+        {
           iconName: "WashingIcon",
           title: "الغسيل",
           image:
@@ -114,45 +156,73 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           ],
         },
         {
-          iconName: "EmbroideryIcon",
-          title: "التطريز والطباعة",
+          iconName: "DeliveryIcon",
+          title: "التغليف والتوصيل",
           image:
-            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-          description: "خدمات تطريز وطباعة مخصصة للعلامات التجارية.",
+            "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+          description: "تغليف احترافي وتوصيل آمن لجميع أنحاء العالم.",
           details: [
-            "آلات تطريز متعددة الرؤوس",
-            "طباعة الشاشة الحريرية",
-            "طباعة النقل الحراري",
-            "النقش بالليزر",
+            "فحص نهائي 100%",
+            "تغليف احترافي",
+            "وثائق التصدير",
+            "شحن دولي موثوق",
           ],
         },
         {
-          iconName: "PackagingIcon",
-          title: "التغليف ومراقبة الجودة",
+          iconName: "MarketingIcon",
+          title: "التسويق والمبيعات",
           image:
-            "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
-          description: "مراقبة جودة شاملة وتغليف احترافي للتسليم.",
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+          description: "دعم تسويقي متكامل لمساعدتك في الوصول لعملائك.",
           details: [
-            "فحص نهائي 100%",
-            "مسح كشف المعادن",
-            "كي وطي احترافي",
-            "وثائق التصدير",
+            "استراتيجيات تسويق مخصصة",
+            "دعم العلامة التجارية",
+            "تصوير المنتجات",
+            "إدارة العلاقات مع العملاء",
           ],
         },
       ]
     : [
         {
-          iconName: "FabricInspectionIcon",
-          title: "Fabric Inspection",
+          iconName: "RnDIcon",
+          title: "R&D",
+          image:
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+          description:
+            "Dedicated research and development team innovating new solutions and staying ahead with latest technologies.",
+          details: [
+            "Market trend analysis",
+            "New material development",
+            "Modern technology testing",
+            "Continuous process improvement",
+          ],
+        },
+        {
+          iconName: "CustomDesignIcon",
+          title: "Custom Design",
+          image:
+            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+          description:
+            "Professional design team to transform your ideas into unique designs that fit your brand.",
+          details: [
+            "Made-to-order designs",
+            "Precise technical drawings",
+            "Color and material selection",
+            "Rapid prototyping",
+          ],
+        },
+        {
+          iconName: "FabricSourcingIcon",
+          title: "Fabric Sourcing & Inspection",
           image:
             "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
           description:
-            "Rigorous quality checks on all incoming materials to ensure premium standards.",
+            "Sourcing premium fabrics from trusted suppliers with rigorous quality inspection.",
           details: [
+            "Global supplier network",
             "4-point inspection system",
             "Color consistency verification",
-            "Shrinkage testing",
-            "Weight and composition analysis",
+            "Shrinkage and quality testing",
           ],
         },
         {
@@ -184,6 +254,20 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           ],
         },
         {
+          iconName: "DecorationIcon",
+          title: "Embroidery, Printing & Decoration",
+          image:
+            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+          description:
+            "Custom embroidery, printing and decoration services for branding and design elements.",
+          details: [
+            "Multi-head embroidery machines",
+            "Screen printing",
+            "Heat transfer printing",
+            "Laser engraving & decoration",
+          ],
+        },
+        {
           iconName: "WashingIcon",
           title: "Washing",
           image:
@@ -198,31 +282,31 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           ],
         },
         {
-          iconName: "EmbroideryIcon",
-          title: "Embroidery & Printing",
-          image:
-            "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
-          description:
-            "Custom embroidery and printing services for branding and design elements.",
-          details: [
-            "Multi-head embroidery machines",
-            "Screen printing",
-            "Heat transfer printing",
-            "Laser engraving",
-          ],
-        },
-        {
-          iconName: "PackagingIcon",
-          title: "Packaging & Final QC",
+          iconName: "DeliveryIcon",
+          title: "Packaging & Delivery",
           image:
             "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
           description:
-            "Comprehensive quality control and professional packaging for delivery.",
+            "Professional packaging and secure delivery worldwide.",
           details: [
             "100% final inspection",
-            "Metal detection scanning",
-            "Professional pressing and folding",
+            "Professional packaging",
             "Export documentation",
+            "Reliable international shipping",
+          ],
+        },
+        {
+          iconName: "MarketingIcon",
+          title: "Marketing & Sales",
+          image:
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+          description:
+            "Comprehensive marketing support to help you reach your customers.",
+          details: [
+            "Custom marketing strategies",
+            "Brand support",
+            "Product photography",
+            "Customer relationship management",
           ],
         },
       ];
@@ -249,6 +333,9 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           { label: isRTL ? "الإنتاج" : "Production" },
         ]}
       />
+
+      {/* Factory Capacity Section */}
+      <FactoryCapacitySection isRTL={isRTL} />
 
       {/* Production Cycle */}
       <section className="py-8 lg:py-10">

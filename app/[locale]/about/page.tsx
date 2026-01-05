@@ -15,6 +15,7 @@ import { AIGuideSection } from "../sections/AIGuideSection";
 import { PartnersSection } from "../sections/PartnersSection";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { TypewriterTitle } from "../components/TypewriterTitle";
+import { CertificationsSection } from "../components/CertificationsSection";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -268,75 +269,6 @@ export default async function AboutPage({ params }: PageProps) {
             </ScrollReveal>
 
           </div>
-
-          {/* Bottom Cards - Compact Style Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-            {/* Production Line Card */}
-            <ScrollReveal direction="up" delay={300}>
-              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
-                <Image
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
-                  alt={isRTL ? "خط الإنتاج" : "Production Line"}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
-                <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "خط الإنتاج" : "Production Line"}
-                  </h4>
-                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "أحدث الآلات والتقنيات في التصنيع" : "State-of-the-art machinery and manufacturing technology"}
-                  </p>
-                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Quality Control Card */}
-            <ScrollReveal direction="up" delay={400}>
-              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
-                <Image
-                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80"
-                  alt={isRTL ? "مراقبة الجودة" : "Quality Control"}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
-                <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "مراقبة الجودة" : "Quality Control"}
-                  </h4>
-                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "معايير صارمة لضمان أعلى جودة" : "Rigorous standards ensuring the highest quality"}
-                  </p>
-                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Innovation Card */}
-            <ScrollReveal direction="up" delay={500}>
-              <div className="relative h-[200px] rounded-[2rem] overflow-hidden group">
-                <Image
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80"
-                  alt={isRTL ? "الابتكار" : "Innovation"}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-true-cobalt/90 via-true-cobalt/40 to-transparent" />
-                <div className={`absolute bottom-0 left-0 right-0 p-6 ${isRTL ? "text-right" : ""}`}>
-                  <h4 className={`text-white font-bold text-xl ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "الابتكار والتقنية" : "Innovation & Tech"}
-                  </h4>
-                  <p className={`text-white/70 text-sm mt-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "تبني أحدث التقنيات والأساليب" : "Embracing the latest technologies and methods"}
-                  </p>
-                  <div className={`h-0.5 bg-royal-azure mt-3 w-12 ${isRTL ? "ml-auto" : ""}`} />
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
         </div>
       </section>
 
@@ -355,8 +287,10 @@ export default async function AboutPage({ params }: PageProps) {
         members={teamMembers}
         isRTL={isRTL}
         title={isRTL ? "تعرف على مجلس الإدارة" : "Meet Our Board of Directors"}
-        subtitle={isRTL ? "فريقنا الخبير" : "OUR EXPERT TEAM"}
       />
+
+      {/* Certifications Section */}
+      <CertificationsSection isRTL={isRTL} />
 
       {/* Values */}
       <section className="py-12 lg:py-16 bg-alabaster-grey">

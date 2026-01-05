@@ -77,24 +77,12 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
         },
         {
           id: 2,
-          title: "إنتاج الملابس",
-          description: "تصنيع ملابس متكامل من القص إلى التشطيب",
-          image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop",
-        },
-        {
-          id: 3,
-          title: "مراقبة الجودة",
-          description: "عمليات جودة صارمة تضمن معايير منتج فاخرة",
-          image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
-        },
-        {
-          id: 4,
           title: "تصميم مخصص",
           description: "تصاميم مخصصة تتناسب مع هوية علامتك التجارية",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop",
         },
         {
-          id: 5,
+          id: 3,
           title: "توريد الأقمشة",
           description: "اختيار أقمشة فاخرة من موردين عالميين موثوقين",
           image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=600&fit=crop",
@@ -103,30 +91,18 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
     : [
         {
           id: 1,
-          title: "Denim Manufacturing",
+          title: "Denim Jeans Manufacturing",
           description: "Premium quality denim production with advanced washing techniques",
           image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&h=600&fit=crop",
         },
         {
           id: 2,
-          title: "Garment Production",
-          description: "Full-scale garment manufacturing from cutting to finishing",
-          image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop",
-        },
-        {
-          id: 3,
-          title: "Quality Control",
-          description: "Rigorous QC processes ensuring premium product standards",
-          image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
-        },
-        {
-          id: 4,
           title: "Custom Design",
           description: "Tailored designs to match your brand identity and vision",
           image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop",
         },
         {
-          id: 5,
+          id: 3,
           title: "Fabric Sourcing",
           description: "Premium fabric selection from trusted global suppliers",
           image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=600&fit=crop",
