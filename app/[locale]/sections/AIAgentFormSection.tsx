@@ -14,6 +14,8 @@ interface Question {
   question: string;
   questionAr: string;
   type?: "mcq" | "dropdown";
+  multiSelect?: boolean;
+  maxSelections?: number;
   options?: { value: string; label: string; labelAr: string }[];
 }
 
@@ -97,6 +99,8 @@ const questions: Question[] = [
     id: "garmentType",
     question: "What type of garments are you interested in producing?",
     questionAr: "ما نوع الملابس التي ترغب في إنتاجها؟",
+    multiSelect: true,
+    maxSelections: 4,
     options: [
       { value: "tshirts", label: "T-shirts", labelAr: "تيشيرتات" },
       { value: "jeans", label: "Jeans / Denim", labelAr: "جينز / دنيم" },
@@ -124,6 +128,8 @@ const questions: Question[] = [
     id: "services",
     question: "Which services do you need?",
     questionAr: "ما الخدمات التي تحتاجها؟",
+    multiSelect: true,
+    maxSelections: 4,
     options: [
       { value: "cutting", label: "Cutting & Sewing", labelAr: "قص وخياطة" },
       { value: "washing", label: "Washing & Finishing", labelAr: "غسيل وتشطيب" },
@@ -169,9 +175,11 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [multiAnswers, setMultiAnswers] = useState<Record<string, string[]>>({});
   const [otherInputs, setOtherInputs] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
   const [countryCode, setCountryCode] = useState("+20");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -208,27 +216,46 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   const consultationType = answers["consultation"];
 
   const handleSelect = (value: string) => {
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
-    if (value !== "other") {
-      setTimeout(() => {
-        if (currentStep < questions.length - 1) {
-          setCurrentStep((prev) => prev + 1);
-        } else {
-          setCurrentStep(questions.length);
-        }
-      }, 300);
+    if (currentQuestion.multiSelect) {
+      const currentSelections = multiAnswers[currentQuestion.id] || [];
+      const maxSelections = currentQuestion.maxSelections || 2;
+      
+      if (currentSelections.includes(value)) {
+        // Remove if already selected
+        setMultiAnswers((prev) => ({
+          ...prev,
+          [currentQuestion.id]: currentSelections.filter((v) => v !== value),
+        }));
+      } else if (currentSelections.length < maxSelections) {
+        // Add if under limit
+        setMultiAnswers((prev) => ({
+          ...prev,
+          [currentQuestion.id]: [...currentSelections, value],
+        }));
+      }
+    } else {
+      setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
+    }
+  };
+
+  const handleNext = () => {
+    if (currentStep < questions.length - 1) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      setCurrentStep(questions.length);
+    }
+  };
+
+  const handleMultiSelectContinue = () => {
+    const selections = multiAnswers[currentQuestion.id] || [];
+    if (selections.length > 0) {
+      handleNext();
     }
   };
 
   const handleOtherSubmit = () => {
     if (otherInputs[currentQuestion.id]?.trim()) {
-      setTimeout(() => {
-        if (currentStep < questions.length - 1) {
-          setCurrentStep((prev) => prev + 1);
-        } else {
-          setCurrentStep(questions.length);
-        }
-      }, 300);
+      handleNext();
     }
   };
 
@@ -238,13 +265,16 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
     
     setIsSubmitting(true);
     const formData = {
+      name: name,
       email: consultationType === "email" ? email : "",
       phone: (consultationType === "call" || consultationType === "whatsapp") ? `${countryCode}${phone}` : "",
       whatsapp: consultationType === "whatsapp" ? `${countryCode}${phone}` : "",
       contactMethod: consultationType,
       answers: questions.map((q) => ({
         question: q.question,
-        answer: answers[q.id] === "other" ? otherInputs[q.id] : answers[q.id],
+        answer: q.multiSelect 
+          ? (multiAnswers[q.id] || []).join(", ")
+          : (answers[q.id] === "other" ? otherInputs[q.id] : answers[q.id]),
       })),
     };
     try {
@@ -268,9 +298,11 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
   const handleReset = () => {
     setCurrentStep(0);
     setAnswers({});
+    setMultiAnswers({});
     setOtherInputs({});
     setEmail("");
     setPhone("");
+    setName("");
     setCountryCode("+20");
     setIsComplete(false);
   };
@@ -304,12 +336,12 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
             <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full mb-6 ${isRTL ? "flex-row-reverse" : ""}`}>
               <div className="w-2 h-2 bg-royal-azure rounded-full animate-pulse" />
               <span className={`text-white/90 text-sm font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                {isRTL ? "مساعد ذكي" : "AI Assistant"}
+                {isRTL ? "مساعد ذكي" : "Smart Assistant"}
               </span>
             </div>
             <div className="mb-4">
               <TypewriterTitle
-                text={isRTL ? "دعنا نساعدك" : "Let Our AI Agent Help You"}
+                text={isRTL ? "دعنا نساعدك" : "Let Us Help You"}
                 isVisible={true}
                 className={`text-2xl md:text-3xl lg:text-4xl font-bold text-white ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               />
@@ -356,6 +388,14 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
             <div key={currentQuestion.id}>
               <h3 className={`text-xl md:text-2xl font-bold text-white mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                 {isRTL ? currentQuestion.questionAr : currentQuestion.question}
+                {currentQuestion.multiSelect && (
+                  <span className={`block text-sm font-normal text-white/60 mt-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {isRTL 
+                      ? `(اختر حتى ${currentQuestion.maxSelections || 2} خيارات)`
+                      : `(Select up to ${currentQuestion.maxSelections || 2} options)`
+                    }
+                  </span>
+                )}
               </h3>
               
               {currentQuestion.type === "dropdown" ? (
@@ -413,13 +453,6 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                                 setAnswers((prev) => ({ ...prev, [currentQuestion.id]: country.name }));
                                 setCountryDropdownOpen(false);
                                 setCountrySearch("");
-                                setTimeout(() => {
-                                  if (currentStep < questions.length - 1) {
-                                    setCurrentStep((prev) => prev + 1);
-                                  } else {
-                                    setCurrentStep(questions.length);
-                                  }
-                                }, 300);
                               }}
                               className={`w-full px-4 py-3 flex items-center gap-3 text-white hover:bg-white/10 transition-colors ${
                                 answers[currentQuestion.id] === country.name ? "bg-royal-azure/30" : ""
@@ -446,32 +479,39 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
               ) : (
                 /* MCQ Options */
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {currentQuestion.options?.map((option) => (
-                    <button
-                      key={option.value}
-                      onClick={() => handleSelect(option.value)}
-                      className={`group p-5 border-2 transition-colors ${
-                        answers[currentQuestion.id] === option.value
-                          ? "bg-royal-azure border-royal-azure text-white"
-                          : "bg-white/10 border-white/20 text-white hover:bg-white/5 hover:border-white/40"
-                      }`}
-                    >
-                      <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                          answers[currentQuestion.id] === option.value ? "bg-white border-white" : "border-white/40"
-                        }`}>
-                          {answers[currentQuestion.id] === option.value && (
-                            <svg className="w-4 h-4 text-royal-azure" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
+                  {currentQuestion.options?.map((option) => {
+                    const isMultiSelect = currentQuestion.multiSelect;
+                    const isSelected = isMultiSelect
+                      ? (multiAnswers[currentQuestion.id] || []).includes(option.value)
+                      : answers[currentQuestion.id] === option.value;
+                    
+                    return (
+                      <button
+                        key={option.value}
+                        onClick={() => handleSelect(option.value)}
+                        className={`group p-5 border-2 transition-colors ${
+                          isSelected
+                            ? "bg-royal-azure border-royal-azure text-white"
+                            : "bg-white/10 border-white/20 text-white hover:bg-white/5 hover:border-white/40"
+                        }`}
+                      >
+                        <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                          <div className={`w-6 h-6 ${isMultiSelect ? "rounded-md" : "rounded-full"} border-2 flex items-center justify-center flex-shrink-0 ${
+                            isSelected ? "bg-white border-white" : "border-white/40"
+                          }`}>
+                            {isSelected && (
+                              <svg className="w-4 h-4 text-royal-azure" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </div>
+                          <span className={`font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                            {isRTL ? option.labelAr : option.label}
+                          </span>
                         </div>
-                        <span className={`font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                          {isRTL ? option.labelAr : option.label}
-                        </span>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
 
@@ -485,37 +525,61 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                       placeholder={isRTL ? "اكتب إجابتك هنا..." : "Type your answer here..."}
                       className={`flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
                     />
-                    <button
-                      onClick={handleOtherSubmit}
-                      disabled={!otherInputs[currentQuestion.id]?.trim()}
-                      className="px-6 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white"
-                    >
-                      <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
                   </div>
                 </div>
               )}
 
-              {currentStep > 0 && (
-                <button onClick={handleBack} className={`mt-8 flex items-center gap-2 text-white/60 hover:text-white ${isRTL ? "flex-row-reverse" : ""}`}>
-                  <svg className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  <span className={isRTL ? "font-[var(--font-cairo)]" : ""}>{isRTL ? "السابق" : "Back"}</span>
-                </button>
-              )}
+              {/* Navigation buttons */}
+              <div className="mt-8 flex items-center justify-between">
+                {/* Back button - Left in English, Right in Arabic */}
+                {currentStep > 0 ? (
+                  <button onClick={handleBack} className={`flex items-center gap-2 text-white/60 hover:text-white ${isRTL ? "font-[var(--font-cairo)] order-2" : ""}`}>
+                    {!isRTL && (
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                    )}
+                    <span>{isRTL ? "السابق" : "Back"}</span>
+                    {isRTL && (
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    )}
+                  </button>
+                ) : (
+                  <div className={isRTL ? "order-2" : ""}></div>
+                )}
+
+                {/* Next button - Right in English, Left in Arabic */}
+                {((currentQuestion.multiSelect && (multiAnswers[currentQuestion.id] || []).length > 0) ||
+                  (!currentQuestion.multiSelect && answers[currentQuestion.id] && (answers[currentQuestion.id] !== "other" || otherInputs[currentQuestion.id]?.trim()))) ? (
+                  <button
+                    onClick={currentQuestion.multiSelect ? handleMultiSelectContinue : (answers[currentQuestion.id] === "other" ? handleOtherSubmit : handleNext)}
+                    className={`px-8 py-3 bg-royal-azure hover:bg-royal-azure/80 text-white font-semibold flex items-center gap-2 ${isRTL ? "font-[var(--font-cairo)] order-1" : ""}`}
+                  >
+                    {isRTL && (
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                    )}
+                    <span>{isRTL ? "التالي" : "Next"}</span>
+                    {!isRTL && (
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    )}
+                  </button>
+                ) : (
+                  <div className={isRTL ? "order-1" : ""}></div>
+                )}
+              </div>
             </div>
           ) : (
             <div>
               {consultationType === "call" || consultationType === "whatsapp" ? (
                 <>
                   <h3 className={`text-xl md:text-2xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL 
-                      ? (consultationType === "whatsapp" ? "أدخل رقم الواتساب" : "أدخل رقم هاتفك")
-                      : (consultationType === "whatsapp" ? "Enter your WhatsApp number" : "Enter your phone number")
-                    }
+                    {isRTL ? "أدخل بياناتك" : "Enter your details"}
                   </h3>
                   <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL 
@@ -524,7 +588,15 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                     }
                   </p>
                   <div className="space-y-4">
-                    {/* Phone Input Fields - Stack vertically on mobile, side by side on larger screens */}
+                    {/* Name Input */}
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder={isRTL ? "الاسم" : "Your Name"}
+                      className={`w-full px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                    />
+                    {/* Phone Input Fields */}
                     <div className="flex flex-col sm:flex-row gap-3">
                       <select
                         value={countryCode}
@@ -542,7 +614,7 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                        placeholder="1234567890"
+                        placeholder={isRTL ? "رقم الهاتف" : "Phone Number"}
                         className="flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
                         dir="ltr"
                       />
@@ -571,42 +643,48 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
               ) : (
                 <>
                   <h3 className={`text-xl md:text-2xl font-bold text-white mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-                    {isRTL ? "أدخل بريدك الإلكتروني" : "Enter your email"}
+                    {isRTL ? "أدخل بياناتك" : "Enter your details"}
                   </h3>
                   <p className={`text-white/60 mb-8 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                     {isRTL ? "سنراسلك قريباً" : "We'll email you soon"}
                   </p>
                   <div className="space-y-4">
-                    {/* Email Input and Submit Button - Stack vertically with consistent spacing */}
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="example@company.com"
-                        className="flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
-                        dir="ltr"
-                      />
-                      <button
-                        onClick={handleSubmit}
-                        disabled={!isContactValid() || isSubmitting}
-                        className={`px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold flex items-center justify-center gap-2 sm:w-auto w-full ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
-                      >
-                        {isSubmitting ? (
-                          <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    {/* Name Input */}
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder={isRTL ? "الاسم" : "Your Name"}
+                      className={`w-full px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                    />
+                    {/* Email Input */}
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="example@company.com"
+                      className="w-full px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure"
+                      dir="ltr"
+                    />
+                    <button
+                      onClick={handleSubmit}
+                      disabled={!isContactValid() || isSubmitting}
+                      className={`w-full px-8 py-4 bg-royal-azure hover:bg-royal-azure/80 disabled:opacity-50 text-white font-semibold flex items-center justify-center gap-2 ${isRTL ? "font-[var(--font-cairo)] flex-row-reverse" : ""}`}
+                    >
+                      {isSubmitting ? (
+                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                      ) : (
+                        <>
+                          <span>{isRTL ? "إرسال" : "Submit"}</span>
+                          <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
-                        ) : (
-                          <>
-                            <span>{isRTL ? "إرسال" : "Submit"}</span>
-                            <svg className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </>
               )}

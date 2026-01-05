@@ -345,7 +345,7 @@ export function PageHero({
       {/* Hero Content */}
       <div
         className={`relative z-10 ${
-          stats ? "py-16 lg:py-24" : "py-28 lg:py-44"
+          stats ? "pt-24 pb-16 lg:pt-32 lg:pb-24" : "py-28 lg:py-44"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">

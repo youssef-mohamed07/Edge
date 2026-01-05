@@ -42,6 +42,17 @@ const locations: Location[] = [
     y: 29,
   },
   {
+    id: "netherlands",
+    nameEn: "Netherlands",
+    nameAr: "هولندا",
+    descEn: "European Partner",
+    descAr: "الشريك الأوروبي",
+    country: "Netherlands",
+    countryAr: "هولندا",
+    x: 49,
+    y: 30,
+  },
+  {
     id: "germany",
     nameEn: "Germany",
     nameAr: "ألمانيا",
@@ -84,6 +95,17 @@ const locations: Location[] = [
     countryAr: "إسبانيا",
     x: 45,
     y: 37,
+  },
+  {
+    id: "morocco",
+    nameEn: "Morocco",
+    nameAr: "المغرب",
+    descEn: "North Africa Partner",
+    descAr: "شريك شمال أفريقيا",
+    country: "Morocco",
+    countryAr: "المغرب",
+    x: 43,
+    y: 49,
   },
   {
     id: "egypt",
@@ -430,7 +452,7 @@ export function LocationsMapSection({ locale }: LocationsMapSectionProps) {
               <p
                 className={`text-3xl font-bold text-royal-azure leading-none`}
               >
-                <Counter end={30} isVisible={markersVisible} prefix="+" />
+                <Counter end={10} isVisible={markersVisible} prefix="+" />
               </p>
               <p
                 className={`text-sm text-true-cobalt font-medium mt-1 ${

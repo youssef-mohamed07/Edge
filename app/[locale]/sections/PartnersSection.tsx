@@ -43,7 +43,7 @@ export function PartnersSection({ locale }: PartnersSectionProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
 
-  const title = isRTL ? "موثوق عالمياً" : "Worldwide Trusted";
+  const title = isRTL ? "شركاء النمو" : "Growth Partners";
 
   useEffect(() => {
     const observer = new IntersectionObserver(

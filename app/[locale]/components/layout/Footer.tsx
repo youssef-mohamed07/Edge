@@ -123,9 +123,9 @@ export function Footer({ locale, dict }: FooterProps) {
             <Image
               src="/logo-white.png"
               alt="EDGE for Garments"
-              width={300}
-              height={100}
-              className={`h-24 w-auto mb-5 ${isRTL ? "ml-auto" : ""}`}
+              width={500}
+              height={188}
+              className={`h-40 w-auto mb-5 ${isRTL ? "ml-auto" : ""}`}
             />
             <p
               className={`text-white/60 text-sm leading-relaxed mb-5 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}

@@ -35,7 +35,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
         {
           title: "الاستدامة",
           description: "نحن ملتزمون بالتصنيع المسؤول بيئياً وأخلاقياً.",
-          image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80",
+          image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&q=80",
         },
         {
           title: "رضا العملاء",
@@ -67,7 +67,7 @@ export function WhySetsUsApart({ isRTL }: WhySetsUsApartProps) {
         {
           title: "Sustainability",
           description: "We are committed to environmentally responsible and ethical manufacturing.",
-          image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80",
+          image: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?w=600&q=80",
         },
         {
           title: "Customer Satisfaction",

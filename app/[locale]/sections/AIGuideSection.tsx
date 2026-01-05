@@ -56,7 +56,7 @@ export function AIGuideSection({ locale }: AIGuideSectionProps) {
         <div className={`text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           {/* Subtitle */}
           <p className={`text-true-cobalt/70 text-sm md:text-base font-medium mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-            {isRTL ? "مساعدنا الذكي يوجه متطلباتك." : "Our AI agent guides your requirements."}
+            {isRTL ? "مساعدنا الذكي يوجه متطلباتك." : "Our smart assistant guides your requirements."}
           </p>
 
           {/* Main Question */}

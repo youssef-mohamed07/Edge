@@ -9,6 +9,12 @@ import {
   WashingIcon,
   EmbroideryIcon,
   PackagingIcon,
+  RnDIcon,
+  CustomDesignIcon,
+  FabricSourcingIcon,
+  DecorationIcon,
+  DeliveryIcon,
+  MarketingIcon,
 } from "../../components/Icons";
 
 const iconMap = {
@@ -18,6 +24,12 @@ const iconMap = {
   WashingIcon,
   EmbroideryIcon,
   PackagingIcon,
+  RnDIcon,
+  CustomDesignIcon,
+  FabricSourcingIcon,
+  DecorationIcon,
+  DeliveryIcon,
+  MarketingIcon,
 };
 
 export type IconName = keyof typeof iconMap;

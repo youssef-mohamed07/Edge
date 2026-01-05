@@ -190,3 +190,63 @@ export const ArrowRightIcon = ({ className = "w-5 h-5" }: { className?: string }
     <path d="M5 12H19M12 5l7 7-7 7" strokeLinecap="square"/>
   </svg>
 );
+
+export const RnDIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <circle cx="24" cy="20" r="10"/>
+    <path d="M18 30V42H30V30" strokeLinecap="square"/>
+    <path d="M21 30V36M27 30V36" strokeLinecap="square"/>
+    <path d="M24 10V14M18 14L20 16M30 14L28 16" strokeLinecap="square"/>
+    <circle cx="24" cy="20" r="3" fill="#1A4AFF" stroke="none"/>
+  </svg>
+);
+
+export const CustomDesignIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <path d="M8 40L18 30L28 40" strokeLinecap="square"/>
+    <path d="M36 8L40 12L20 32L16 28L36 8Z" strokeLinecap="square"/>
+    <path d="M32 12L36 16" strokeLinecap="square"/>
+    <circle cx="12" cy="12" r="4"/>
+    <circle cx="36" cy="36" r="4"/>
+  </svg>
+);
+
+export const FabricSourcingIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <rect x="6" y="10" width="36" height="28" rx="1" strokeLinecap="square"/>
+    <path d="M6 18H42" strokeLinecap="square"/>
+    <path d="M6 26H42" strokeLinecap="square"/>
+    <path d="M6 34H42" strokeLinecap="square"/>
+    <path d="M16 10V38M32 10V38" strokeLinecap="square" strokeDasharray="2 2"/>
+    <circle cx="38" cy="38" r="8" fill="white"/>
+    <circle cx="38" cy="38" r="6"/>
+    <path d="M42 42L46 46" strokeWidth="3" strokeLinecap="square"/>
+  </svg>
+);
+
+export const DecorationIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <path d="M24 6L28 18H40L30 26L34 38L24 30L14 38L18 26L8 18H20L24 6Z" strokeLinecap="square" strokeLinejoin="miter"/>
+    <circle cx="24" cy="24" r="4" fill="#1A4AFF" stroke="none"/>
+  </svg>
+);
+
+export const DeliveryIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <rect x="4" y="14" width="28" height="20" rx="1" strokeLinecap="square"/>
+    <path d="M32 20H40L44 28V34H32V20Z" strokeLinecap="square"/>
+    <circle cx="12" cy="38" r="4"/>
+    <circle cx="38" cy="38" r="4"/>
+    <path d="M16 34H34" strokeLinecap="square"/>
+  </svg>
+);
+
+export const MarketingIcon = ({ className = "w-12 h-12" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#122D8B" strokeWidth="2">
+    <path d="M8 12V36L24 28V20L8 12Z" strokeLinecap="square"/>
+    <path d="M24 20V28L40 36V12L24 20Z" strokeLinecap="square"/>
+    <path d="M24 20V28" strokeLinecap="square"/>
+    <circle cx="24" cy="40" r="4"/>
+    <path d="M24 36V28" strokeLinecap="square"/>
+  </svg>
+);
