@@ -15,6 +15,24 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Check if accessing admin routes (but not login page)
+  const isAdminRoute = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/admin`) && !pathname.includes("/admin/login")
+  ) || (pathname.startsWith("/admin") && !pathname.includes("/admin/login"));
+
+  if (isAdminRoute) {
+    const authCookie = request.cookies.get("admin_auth");
+    if (!authCookie || authCookie.value !== "authenticated") {
+      // Get locale from path or use default
+      const segments = pathname.split("/");
+      const localeFromPath = segments[1];
+      const locale = isValidLocale(localeFromPath) ? localeFromPath : defaultLocale;
+      
+      const loginUrl = new URL(`/${locale}/admin/login`, request.url);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   // Check if the pathname already has a valid locale
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
