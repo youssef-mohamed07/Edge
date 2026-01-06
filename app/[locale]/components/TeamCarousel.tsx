@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { TypewriterTitle } from "./TypewriterTitle";
+
+/**
+ * مقاسات الصور المطلوبة:
+ * - صور أعضاء الفريق الرئيسية: 400 × 600 بكسل (نسبة 2:3)
+ * - الصورة المصغرة في الكارت: 80 × 80 بكسل (مربعة)
+ */
 
 interface TeamMember {
   name: string;
@@ -25,206 +31,369 @@ export function TeamCarousel({
 }: TeamCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeMember = members[activeIndex];
+
+  // Auto-play
+  const startAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    autoPlayRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % members.length);
+    }, 5000);
+  }, [members.length]);
+
+  const stopAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      autoPlayRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAutoPlaying && isVisible && !isHovering) {
+      startAutoPlay();
+    } else {
+      stopAutoPlay();
+    }
+    return () => stopAutoPlay();
+  }, [isAutoPlaying, isVisible, isHovering, startAutoPlay, stopAutoPlay]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.2 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  const handleCardInteraction = (index: number) => {
+    setActiveIndex(index);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % members.length);
+    handleCardInteraction((activeIndex + 1) % members.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + members.length) % members.length);
+    handleCardInteraction((activeIndex - 1 + members.length) % members.length);
+  };
+
   return (
-    <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div
-          className={`grid lg:grid-cols-2 gap-12 items-center`}
-        >
-          {/* Text Content - Left side for RTL, Right side for LTR */}
-          <div className={`${isRTL ? "text-right lg:order-1" : "lg:order-1"} transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "translate-x-12" : "-translate-x-12"}`}`}>
+    <section 
+      ref={sectionRef} 
+      className="relative py-16 lg:py-24 overflow-hidden bg-alabaster-grey"
+    >
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-royal-azure/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-true-cobalt/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-royal-azure/3 to-transparent rounded-full" />
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23122d8b' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}
+        />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          
+          {/* Left Content */}
+          <div 
+            className={`${isRTL ? "text-right lg:order-1" : "lg:order-1"} transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
+          >
+            {/* Badge */}
             {subtitle && (
-              <p
-                className={`text-royal-azure font-semibold mb-3 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-              >
-                {subtitle}
-              </p>
+              <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-royal-azure/10 mb-6 ${isRTL ? "flex-row-reverse" : ""}`}>
+                <span className="w-2 h-2 bg-royal-azure rounded-full animate-pulse" />
+                <span className={`text-sm font-semibold text-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                  {subtitle}
+                </span>
+              </div>
             )}
+
+            {/* Title */}
             <div className="mb-8">
               <TypewriterTitle
                 text={title}
                 isVisible={isVisible}
-                className={`text-4xl md:text-5xl lg:text-6xl font-bold text-true-cobalt leading-tight ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                className={`text-4xl sm:text-5xl lg:text-6xl font-bold text-true-cobalt leading-[1.1] ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
               />
             </div>
 
-            {/* Active Member Card with Image */}
-            <div
-              className={`inline-flex items-center gap-5 p-5 bg-white rounded-2xl shadow-lg border border-true-cobalt/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-1`}
+            {/* Active Member Card - Premium Design */}
+            <div 
+              className={`group relative bg-white rounded-3xl shadow-xl border border-gray-100/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 max-w-sm ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+              style={{ transitionDelay: "300ms" }}
             >
-              {/* Text */}
-              <div className={isRTL ? "text-right" : ""}>
-                <h3
-                  className={`text-xl font-bold text-true-cobalt mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-                >
-                  {activeMember?.name}
-                </h3>
-                <p
-                  className={`text-royal-azure font-medium text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
-                >
-                  {activeMember?.role}
-                </p>
-              </div>
-              {/* Member Image - always on right of text */}
-              <div className="relative w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
-                {activeMember?.image ? (
-                  <Image
-                    src={activeMember.image}
-                    alt={activeMember.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-true-cobalt to-royal-azure flex items-center justify-center">
-                    <span className="text-white text-2xl font-bold">
-                      {activeMember?.name.charAt(0)}
-                    </span>
+              {/* Gradient accent */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-royal-azure via-true-cobalt to-royal-azure" />
+              
+              <div className={`flex items-center gap-5 p-5 ${isRTL ? "flex-row-reverse" : ""}`}>
+                {/* Member Image */}
+                <div className="relative">
+                  <div className="relative w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-royal-azure/10 group-hover:ring-royal-azure/20 transition-all duration-300">
+                    {activeMember?.image ? (
+                      <Image
+                        src={activeMember.image}
+                        alt={activeMember.name}
+                        fill
+                        sizes="80px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-royal-azure to-true-cobalt flex items-center justify-center">
+                        <span className="text-white text-2xl font-bold">
+                          {activeMember?.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
+                  {/* Online indicator */}
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-3 border-white shadow-sm" />
+                </div>
+
+                {/* Text */}
+                <div className={`flex-1 ${isRTL ? "text-right" : ""}`}>
+                  <h3 className={`text-xl font-bold text-true-cobalt mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {activeMember?.name}
+                  </h3>
+                  <p className={`text-royal-azure font-medium text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    {activeMember?.role}
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Navigation Dots */}
-            <div
-              className={`flex items-center gap-3 mt-8 ${isRTL ? "justify-end" : ""}`}
-            >
-              {members.map((_, index) => (
+            {/* Navigation */}
+            <div className={`flex items-center gap-4 mt-8 ${isRTL ? "justify-end flex-row-reverse" : ""}`}>
+              {/* Arrow buttons */}
+              <div className="flex items-center gap-2">
                 <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`h-2.5 rounded-full transition-all duration-300 flex-shrink-0 ${
-                    index === activeIndex
-                      ? "w-8 min-w-[32px] max-w-[32px] bg-royal-azure"
-                      : "w-2.5 min-w-[10px] max-w-[10px] bg-true-cobalt/20 hover:bg-true-cobalt/40"
-                  }`}
-                />
-              ))}
+                  onClick={prevSlide}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center hover:bg-royal-azure hover:text-white hover:border-royal-azure transition-all duration-300 group"
+                  aria-label="Previous"
+                >
+                  <svg className={`w-5 h-5 text-true-cobalt group-hover:text-white transition-colors ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center hover:bg-royal-azure hover:text-white hover:border-royal-azure transition-all duration-300 group"
+                  aria-label="Next"
+                >
+                  <svg className={`w-5 h-5 text-true-cobalt group-hover:text-white transition-colors ${isRTL ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Dots */}
+              <div className="flex items-center gap-2">
+                {members.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleCardInteraction(index)}
+                    aria-label={`View ${members[index].name}`}
+                    className={`relative h-2.5 rounded-full transition-all duration-500 overflow-hidden ${
+                      index === activeIndex
+                        ? "w-8 bg-royal-azure"
+                        : "w-2.5 bg-true-cobalt/20 hover:bg-true-cobalt/40"
+                    }`}
+                  >
+                    {index === activeIndex && isAutoPlaying && (
+                      <span 
+                        className="absolute inset-0 bg-true-cobalt/30 origin-left"
+                        style={{
+                          animation: "progress 5s linear infinite"
+                        }}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Counter */}
+              <div className="text-sm text-true-cobalt/50 font-medium">
+                <span className="text-royal-azure font-bold">{String(activeIndex + 1).padStart(2, '0')}</span>
+                <span className="mx-1">/</span>
+                <span>{String(members.length).padStart(2, '0')}</span>
+              </div>
             </div>
           </div>
 
-          {/* Team Cards - Right side for RTL, Left side for LTR */}
+          {/* Right - Cards Stack */}
           <div
-            className={`flex items-center justify-center gap-3 md:gap-4 h-[360px] md:h-[470px] lg:order-2 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-x-0" : `opacity-0 ${isRTL ? "-translate-x-12" : "translate-x-12"}`}`}
-            style={{
-              flexDirection: isRTL ? "row" : "row",
-            }}
+            className={`relative flex items-center justify-center h-[380px] sm:h-[450px] md:h-[520px] lg:order-2 transition-all duration-1000 delay-200 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
           >
-            {members.map((member, index) => {
-              const isActive = index === activeIndex;
+            {/* Glow effect behind active card */}
+            <div 
+              className="absolute w-64 h-80 bg-royal-azure/20 rounded-3xl blur-3xl transition-all duration-500"
+              style={{
+                transform: `translateX(${(activeIndex - Math.floor(members.length / 2)) * 20}px)`
+              }}
+            />
 
-              return (
-                <div
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  className="relative overflow-hidden shadow-lg rounded-2xl hover:shadow-2xl"
-                  style={{
-                    width: isActive ? "280px" : "85px",
-                    height: isActive ? "450px" : "380px",
-                    filter: isActive ? "none" : "grayscale(100%)",
-                    transition: "width 0.4s ease, height 0.4s ease, filter 0.4s ease, box-shadow 0.3s ease",
-                    zIndex: isActive ? 10 : 1,
-                    borderRadius: isActive ? "24px" : "16px",
-                    transitionDelay: `${index * 50}ms`,
-                  }}
-                >
-                  {/* Image */}
-                  {member.image ? (
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover transition-transform duration-500"
-                      style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-true-cobalt to-royal-azure flex items-center justify-center">
-                      <span
-                        className="text-white font-bold transition-all duration-300"
-                        style={{
-                          fontSize: isActive ? "3.5rem" : "1.25rem",
-                        }}
-                      >
-                        {member.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
+            {/* Cards */}
+            <div className="relative flex items-center justify-center gap-2 sm:gap-3 md:gap-4">
+              {members.map((member, index) => {
+                const isActive = index === activeIndex;
+                const distance = Math.abs(index - activeIndex);
 
-                  {/* Gradient Overlay */}
-                  <div
-                    className="absolute inset-0 transition-all duration-300"
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleCardInteraction(index)}
+                    onMouseEnter={() => window.innerWidth >= 768 && handleCardInteraction(index)}
+                    onFocus={() => handleCardInteraction(index)}
+                    aria-label={`${member.name} - ${member.role}`}
+                    aria-pressed={isActive}
+                    className="relative overflow-hidden focus:outline-none focus:ring-4 focus:ring-royal-azure/30 cursor-pointer group"
                     style={{
-                      background: isActive
-                        ? "linear-gradient(to top, rgba(18, 45, 139, 0.8), transparent, transparent)"
-                        : "rgba(18, 45, 139, 0.3)",
-                    }}
-                  />
-
-                  {/* Content - Only show on active */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 p-4 transition-all duration-300"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      transform: isActive ? "translateY(0)" : "translateY(16px)",
+                      width: isActive ? "clamp(220px, 35vw, 300px)" : "clamp(55px, 8vw, 80px)",
+                      height: isActive ? "clamp(340px, 55vw, 480px)" : "clamp(280px, 45vw, 400px)",
+                      filter: isActive ? "none" : "grayscale(100%)",
+                      opacity: isActive ? 1 : 0.7 + (0.1 * (3 - distance)),
+                      transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                      zIndex: isActive ? 20 : 10 - distance,
+                      borderRadius: isActive ? "28px" : "20px",
+                      boxShadow: isActive 
+                        ? "0 25px 50px -12px rgba(18, 45, 139, 0.35), 0 0 0 1px rgba(255,255,255,0.1)" 
+                        : "0 10px 30px -10px rgba(0,0,0,0.2)",
+                      transform: isActive ? "scale(1)" : `scale(${0.95 - distance * 0.02})`,
                     }}
                   >
-                    <h3
-                      className={`text-base md:text-lg font-bold text-white mb-0.5 ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}
-                    >
-                      {member.name}
-                    </h3>
-                    <p
-                      className={`text-white/70 text-xs ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}
-                    >
-                      {member.role}
-                    </p>
-                  </div>
+                    {/* Image */}
+                    {member.image ? (
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 640px) 220px, (max-width: 768px) 260px, 300px"
+                        className="object-cover transition-transform duration-700"
+                        style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
+                        priority={index <= 1}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-true-cobalt via-royal-azure to-true-cobalt flex items-center justify-center">
+                        <span
+                          className="text-white font-bold transition-all duration-500"
+                          style={{ fontSize: isActive ? "clamp(3rem, 8vw, 5rem)" : "clamp(1rem, 2vw, 1.5rem)" }}
+                        >
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
 
-                  {/* Vertical Name - Only show on inactive */}
-                  <div
-                    className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-                    style={{
-                      opacity: isActive ? 0 : 1,
-                    }}
-                  >
-                    <p
-                      className="text-white font-semibold text-[10px] md:text-xs tracking-wide whitespace-nowrap"
+                    {/* Gradient Overlay - Active */}
+                    <div
+                      className="absolute inset-0 transition-all duration-500 pointer-events-none"
                       style={{
-                        writingMode: "vertical-rl",
-                        textOrientation: "mixed",
-                        transform: "rotate(180deg)",
+                        background: isActive
+                          ? "linear-gradient(to top, rgba(18, 45, 139, 0.95) 0%, rgba(18, 45, 139, 0.6) 25%, rgba(18, 45, 139, 0.1) 50%, transparent 70%)"
+                          : "linear-gradient(to top, rgba(18, 45, 139, 0.5) 0%, rgba(18, 45, 139, 0.2) 50%, transparent 100%)",
+                      }}
+                    />
+
+                    {/* Shine effect on hover */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 55%, transparent 60%)",
+                        transform: "translateX(-100%)",
+                        animation: isActive ? "shine 2s ease-in-out infinite" : "none"
+                      }}
+                    />
+
+                    {/* Active Content */}
+                    <div
+                      className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 transition-all duration-500 pointer-events-none"
+                      style={{
+                        opacity: isActive ? 1 : 0,
+                        transform: isActive ? "translateY(0)" : "translateY(30px)",
                       }}
                     >
-                      {member.name.split(" ")[0]}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+                      {/* Role badge */}
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full mb-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                        <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                        <span className={`text-white/90 text-xs font-medium ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                          {isRTL ? "عضو مجلس الإدارة" : "Board Member"}
+                        </span>
+                      </div>
+                      
+                      <h3 className={`text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
+                        {member.name}
+                      </h3>
+                      <p className={`text-white/80 text-sm sm:text-base ${isRTL ? "font-[var(--font-cairo)] text-right" : ""}`}>
+                        {member.role}
+                      </p>
+                    </div>
+
+                    {/* Vertical Name - Inactive */}
+                    <div
+                      className="absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none"
+                      style={{ opacity: isActive ? 0 : 1 }}
+                    >
+                      <div className="relative">
+                        <p
+                          className="text-white font-bold text-[10px] sm:text-xs tracking-[0.2em] whitespace-nowrap uppercase"
+                          style={{
+                            writingMode: "vertical-rl",
+                            textOrientation: "mixed",
+                            transform: "rotate(180deg)",
+                            textShadow: "0 2px 10px rgba(0,0,0,0.3)"
+                          }}
+                        >
+                          {member.name.split(" ")[0]}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Border glow for active */}
+                    {isActive && (
+                      <div className="absolute inset-0 rounded-[28px] border-2 border-white/20 pointer-events-none" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes progress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+        @keyframes shine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </section>
   );
 }
