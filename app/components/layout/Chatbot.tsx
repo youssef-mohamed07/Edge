@@ -93,6 +93,22 @@ export function Chatbot() {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // Check if the response contains a scroll command
+      if (data.message.includes("[SCROLL_TO:")) {
+        const match = data.message.match(/\[SCROLL_TO:([^\]]+)\]/);
+        if (match) {
+          const sectionId = match[1];
+          // Close the chatbot and scroll to the section
+          setTimeout(() => {
+            setIsOpen(false);
+            const element = document.getElementById(sectionId);
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }, 1500); // Wait 1.5 seconds so user can read the message
+        }
+      }
     } catch (error) {
       console.error("Chat error:", error);
       const errorMessage: Message = {
@@ -321,7 +337,7 @@ export function Chatbot() {
                           : "bg-slate-100 text-slate-800 rounded-bl-md"
                       } ${dir === "rtl" ? "font-[var(--font-cairo)]" : ""}`}
                     >
-                      {message.content}
+                      {message.content.replace(/\[SCROLL_TO:[^\]]+\]/g, "").trim()}
                     </div>
                   </div>
                 ))}

@@ -515,7 +515,22 @@ export function AIAgentFormSection({ locale }: AIAgentFormSectionProps) {
                 </div>
               )}
 
-              {answers[currentQuestion.id] === "other" && currentQuestion.type !== "dropdown" && (
+              {answers[currentQuestion.id] === "other" && currentQuestion.type !== "dropdown" && !currentQuestion.multiSelect && (
+                <div className="mt-6">
+                  <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                    <input
+                      type="text"
+                      value={otherInputs[currentQuestion.id] || ""}
+                      onChange={(e) => setOtherInputs((prev) => ({ ...prev, [currentQuestion.id]: e.target.value }))}
+                      placeholder={isRTL ? "اكتب إجابتك هنا..." : "Type your answer here..."}
+                      className={`flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-royal-azure ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Other input for multi-select questions */}
+              {currentQuestion.multiSelect && (multiAnswers[currentQuestion.id] || []).includes("other") && (
                 <div className="mt-6">
                   <div className={`flex gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
                     <input

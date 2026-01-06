@@ -553,7 +553,7 @@ export function PageHero({
       {stats && stats.length > 0 && (
         <div ref={statsRef} className="relative z-10 py-6 lg:py-10">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex flex-wrap justify-between gap-8">
               {stats.map((stat, index) => (
                 <div
                   key={stat.label}

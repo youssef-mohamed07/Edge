@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
       consultation: getAnswer("consultation"),
       answers: data.answers,
       status: "new",
-      source: data.source || "website",
     });
 
     if (dbError) {

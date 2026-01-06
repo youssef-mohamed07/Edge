@@ -104,8 +104,8 @@ const locations: Location[] = [
     descAr: "شريك شمال أفريقيا",
     country: "Morocco",
     countryAr: "المغرب",
-    x: 43,
-    y: 49,
+    x: 46,
+    y: 42,
   },
   {
     id: "egypt",

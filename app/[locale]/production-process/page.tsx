@@ -332,6 +332,20 @@ export default async function ProductionProcessPage({ params }: PageProps) {
           { label: isRTL ? "الرئيسية" : "Home", href: `/${locale}` },
           { label: isRTL ? "الإنتاج" : "Production" },
         ]}
+        stats={isRTL
+          ? [
+              { number: "30-45", label: "يوم للتسليم" },
+              { number: "7-14", label: "يوم للعينات" },
+              { number: "3M+", label: "الطاقة السنوية" },
+              { number: "85+", label: "عميل" },
+            ]
+          : [
+              { number: "30-45", label: "Days Lead Time" },
+              { number: "7-14", label: "Days Sample" },
+              { number: "3M+", label: "Annual Capacity" },
+              { number: "85+", label: "Customers" },
+            ]
+        }
       />
 
       {/* Factory Capacity Section */}
