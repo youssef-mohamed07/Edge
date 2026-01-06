@@ -100,14 +100,14 @@ export default async function ProductsPage({ params }: PageProps) {
 
   const stats = isRTL
     ? [
-        { number: "45-60", label: "مدة التسليم", suffix: " يوم" },
+        { number: "30-45", label: "مدة التسليم", suffix: " يوم" },
         { number: "7-14", label: "تطوير العينات", suffix: " يوم" },
-        { number: "1M+", label: "الطاقة السنوية", suffix: " قطعة" },
+        { number: "3M+", label: "الطاقة السنوية", suffix: "" },
       ]
     : [
-        { number: "45-60", label: "Lead Time", suffix: " days" },
+        { number: "30-45", label: "Lead Time", suffix: " days" },
         { number: "7-14", label: "Sample Dev", suffix: " days" },
-        { number: "1M+", label: "Annual Capacity", suffix: "" },
+        { number: "3M+", label: "Annual Capacity", suffix: "" },
       ];
 
   return (

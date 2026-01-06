@@ -28,8 +28,8 @@ export function QuoteSection({ locale }: QuoteSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   const quoteText = isRTL
-    ? "ما بدأ كـ 100 متر مربع في 2017 أصبح الآن أكثر من 2,400 متر مربع. دليل على ما يمكن أن يبنيه الالتزام."
-    : "What began as 100 m² in 2017 is now 2,400+ m². Proof of what commitment can build.";
+    ? "منذ 2017، توسعت مساحة مصنعنا بمقدار 66.7 ضعفًا، مما يعكس نموًا منضبطًا والتزامًا تشغيليًا راسخًا."
+    : "Since 2017, our factory surface has expanded by 66.7×, reflecting disciplined growth and operational commitment.";
 
   const authorName = isRTL ? "السيد شليل" : "Mr Sayed Al Shelil";
 

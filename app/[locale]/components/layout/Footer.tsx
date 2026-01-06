@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { PhoneIcon, EmailIcon, LocationIcon, WhatsAppIcon } from "../../../components/Icons";
@@ -52,6 +53,31 @@ interface FooterProps {
 export function Footer({ locale, dict }: FooterProps) {
   const dir = getDirection(locale);
   const isRTL = dir === "rtl";
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = async () => {
+    if (!email || !email.includes("@")) return;
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      
+      if (response.ok) {
+        setIsSubscribed(true);
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Newsletter error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const quickLinks = isRTL
     ? [
@@ -92,23 +118,44 @@ export function Footer({ locale, dict }: FooterProps) {
                   {dict.footer.newsletter.subtitle}
                 </p>
               </div>
-              <form className={`w-full md:w-auto ${isRTL ? "md:order-2" : ""}`}>
+              <form className={`w-full md:w-auto ${isRTL ? "md:order-2" : ""}`} onSubmit={(e) => e.preventDefault()}>
                 <div className="flex flex-col gap-3">
-                  <input
-                    type="email"
-                    placeholder={dict.footer.newsletter.placeholder}
-                    className={`w-full px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-royal-azure transition-colors text-sm ${
-                      isRTL ? "text-right font-[var(--font-cairo)]" : ""
-                    }`}
-                  />
-                  <button
-                    type="submit"
-                    className={`w-full px-6 py-3 bg-true-cobalt text-white font-semibold hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 ${
-                      isRTL ? "font-[var(--font-cairo)]" : ""
-                    }`}
-                  >
-                    {dict.footer.newsletter.button}
-                  </button>
+                  {isSubscribed ? (
+                    <div className={`px-5 py-3 bg-green-500/20 border border-green-500/40 text-green-400 text-sm ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                      {isRTL ? "تم الاشتراك بنجاح! شكراً لك." : "Successfully subscribed! Thank you."}
+                    </div>
+                  ) : (
+                    <>
+                      <input
+                        type="email"
+                        value={email || ""}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder={dict.footer.newsletter.placeholder}
+                        className={`w-full px-5 py-3 bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-royal-azure transition-colors text-sm ${
+                          isRTL ? "text-right font-[var(--font-cairo)]" : ""
+                        }`}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleNewsletterSubmit}
+                        disabled={isSubmitting || !email}
+                        className={`w-full px-6 py-3 bg-true-cobalt text-white font-semibold hover:bg-true-cobalt/90 transition-colors text-sm whitespace-nowrap border border-white/20 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed ${
+                          isRTL ? "font-[var(--font-cairo)]" : ""
+                        }`}
+                      >
+                        {isSubmitting ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                          </span>
+                        ) : (
+                          dict.footer.newsletter.button
+                        )}
+                      </button>
+                    </>
+                  )}
                 </div>
               </form>
             </div>
@@ -121,11 +168,11 @@ export function Footer({ locale, dict }: FooterProps) {
           {/* Brand Column */}
           <div>
             <Image
-              src="/logo-white.png"
+              src="/EDGE_WHITEEE.png"
               alt="EDGE for Garments"
-              width={500}
-              height={188}
-              className={`h-40 w-auto mb-5 ${isRTL ? "ml-auto" : ""}`}
+              width={250}
+              height={94}
+              className={`h-24 w-auto mb-5 ${isRTL ? "ml-auto" : ""}`}
             />
             <p
               className={`text-white/60 text-sm leading-relaxed mb-5 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}

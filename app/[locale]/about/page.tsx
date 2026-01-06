@@ -86,16 +86,16 @@ export default async function AboutPage({ params }: PageProps) {
 
   const stats = isRTL
     ? [
-        { number: "450,000", label: "جينز سنوياً" },
-        { number: "150,000", label: "جاكيت سنوياً" },
-        { number: "133", label: "ماكينة" },
-        { number: "150", label: "عامل" },
+        { number: "3,000,000+", label: "قطعة سنوياً" },
+        { number: "2,000+", label: "عامل" },
+        { number: "50+", label: "ماكينة" },
+        { number: "85+", label: "عميل" },
       ]
     : [
-        { number: "450,000", label: "Jeans Annually" },
-        { number: "150,000", label: "Jackets Annually" },
-        { number: "133", label: "Machines" },
-        { number: "150", label: "Workers" },
+        { number: "3,000,000+", label: "Pieces Annually" },
+        { number: "2,000+", label: "Operators" },
+        { number: "50+", label: "Machines" },
+        { number: "85+", label: "Clients" },
       ];
 
   const teamMembers = isRTL

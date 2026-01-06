@@ -218,12 +218,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </div>
 
               <div className={`flex gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
-                <Link href={`/${locale}/contact`} className={`px-8 py-4 bg-royal-azure text-white font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                <a 
+                  href={`mailto:info@edgeforgarments.com?subject=${encodeURIComponent(isRTL ? `طلب عرض سعر - ${title}` : `Quote Request - ${title}`)}&body=${encodeURIComponent(isRTL ? `مرحباً،\n\nأود الحصول على عرض سعر للمنتج: ${title}\n\nشكراً لكم` : `Hello,\n\nI would like to request a quote for: ${title}\n\nThank you`)}`}
+                  className={`px-8 py-4 bg-royal-azure text-white font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                >
                   {isRTL ? "اطلب عرض سعر" : "Request Quote"}
-                </Link>
-                <Link href={`/${locale}/contact`} className={`px-8 py-4 border-2 border-true-cobalt text-true-cobalt font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                </a>
+                <a 
+                  href={`mailto:info@edgeforgarments.com?subject=${encodeURIComponent(isRTL ? `طلب عينة - ${title}` : `Sample Request - ${title}`)}&body=${encodeURIComponent(isRTL ? `مرحباً،\n\nأود طلب عينة من المنتج: ${title}\n\nشكراً لكم` : `Hello,\n\nI would like to request a sample for: ${title}\n\nThank you`)}`}
+                  className={`px-8 py-4 border-2 border-true-cobalt text-true-cobalt font-semibold text-sm uppercase tracking-wide hover:bg-true-cobalt hover:text-white transition-colors ${isRTL ? "font-[var(--font-cairo)]" : ""}`}
+                >
                   {isRTL ? "اطلب عينة" : "Request Sample"}
-                </Link>
+                </a>
               </div>
             </div>
           </div>

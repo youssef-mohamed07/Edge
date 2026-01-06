@@ -222,20 +222,20 @@ const dictionaries: Record<Locale, Dictionary> = {
       trusted: "Trusted by",
       brands: "brands worldwide",
       step1: {
-        title: "Design & Sampling",
-        desc: "We work closely with you to develop patterns, select fabrics, and create samples that meet your specifications.",
+        title: "Understanding Your Requirements",
+        desc: "We carefully listen to your specifications, goals, and expectations to ensure alignment.",
       },
       step2: {
-        title: "Production Planning",
-        desc: "Our team plans every detail — from material sourcing to production timelines — ensuring efficiency.",
+        title: "Tailored Solutions",
+        desc: "Our team proposes solutions and production plans that match your vision and operational needs.",
       },
       step3: {
-        title: "Manufacturing",
-        desc: "Using state-of-the-art equipment, our skilled workers bring your designs to life with precision.",
+        title: "Sample & Feedback",
+        desc: "We create prototypes or samples, allowing you to review and provide feedback before full production.",
       },
       step4: {
-        title: "Quality & Delivery",
-        desc: "Every garment undergoes strict quality checks before being carefully packaged and shipped.",
+        title: "Smooth Integration",
+        desc: "Once approved, we integrate your order into our production workflow, ensuring quality, timelines, and transparency throughout.",
       },
     },
     partners: {

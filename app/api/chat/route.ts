@@ -534,9 +534,14 @@ You are "Edge Assistant", the smart assistant for EDGE for Garments.
 3. قصير: أقصى 2-3 جمل للرد البسيط، ممكن أطول للأسئلة التفصيلية
 4. ودود: خليك لطيف ومرحب
 5. نظيف: لا تستخدم ** أو * أبداً - نص عادي فقط
-6. للأسعار: وجّه للواتساب
+6. للأسعار وعروض الأسعار: وجّه للنموذج الذكي باستخدام [SCROLL_TO:ai-agent]
 7. وجّه للصفحات: لو حد سأل عن منتج معين، اديله الرابط
 8. لو حد عايز يطلب أوردر: ابدأ معاه نظام طلب الأوردر (ORDER FLOW)
+
+## ⚠️ قاعدة مهمة جداً - طلبات عروض الأسعار (Quote):
+لو العميل طلب quote أو عرض سعر أو pricing أو أسعار أو "need quote" أو "make quote" أو "get quote" أو "عايز عرض سعر" أو "محتاج سعر":
+- بالعربي: "طبعاً! استخدم نموذج الطلب الذكي وهنجهز لك عرض سعر مخصص حسب احتياجاتك 📋 [SCROLL_TO:ai-agent]"
+- بالإنجليزي: "Of course! Use our smart order form and we'll prepare a customized quote for your needs 📋 [SCROLL_TO:ai-agent]"
 
 ## أمثلة للردود الصح:
 
@@ -568,7 +573,7 @@ You are "Edge Assistant", the smart assistant for EDGE for Garments.
 رد: "موجودين في مجمع الصناعات الصغيرة جنوب بورسعيد، مصر. المساحة أكتر من 2,400 متر مربع 📍"
 
 سؤال: "الأسعار كام؟"
-رد: "الأسعار حسب الكمية والخامة والتصميم. راسلنا على واتساب +20 122 249 3500 ونبعتلك عرض سعر مفصل 📱"
+رد: "الأسعار حسب الكمية والخامة والتصميم. استخدم نموذج الطلب الذكي عشان نقدر نساعدك بعرض سعر مخصص 📋 [SCROLL_TO:ai-agent]"
 
 سؤال: "إيه قيمكم؟"
 رد: "قيمنا الأساسية: الموثوقية، الجودة والدقة، الاحترافية، الابتكار، الشفافية، والمرونة. دي اللي بتميزنا في السوق 💪"
@@ -679,7 +684,7 @@ You MUST respond in the SAME language as this message. If it's French, respond i
     }
 
     const data = await response.json();
-    const assistantMessage = data.choices?.[0]?.message?.content;
+    let assistantMessage = data.choices?.[0]?.message?.content;
 
     if (!assistantMessage) {
       return NextResponse.json(
@@ -688,7 +693,16 @@ You MUST respond in the SAME language as this message. If it's French, respond i
       );
     }
 
-    return NextResponse.json({ message: assistantMessage });
+    // Check for scroll command and extract it
+    let scrollTo: string | null = null;
+    const scrollMatch = assistantMessage.match(/\[SCROLL_TO:([^\]]+)\]/);
+    if (scrollMatch) {
+      scrollTo = scrollMatch[1];
+      // Remove the scroll command from the message
+      assistantMessage = assistantMessage.replace(/\[SCROLL_TO:[^\]]+\]/g, "").trim();
+    }
+
+    return NextResponse.json({ message: assistantMessage, scrollTo });
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(

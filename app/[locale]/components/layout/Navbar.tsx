@@ -55,11 +55,11 @@ export function Navbar({ locale, dict }: NavbarProps) {
           {/* Logo - Left */}
           <Link href={`/${locale}`} className="flex-shrink-0 relative z-[60]">
             <Image
-              src="/logo-white.png"
+              src="/EDGE_WHITEEE.png"
               alt="EDGE for Garments"
-              width={500}
-              height={188}
-              className="h-24 md:h-28 lg:h-36 w-auto"
+              width={300}
+              height={113}
+              className="h-14 md:h-16 lg:h-20 w-auto"
               priority
             />
           </Link>

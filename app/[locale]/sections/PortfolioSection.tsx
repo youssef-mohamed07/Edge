@@ -50,24 +50,26 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
   return (
     <section ref={sectionRef} className="py-8 lg:py-10 bg-alabaster-grey" dir={dir}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
           {/* Process Steps - Left Side */}
           <ScrollReveal direction={isRTL ? "right" : "left"}>
-          <div className={`${isRTL ? "text-right" : ""} lg:order-1`}>
-            <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
-              {isRTL ? "كيف نعمل" : "How We Work"}
-            </span>
-            <div className="mb-14">
-              <TypewriterTitle
-                text={dict.portfolio.label}
-                isVisible={true}
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${
-                  isRTL ? "font-[var(--font-cairo)]" : ""
-                }`}
-              />
+          <div className={`${isRTL ? "text-right" : ""} lg:order-1 flex flex-col justify-between h-full`}>
+            <div>
+              <span className={`text-royal-azure text-sm font-semibold uppercase tracking-wider block mb-4 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                {isRTL ? "كيف نعمل" : "How We Work"}
+              </span>
+              <div className="mb-10">
+                <TypewriterTitle
+                  text={dict.portfolio.label}
+                  isVisible={true}
+                  className={`text-3xl md:text-4xl lg:text-5xl font-bold text-true-cobalt ${
+                    isRTL ? "font-[var(--font-cairo)]" : ""
+                  }`}
+                />
+              </div>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-6 flex-1 flex flex-col justify-center">
               {processSteps.map((step, index) => (
                 <div
                   key={step.id}
@@ -77,14 +79,14 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
                       : "opacity-0 translate-y-6"
                   }`}
                 >
-                  <div className="flex-shrink-0 w-10 h-10 bg-true-cobalt text-white rounded-full flex items-center justify-center font-bold text-sm">
+                  <div className="flex-shrink-0 w-12 h-12 bg-true-cobalt text-white rounded-full flex items-center justify-center font-bold text-base">
                     {step.id}
                   </div>
                   <div className="flex-1 text-start">
-                    <h3 className={`text-lg font-bold text-true-cobalt mb-1 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <h3 className={`text-xl font-bold text-true-cobalt mb-2 ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {step.title}
                     </h3>
-                    <p className={`text-true-cobalt/60 text-sm leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
+                    <p className={`text-true-cobalt/60 text-base leading-relaxed ${isRTL ? "font-[var(--font-cairo)]" : ""}`}>
                       {step.description}
                     </p>
                   </div>
@@ -96,7 +98,7 @@ export function PortfolioSection({ locale, dict }: PortfolioSectionProps) {
 
           {/* Image - Right Side */}
           <ScrollReveal direction={isRTL ? "left" : "right"} delay={200}>
-          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:order-2">
+          <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:order-2 min-h-[500px] lg:min-h-0">
             <Image
               src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
               alt="Our Process"
