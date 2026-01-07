@@ -17,7 +17,7 @@ export function FactoryVideoSection({ locale }: FactoryVideoSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   const title = isRTL ? "زُر مصنعنا" : "Visit our factory";
-  const videoId = "P2my3iEba4k";
+  const videoId = "l5pSoNNuVHc";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
