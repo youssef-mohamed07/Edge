@@ -39,42 +39,24 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
     ? [
         {
           id: 1,
-          title: "تصنيع الدنيم",
-          description: "إنتاج دنيم عالي الجودة بتقنيات غسيل متقدمة",
-          image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&h=600&fit=crop",
-        },
-        {
-          id: 2,
-          title: "تصميم مخصص",
-          description: "تصاميم مخصصة تتناسب مع هوية علامتك التجارية ورؤيتك",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop",
-        },
-        {
-          id: 3,
-          title: "توريد الأقمشة",
-          description: "اختيار أقمشة فاخرة من موردين عالميين موثوقين",
-          image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=600&fit=crop",
-        },
-        {
-          id: 4,
           title: "القص",
           description: "قص دقيق باستخدام معدات متقدمة لتحقيق أقصى كفاءة للقماش ودقة عالية.",
           image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop",
         },
         {
-          id: 5,
+          id: 2,
           title: "الخياطة",
           description: "خياطة عالية المستوى من فنيين مهرة لضمان المتانة والتشطيب الراقي.",
           image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&h=600&fit=crop",
         },
         {
-          id: 6,
+          id: 3,
           title: "الغسيل",
           description: "عمليات غسيل وتشطيب متخصصة تعزز أداء القماش وملمسه ومظهره.",
           image: "https://images.unsplash.com/photo-1489274495757-95c7c837b101?w=800&h=600&fit=crop",
         },
         {
-          id: 7,
+          id: 4,
           title: "التعبئة",
           description: "فحص نهائي وتعبئة احترافية لضمان استيفاء المنتجات لمعايير التصدير والتسليم.",
           image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop",
@@ -83,42 +65,24 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
     : [
         {
           id: 1,
-          title: "Denim Jeans Manufacturing",
-          description: "Premium quality denim production with advanced washing techniques",
-          image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&h=600&fit=crop",
-        },
-        {
-          id: 2,
-          title: "Custom Design",
-          description: "Tailored designs to match your brand identity and vision",
-          image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop",
-        },
-        {
-          id: 3,
-          title: "Fabric Sourcing",
-          description: "Premium fabric selection from trusted global suppliers",
-          image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&h=600&fit=crop",
-        },
-        {
-          id: 4,
           title: "Cutting",
           description: "Precision cutting using advanced equipment to maximize fabric efficiency and accuracy.",
           image: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop",
         },
         {
-          id: 5,
+          id: 2,
           title: "Sewing",
           description: "High-standard stitching carried out by skilled technicians to ensure durability and refined finishing.",
           image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&h=600&fit=crop",
         },
         {
-          id: 6,
+          id: 3,
           title: "Laundry",
           description: "Specialized washing and finishing processes that enhance fabric performance, texture, and appearance.",
           image: "https://images.unsplash.com/photo-1489274495757-95c7c837b101?w=800&h=600&fit=crop",
         },
         {
-          id: 7,
+          id: 4,
           title: "Packing",
           description: "Final inspection and professional packing to ensure products meet export and delivery standards.",
           image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop",
@@ -141,19 +105,18 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
     if (diff > totalItems / 2) adjustedDiff = diff - totalItems;
     if (diff < -totalItems / 2) adjustedDiff = diff + totalItems;
 
+    // Optimized for 4 cards - more spacing between cards
     if (adjustedDiff === 0) {
       return { transform: "translateX(0) scale(1)", opacity: 1, zIndex: 10 };
     } else if (adjustedDiff === 1) {
-      return { transform: "translateX(90%) scale(0.85)", opacity: 0.8, zIndex: 8 };
+      return { transform: "translateX(105%) scale(0.85)", opacity: 0.8, zIndex: 8 };
     } else if (adjustedDiff === -1) {
-      return { transform: "translateX(-90%) scale(0.85)", opacity: 0.8, zIndex: 8 };
-    } else if (adjustedDiff === 2) {
-      return { transform: "translateX(170%) scale(0.7)", opacity: 0.5, zIndex: 5 };
-    } else if (adjustedDiff === -2) {
-      return { transform: "translateX(-170%) scale(0.7)", opacity: 0.5, zIndex: 5 };
+      return { transform: "translateX(-105%) scale(0.85)", opacity: 0.8, zIndex: 8 };
+    } else if (adjustedDiff === 2 || adjustedDiff === -2) {
+      return { transform: `translateX(${adjustedDiff > 0 ? '195%' : '-195%'}) scale(0.7)`, opacity: 0.5, zIndex: 5 };
     } else {
       return {
-        transform: adjustedDiff > 0 ? "translateX(250%) scale(0.6)" : "translateX(-250%) scale(0.6)",
+        transform: adjustedDiff > 0 ? "translateX(280%) scale(0.6)" : "translateX(-280%) scale(0.6)",
         opacity: 0,
         zIndex: 0,
       };
@@ -176,11 +139,11 @@ export function OurServicesSection({ locale }: OurServicesSectionProps) {
         </div>
 
         {/* Carousel */}
-        <div className={`relative h-[420px] md:h-[480px] flex items-center justify-center transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+        <div className={`relative h-[400px] md:h-[450px] flex items-center justify-center transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
           {services.map((service, index) => (
             <div
               key={service.id}
-              className="absolute w-[260px] md:w-[320px] transition-all duration-500 ease-out cursor-pointer"
+              className="absolute w-[280px] md:w-[340px] transition-all duration-500 ease-out cursor-pointer"
               style={getCardStyle(index)}
               onClick={() => setActiveIndex(index)}
             >

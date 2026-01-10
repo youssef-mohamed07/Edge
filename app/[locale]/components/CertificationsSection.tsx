@@ -59,17 +59,18 @@ export function CertificationsSection({ isRTL = false }: CertificationsSectionPr
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch">
           {certifications.map((cert, index) => (
             <ScrollReveal key={cert.id} delay={index * 100} direction="up">
-              <div className="group flex flex-col items-center">
+              <div className="group flex flex-col items-center h-full">
                 {/* Certificate Image Container */}
-                <div className="relative w-full aspect-[3/4] bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
+                <div className="relative w-full h-64 md:h-72 lg:h-80 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
                   <Image
                     src={cert.image}
                     alt={isRTL ? cert.nameAr : cert.name}
                     fill
-                    className="object-contain p-2"
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, 25vw"
                   />
                 </div>
                 
